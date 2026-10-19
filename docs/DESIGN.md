@@ -91,22 +91,49 @@ Pengganti "otak partikel" di referensi. Ribuan titik ukur InSAR di sepanjang pes
 - Datanya titik ukur asli dari `points.pmtiles`, bukan dekorasi acak. Ini menjaga aturan "setiap angka bisa ditelusuri".
 - Mengikuti `prefers-reduced-motion`: kalau aktif, titik diam.
 
-## 9. Logo
+## 9. Animasi
+
+Animasi dipakai untuk **menunjukkan perubahan waktu**, bukan hiasan. Setiap animasi harus menjawab "apa yang bergerak, dan kenapa".
+
+### 9.1 Daftar
+
+| # | Di mana | Apa yang bergerak | Durasi |
+|---|---|---|---|
+| A1 | Pembuka peta (kunjungan pertama) | Peta terbuka di 2015, lalu otomatis berjalan sampai tahun ini. Garis Pantai maju dan Area Bawah Pasang meluas. Berhenti di tahun ini dengan teks "Ini yang sudah terjadi". Bisa dilewati dengan satu ketukan | ±4 dtk |
+| A2 | Slider & Play | Pergantian tahun: poligon tahun lama memudar keluar, tahun baru memudar masuk. Garis Pantai tahun terpilih ikut bergeser | 300 ms per tahun |
+| A3 | Garis Pantai Masa Perkiraan | Garis putus-putus pelan-pelan "berjalan" (dash bergeser), menandakan ini perkiraan, bukan hasil ukur | loop 2 dtk |
+| A4 | Pencarian | Peta terbang ke alamat (`flyTo` MapLibre) | 1,2 dtk |
+| A5 | Ketuk titik | Cincin titik terpilih berdenyut sekali. Kartu naik dari bawah. Angka Rentang Tahun menghitung naik dari 2026 ke nilainya | 300 / 600 ms |
+| A6 | Ganti Skenario | Area Bawah Pasang berubah bentuk dengan pudar silang. Angka di kartu menghitung ke nilai baru | 400 ms |
+| A7 | Geser bandingkan | Pembatas mengikuti jari tanpa jeda. Saat dibuka, pembatas meluncur dari kanan ke tengah | 400 ms |
+| A8 | Hero halaman Tentang | Konstelasi Titik (§8): titik ukur turun sesuai Laju Penurunan masing-masing, sambil tahun di pojok berjalan 2015 → 2050 | loop 12 dtk |
+| A9 | Halaman Tentang & Peliput | Setiap bagian muncul pelan (naik 12px + pudar) saat digulir ke layar | 400 ms |
+| A10 | Tombol | Ditekan: mengecil ke 0,97. Hover (desktop): terang sedikit | 150 ms |
+
+### 9.2 Aturan Gerak
+- Kurva: `cubic-bezier(0.2, 0.7, 0.2, 1)` untuk semuanya. Masuk cepat, berhenti halus.
+- Token durasi: `--dur-fast: 150ms`, `--dur-base: 300ms`, `--dur-slow: 600ms`.
+- Hanya animasikan `opacity` dan `transform` di DOM, dan properti cat (`fill-opacity`, `line-dasharray`) di MapLibre. Jangan animasikan ukuran atau tata letak.
+- Tanpa library animasi. Cukup CSS transition, Web Animations API, dan animasi bawaan MapLibre.
+- **`prefers-reduced-motion`**: A1, A3, A8, A9 mati. A2, A5, A6 langsung lompat tanpa transisi. A4 jadi `jumpTo`.
+- A1 hanya sekali per perangkat. Ingatannya disimpan di `localStorage` (dibungkus `try/catch`). Link dengan hash langsung membuka keadaan di hash, tanpa A1.
+
+## 10. Logo
 Peta pulau Jawa yang separuh bawahnya terpotong garis air, seperti Kolam Intel di ITB. Gradien Tulang ke Laut Dalam di bagian bawah garis air. Wordmark "INTEL" 14px berat 600, tracking 0.06em.
 
-## 10. Bahasa di Layar
+## 11. Bahasa di Layar
 - Pakai istilah `GLOSSARY.md`. Untuk awam boleh ditambah penjelasan pendek, misalnya "Laju Penurunan (seberapa cepat tanah turun)".
 - **Jangan** menulis "tenggelam", "hilang", atau "kiamat" di kartu dan legenda (ADR-0003). Tagline "Indonesia Tenggelam?" boleh karena berupa pertanyaan.
 - Tahun selalu sebagai Rentang Tahun: "±2031–2035", bukan "2033".
 - Setiap kartu dan legenda punya baris keterangan "Data: <sumber>, diperbarui <tanggal>".
 
-## 11. Aksesibilitas
+## 12. Aksesibilitas
 - Hitam dan putih sudah kontras maksimal. Warna lain dicek minimal 4,5:1 untuk teks (lihat §2).
 - Slider bisa digeser dengan tombol panah keyboard dan dibacakan pembaca layar ("Tahun 2035, perkiraan").
 - Informasi tidak boleh hanya disampaikan lewat warna. Kartu titik selalu menuliskan angkanya, dan Masa Terukur/Perkiraan selalu punya label teks.
 - Animasi Play dan Konstelasi Titik mengikuti `prefers-reduced-motion`.
 
-## 12. Token CSS
+## 13. Token CSS
 
 ```css
 :root {
@@ -127,5 +154,10 @@ Peta pulau Jawa yang separuh bawahnya terpotong garis air, seperti Kolam Intel d
 
   --radius: 24px;
   --radius-pill: 9999px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur-fast: 150ms;
+  --dur-base: 300ms;
+  --dur-slow: 600ms;
 }
 ```
