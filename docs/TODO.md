@@ -52,7 +52,9 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 
 > Dibuka bersamaan dengan Blok 2 (19 Okt 2026, disetujui pemilik) supaya bagian yang tidak butuh hasil HyP3 bisa dikerjakan sambil menunggu.
 
-- [ ] `fetch_dem.py` (range request ke `Asia.zip`, tile `S07E110` + `S08E110`), `fetch_tide.py` (IOC `sema`).
+- [x] `fetch_dem.py`: DeltaDTM `S07E110` + `S08E110` lewat range request, dikurangi MDT 1,008 m → `elevation.tif`.
+- [x] `fetch_tide.py`: IOC `sema` 2015–2026 → Pasang Tertinggi 0,65 m, Pasang Harian 0,34 m.
+- [x] Uji asap `compute.py` dari ujung ke ujung dengan laju buatan 10 cm/tahun: jalan, 70.956 titik.
 - [x] Cek geoid acuan DTU22 MDT: XGM2019e, bukan EGM2008. Dipakai apa adanya dulu, diganti kalau Uji Mundur meleset sistematis.
 - [x] Sumber angka BRIN 2,4–4,3 mm/tahun: siaran pers BRIGHTS Seri 2, 26 Mei 2026.
 - [ ] Pilih `t0` DeltaDTM dengan titik ICESat-2 di Sayung (`DATA.md` §2.1).
