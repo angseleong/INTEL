@@ -48,12 +48,15 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 
 **Checkpoint:** GeoTIFF Laju Penurunan terbuka di QGIS dan angkanya masuk akal dibanding paper.
 
-## Blok 3: Hitung & Uji Mundur
+## ACTIVE — Blok 3: Hitung & Uji Mundur
+
+> Dibuka bersamaan dengan Blok 2 (19 Okt 2026, disetujui pemilik) supaya bagian yang tidak butuh hasil HyP3 bisa dikerjakan sambil menunggu.
+
 - [ ] `fetch_dem.py` (range request ke `Asia.zip`, tile `S07E110` + `S08E110`), `fetch_tide.py` (IOC `sema`).
-- [ ] Cek geoid acuan DTU22 MDT vs EGM2008. Kalau beda, hitung `MSS DTU21 − EGM2008`.
-- [ ] Cari dokumen asli angka Kenaikan Muka Laut BRIN 2,4–4,3 mm/tahun.
+- [x] Cek geoid acuan DTU22 MDT: XGM2019e, bukan EGM2008. Dipakai apa adanya dulu, diganti kalau Uji Mundur meleset sistematis.
+- [x] Sumber angka BRIN 2,4–4,3 mm/tahun: siaran pers BRIGHTS Seri 2, 26 Mei 2026.
 - [ ] Pilih `t0` DeltaDTM dengan titik ICESat-2 di Sayung (`DATA.md` §2.1).
-- [ ] `compute.py` + `compute_check.py` (angka buatan dengan jawaban yang diketahui).
+- [x] `compute.py` + `compute_check.py` (angka buatan dengan jawaban yang diketahui). Masa Terukur menyusul setelah ada deret waktu InSAR.
 - [ ] `backtest.py`: Uji Mundur sesuai `DATA.md` §5.
 - [ ] Setel `RENTANG_MAKS` dan `UJI_MINIMAL` dari hasil Uji Mundur.
 
