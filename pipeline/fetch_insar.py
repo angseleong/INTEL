@@ -4,7 +4,7 @@
     python pipeline/fetch_insar.py submit [--dry-run]  # send missing pairs to HyP3
     python pipeline/fetch_insar.py status              # how many pairs HyP3 has finished
     python pipeline/fetch_insar.py download            # fetch finished pairs into pipeline/work/hyp3/
-    python pipeline/fetch_insar.py timeseries          # MintPy -> pipeline/work/subsidence_rate.tif (needs GDAL + mintpy)
+    python pipeline/fetch_insar.py timeseries [--end-date 20171231]  # MintPy -> work/subsidence_rate[_until_DATE].tif
 
 Login comes from EARTHDATA_USERNAME / EARTHDATA_PASSWORD, or ~/.netrc.
 """
@@ -186,7 +186,7 @@ def stable_offset(rate, transform, crs):
     return float(np.median(rate[box]))
 
 
-def cmd_timeseries(_):
+def cmd_timeseries(args):
     """HyP3 pairs -> MintPy small-baseline time series -> Laju Penurunan GeoTIFF (cm/tahun, positif = turun)."""
     import subprocess
 
@@ -212,6 +212,7 @@ mintpy.troposphericDelay.method = no
 mintpy.deramp              = no
 mintpy.topographicResidual = yes
 mintpy.networkInversion.minTempCoh = 0.5
+mintpy.network.endDate     = {args.end_date or "auto"}
 """)
     subprocess.run(["smallbaselineApp.py", "intel.cfg", "--end", "load_data"], cwd=MINTPY, check=True)
     write_reference_mask()
@@ -232,11 +233,12 @@ mintpy.networkInversion.minTempCoh = 0.5
     offset = stable_offset(rate, prof["transform"], prof["crs"])
     rate -= offset
     print(f"re-referenced to STABLE_BOX median: {offset:+.2f} cm/tahun removed")
-    with rasterio.open(OUT, "w", **prof) as dst:
+    out = OUT.with_name(f"subsidence_rate_until_{args.end_date}.tif") if args.end_date else OUT
+    with rasterio.open(out, "w", **prof) as dst:
         dst.write(np.stack([rate, std]))
         dst.set_band_description(1, "subsidence_rate_cm_per_year")
         dst.set_band_description(2, "subsidence_rate_std_cm_per_year")
-    print(f"{OUT}: median {np.nanmedian(rate):.1f} cm/tahun, p95 {np.nanpercentile(rate, 95):.1f} cm/tahun, "
+    print(f"{out}: median {np.nanmedian(rate):.1f} cm/tahun, p95 {np.nanpercentile(rate, 95):.1f} cm/tahun, "
           f"{np.isfinite(rate).mean():.0%} piksel terukur")
 
 
@@ -249,6 +251,8 @@ if __name__ == "__main__":
     p.set_defaults(fn=cmd_submit)
     sub.add_parser("status").set_defaults(fn=cmd_status)
     sub.add_parser("download").set_defaults(fn=cmd_download)
-    sub.add_parser("timeseries").set_defaults(fn=cmd_timeseries)
+    p = sub.add_parser("timeseries")
+    p.add_argument("--end-date", default="", help="YYYYMMDD: only use pairs up to this date (Uji Mundur)")
+    p.set_defaults(fn=cmd_timeseries)
     args = ap.parse_args()
     sys.exit(args.fn(args))

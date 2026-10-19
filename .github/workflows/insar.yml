@@ -17,6 +17,10 @@ on:
         description: "submit saja: hitung pasangan tanpa mengirim"
         type: boolean
         default: true
+      end_date:
+        description: "process saja, kosongkan untuk run biasa. Isi 20171231 untuk Uji Mundur"
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -73,13 +77,13 @@ jobs:
           start=$(date +%s)
           python pipeline/fetch_insar.py download
           df -h .
-          python pipeline/fetch_insar.py timeseries
+          python pipeline/fetch_insar.py timeseries ${{ inputs.end_date && format('--end-date {0}', inputs.end_date) || '' }}
           echo "waktu total: $(( $(date +%s) - start )) detik"
           df -h .
       - uses: actions/upload-artifact@v4
         if: env.STEP == 'process'
         with:
-          name: subsidence-rate
+          name: subsidence-rate${{ inputs.end_date && format('-until-{0}', inputs.end_date) || '' }}
           path: |
-            pipeline/work/subsidence_rate.tif
+            pipeline/work/subsidence_rate*.tif
             pipeline/work/mintpy/pic/
