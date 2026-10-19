@@ -1,38 +1,131 @@
 # INTEL — Aturan Desain
 
-## 1. Filosofi
-Tenang dan bisa dipercaya, bukan menakut-nakuti. INTEL harus terasa seperti alat ukur, bukan film bencana. Kalau ragu antara dramatis dan jujur, pilih jujur.
+> Titik-titik ukur yang melayang di atas laut malam.
 
-## 2. Bahasa di Layar
+## 1. Filosofi
+Panggung hitam pekat. Peta satelit dan data adalah satu-satunya yang menyala. Ini diadaptasi dari gaya "void" (referensi: Dala, Linear, Vercel): latar hitam murni, satu warna aksi, satu warna sorot, tipografi besar yang ringan, tanpa kartu bergaris atau bayangan.
+
+Tetap tenang dan bisa dipercaya, bukan film bencana. Gelap di sini artinya fokus, bukan seram. Kalau ragu antara dramatis dan jujur, pilih jujur.
+
+## 2. Warna
+
+| Nama | Nilai | Token | Peran |
+|---|---|---|---|
+| Void | `#000000` | `--color-void` | Latar halaman, panel di atas peta. Hitam murni, bukan abu gelap |
+| Tulang | `#ffffff` | `--color-bone` | Judul, teks utama, Garis Pantai tahun ini |
+| Abu | `#9a9a9a` | `--color-ash` | Teks sekunder, link hantu, label nonaktif, Tanggul |
+| Kabut | `#bdbdbd` | `--color-mist` | Teks pendukung, keterangan sumber data |
+| Biru Pasang | `#1f6bff` | `--color-tide` | **Satu-satunya** warna tombol terisi (Play, Bandingkan). Teks putih di atasnya 4,56:1 |
+| Air | `#4da3ff` | `--color-water` | Area Bawah Pasang (opasitas 45%). Hanya untuk data, tidak pernah untuk tombol |
+| Sorot | `#ffb829` | `--color-spark` | Garis Pantai tahun terpilih, angka Rentang Tahun, label kecil kapital. 12,1:1 di atas hitam |
+| Laut Dalam | `#0b2a4a` | `--color-deep` | Ujung gradien logo saja |
+
+Aturan:
+- Biru Pasang hanya untuk tombol aksi utama, satu per tampilan. Air hanya untuk data. Keduanya sengaja beda terang supaya tombol tidak terbaca sebagai data.
+- Tidak ada merah. Tidak ada gradien di komponen UI, gradien hanya di logo.
+- Link berwarna Sorot atau Tulang, tidak pernah biru bawaan browser.
+
+## 3. Lapisan Peta
+
+| Lapisan | Gaya |
+|---|---|
+| Peta dasar | Citra satelit, digelapkan 20% supaya data menyala |
+| Area Bawah Pasang | Air `#4da3ff`, opasitas 45%, tanpa garis tepi |
+| Garis Pantai tahun ini | Tulang, 2 px |
+| Garis Pantai tahun terpilih | Sorot, 2 px. **Garis penuh** di Masa Terukur, **putus-putus** di Masa Perkiraan |
+| Tanggul | Abu, 2 px, putus-putus |
+| Titik ukur (zoom ≥ 14) | Titik 2 px Kabut, opasitas 30%. Menunjukkan di mana satelit benar-benar mengukur |
+| Titik terpilih | Lingkaran Tulang 12 px, tanpa isi |
+
+## 4. Tipografi
+
+**Inter** (variable, lisensi OFL), di-self-host sebagai satu file `woff2` di `public/fonts/`. Satu keluarga huruf untuk semua. Fallback: `system-ui`.
+
+Seperti referensi, hierarki datang dari **ukuran dan tracking, bukan ketebalan**. Judul tidak pernah tebal.
+
+| Peran | Ukuran | Berat | Line height | Tracking | Dipakai di |
+|---|---|---|---|---|---|
+| Display | 96px (desktop) / 48px (ponsel) | 400 | 1.0 | -0.04em | Hero halaman Tentang |
+| Angka besar | 42px / 36px | 400 | 1.0 | -0.04em | Rentang Tahun di kartu titik, berwarna Sorot |
+| Judul | 27px | 400 | 1.1 | -0.02em | Nama Kelurahan di kartu, judul halaman Peliput |
+| Badan | 16px | 300 | 1.5 | normal | Paragraf di halaman Tentang |
+| UI | 15px | 400 | 1.3 | normal | Isi kartu, tabel |
+| Label | 12px | 600 | 1.2 | 0.06em, KAPITAL | "TERUKUR", "PERKIRAAN", "MULAI KENA ROB" |
+| Keterangan | 12px | 400 | 1.5 | normal | "Data: Sentinel-1, diperbarui …", warna Kabut |
+
+- Badan memakai berat 300, bukan 200 seperti referensi. Berat 200 terlalu tipis untuk dibaca di ponsel di luar ruangan.
+- Semua angka memakai `font-variant-numeric: tabular-nums` supaya tahun di slider tidak bergoyang.
+
+## 5. Bentuk & Jarak
+- **Unit dasar 6px.** Skala: 6, 12, 18, 24, 30, 36, 60, 96.
+- **Radius 24px** untuk panel dan kartu. Tombol berbentuk pil (`9999px`).
+- **Tanpa garis tepi, tanpa bayangan.** Panel di atas peta: Void dengan opasitas 85%, supaya teks terbaca di atas citra satelit tanpa harus pakai kotak bergaris.
+- Area ketuk minimal 44×44 px.
+
+## 6. Komponen
+
+| Komponen | Bentuk |
+|---|---|
+| **Tombol utama** | Pil Biru Pasang, teks Tulang 14px berat 600 kapital, padding 14×18px. Satu per tampilan |
+| **Tombol hantu** | Tanpa latar, teks Abu (nonaktif) atau Tulang (aktif). Untuk menu dan aksi sekunder |
+| **Tombol Skenario** | Dua pil hantu berdampingan. Yang aktif: teks Tulang + garis bawah Sorot 2px. Di Masa Terukur keduanya nonaktif |
+| **Slider tahun** | Jalur 4px. Bagian Masa Terukur: Tulang penuh, label "TERUKUR". Bagian Masa Perkiraan: Abu bergaris, label "PERKIRAAN". Penanda "hari ini" di batasnya. Pegangan: lingkaran Tulang 24px dengan tahun di atasnya (angka 27px) |
+| **Kartu titik** | Panel Void 85%, radius 24. Label Sorot kapital → angka besar Rentang Tahun → baris UI untuk Tinggi Tanah dan Laju Penurunan → keterangan sumber |
+| **Banner pasang** | Satu baris di atas peta: label "PASANG TINGGI" Sorot + waktu dalam teks Tulang |
+
+## 7. Tata Letak
+
+### Halaman Peta (utama)
+- **Ponsel dulu.** Peta penuh layar. Logo dan menu hantu di kiri atas, langsung di atas peta. Slider dan tombol Play menempel di bawah. Kartu titik naik dari bawah sebagai lembar.
+- **Desktop**: kartu titik di panel kanan selebar 380px, slider tetap di bawah.
+
+### Halaman Tentang & Peliput
+- Latar Void penuh, lebar konten maksimal 1200px.
+- Pola dua kolom asimetris seperti referensi: judul besar di kiri, teks badan di kanan, label Sorot kecil di atas teks badan. Jarak antar bagian 60–96px.
+- Tabel Peliput: baris dipisah jarak, bukan garis. Header kolom memakai gaya Label.
+
+## 8. Visual Khas: Konstelasi Titik
+Pengganti "otak partikel" di referensi. Ribuan titik ukur InSAR di sepanjang pesisir Demak–Semarang, digambar sebagai titik 1–2px di atas hitam, diwarnai dari Kabut (turun pelan) sampai Sorot (turun cepat). Saat halaman Tentang dibuka, titik-titik itu pelan-pelan turun sesuai Laju Penurunan masing-masing.
+
+- Hanya di hero halaman Tentang. Peta utama tetap peta.
+- Datanya titik ukur asli dari `points.pmtiles`, bukan dekorasi acak. Ini menjaga aturan "setiap angka bisa ditelusuri".
+- Mengikuti `prefers-reduced-motion`: kalau aktif, titik diam.
+
+## 9. Logo
+Peta pulau Jawa yang separuh bawahnya terpotong garis air, seperti Kolam Intel di ITB. Gradien Tulang ke Laut Dalam di bagian bawah garis air. Wordmark "INTEL" 14px berat 600, tracking 0.06em.
+
+## 10. Bahasa di Layar
 - Pakai istilah `GLOSSARY.md`. Untuk awam boleh ditambah penjelasan pendek, misalnya "Laju Penurunan (seberapa cepat tanah turun)".
 - **Jangan** menulis "tenggelam", "hilang", atau "kiamat" di kartu dan legenda (ADR-0003). Tagline "Indonesia Tenggelam?" boleh karena berupa pertanyaan.
 - Tahun selalu sebagai Rentang Tahun: "±2031–2035", bukan "2033".
-- Setiap kartu dan legenda punya baris kecil "Data: <sumber>, diperbarui <tanggal>".
+- Setiap kartu dan legenda punya baris keterangan "Data: <sumber>, diperbarui <tanggal>".
 
-## 3. Warna Peta
+## 11. Aksesibilitas
+- Hitam dan putih sudah kontras maksimal. Warna lain dicek minimal 4,5:1 untuk teks (lihat §2).
+- Slider bisa digeser dengan tombol panah keyboard dan dibacakan pembaca layar ("Tahun 2035, perkiraan").
+- Informasi tidak boleh hanya disampaikan lewat warna. Kartu titik selalu menuliskan angkanya, dan Masa Terukur/Perkiraan selalu punya label teks.
+- Animasi Play dan Konstelasi Titik mengikuti `prefers-reduced-motion`.
 
-| Lapisan | Warna | Catatan |
-|---|---|---|
-| Area Bawah Pasang | Biru, opasitas 50% | Satu warna untuk tahun terpilih. Tidak pakai gradien merah |
-| Garis Pantai tahun ini | Putih, 2 px | Selalu tampil |
-| Garis Pantai tahun terpilih | Oranye, 2 px. **Garis penuh** di Masa Terukur, **putus-putus** di Masa Perkiraan | Kontras dengan biru dan citra satelit |
-| Tanggul | Abu-abu putus-putus, 2 px | Hanya informasi |
-| Titik terpilih | Lingkaran putih bertepi hitam | |
+## 12. Token CSS
 
-Semua warna harus terbaca di atas citra satelit, di layar terang maupun gelap. Cek kontrasnya di ponsel di bawah sinar matahari.
+```css
+:root {
+  --color-void: #000000;
+  --color-bone: #ffffff;
+  --color-ash: #9a9a9a;
+  --color-mist: #bdbdbd;
+  --color-tide: #1f6bff;
+  --color-water: #4da3ff;
+  --color-spark: #ffb829;
+  --color-deep: #0b2a4a;
+  --panel: rgb(0 0 0 / 0.85);
 
-## 4. Tata Letak
-- **Ponsel dulu.** Peta penuh layar. Slider dan tombol Play menempel di bawah. Kartu titik muncul sebagai lembar yang naik dari bawah.
-- **Desktop**: kartu titik di panel kanan, slider tetap di bawah.
-- Area ketuk minimal 44×44 px.
-- Pilihan Skenario berupa dua tombol berdampingan, bukan dropdown, supaya keduanya selalu kelihatan. Di Masa Terukur tombolnya nonaktif, karena yang tampil hasil ukur.
-- Jalur slider terbagi dua: bagian Masa Terukur warna penuh dengan label "terukur", bagian Masa Perkiraan bergaris dengan label "perkiraan". Penanda "hari ini" di batasnya.
+  --font: "Inter", system-ui, sans-serif;
 
-## 5. Aksesibilitas
-- Slider bisa digeser dengan tombol panah keyboard dan dibacakan pembaca layar ("Tahun 2035").
-- Informasi tidak boleh hanya disampaikan lewat warna. Kartu titik selalu menuliskan angkanya.
-- Animasi Play mengikuti `prefers-reduced-motion`: kalau aktif, tahun melompat tanpa transisi.
+  --space-1: 6px;  --space-2: 12px; --space-3: 18px; --space-4: 24px;
+  --space-5: 30px; --space-6: 36px; --space-7: 60px; --space-8: 96px;
 
-## 6. Tipografi
-- Satu font sans-serif sistem (`system-ui`). Tidak memuat font web.
-- Angka memakai `font-variant-numeric: tabular-nums` supaya tahun di slider tidak bergoyang.
+  --radius: 24px;
+  --radius-pill: 9999px;
+}
+```
