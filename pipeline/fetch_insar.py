@@ -27,6 +27,7 @@ KEEP = ("_unw_phase.tif", "_corr.tif", "_conncomp.tif", "_dem.tif", "_lv_theta.t
 WORK = Path(__file__).parent / "work" / "hyp3"
 MINTPY = WORK.parent / "mintpy"
 OUT = WORK.parent / "subsidence_rate.tif"
+# Pixels with temporal coherence below 0.5 are masked (MintPy default 0.7 kept only 10% of pixels).
 # Rates are relative to one reference pixel, so it must sit on ground that is not sinking.
 # MintPy picks the most coherent pixel inside this box: Semarang's southern hills (Banyumanik, Tembalang).
 # ponytail: assumed stable from published maps (subsidence is concentrated in the north). Confirm with GNSS later.
@@ -192,6 +193,7 @@ mintpy.reference.minCoherence = 0.5
 mintpy.troposphericDelay.method = no
 mintpy.deramp              = no
 mintpy.topographicResidual = yes
+mintpy.networkInversion.minTempCoh = 0.5
 """)
     subprocess.run(["smallbaselineApp.py", "intel.cfg", "--end", "load_data"], cwd=MINTPY, check=True)
     write_reference_mask()

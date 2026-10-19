@@ -1,4 +1,4 @@
-"""Pasang Tertinggi and Pasang Harian from the IOC Semarang tide gauge (docs/DATA.md §2.1).
+"""Pasang Tertinggi, Pasang Harian and Surut Harian from the IOC Semarang tide gauge (docs/DATA.md §2.1).
 
     python pipeline/fetch_tide.py   # -> work/tide.json
 
@@ -104,16 +104,18 @@ def anomalies(t, h, seg):
 
 
 def yearly_levels(t, anom):
-    """{year: (highest, daily_high)}: the year's highest daily high water, and the mean daily high water."""
+    """{year: (highest, daily_high, daily_low)}: the year's highest daily high water, the mean daily high
+    water, and the mean daily low water."""
     day = (t // 86400).astype(int)
     days, idx = np.unique(day, return_index=True)
     daily_max = np.array([c.max() for c in np.split(anom, idx[1:])])
+    daily_min = np.array([c.min() for c in np.split(anom, idx[1:])])
     years = days // 365.2425 + 1970
     out = {}
     for y in np.unique(years):
         m = years == y
         if m.sum() >= MIN_COVERAGE * 365:
-            out[int(y)] = (float(daily_max[m].max()), float(daily_max[m].mean()))
+            out[int(y)] = (float(daily_max[m].max()), float(daily_max[m].mean()), float(daily_min[m].mean()))
     return out
 
 
@@ -121,15 +123,16 @@ def main():
     download()
     t, h = good_days(*hourly(*load()))
     levels = yearly_levels(*anomalies(t, h, segments(t, h)))
-    for y, (hi, daily) in levels.items():
-        print(f"{y}: Pasang Tertinggi {hi:+.2f} m, Pasang Harian {daily:+.2f} m")
-    hi, daily = np.mean([v[0] for v in levels.values()]), np.mean([v[1] for v in levels.values()])
+    for y, (hi, daily, low) in levels.items():
+        print(f"{y}: Pasang Tertinggi {hi:+.2f} m, Pasang Harian {daily:+.2f} m, Surut Harian {low:+.2f} m")
+    hi, daily, low = (float(np.mean([v[i] for v in levels.values()])) for i in range(3))
     result = {"station": f"IOC {STATION}", "sensor": SENSOR, "years": sorted(levels),
-              "highest_tide": round(float(hi), 3), "daily_high_tide": round(float(daily), 3),
-              "per_year": {y: {"highest_tide": round(a, 3), "daily_high_tide": round(b, 3)} for y, (a, b) in levels.items()},
+              "highest_tide": round(hi, 3), "daily_high_tide": round(daily, 3), "daily_low_tide": round(low, 3),
+              "per_year": {y: {"highest_tide": round(a, 3), "daily_high_tide": round(b, 3), "daily_low_tide": round(c, 3)}
+                           for y, (a, b, c) in levels.items()},
               "updated": date.today().isoformat()}
     (WORK / "tide.json").write_text(json.dumps(result, indent=2))
-    print(f"Pasang Tertinggi {hi:.2f} m, Pasang Harian {daily:.2f} m di atas MSL ({len(levels)} tahun)")
+    print(f"Pasang Tertinggi {hi:.2f} m, Pasang Harian {daily:.2f} m, Surut Harian {low:.2f} m terhadap MSL ({len(levels)} tahun)")
 
 
 if __name__ == "__main__":

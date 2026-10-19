@@ -58,7 +58,8 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 - [x] Cek geoid acuan DTU22 MDT: XGM2019e, bukan EGM2008. Dipakai apa adanya dulu, diganti kalau Uji Mundur meleset sistematis.
 - [x] Sumber angka BRIN 2,4–4,3 mm/tahun: siaran pers BRIGHTS Seri 2, 26 Mei 2026.
 - [x] Pilih `t0` DeltaDTM dengan titik ICESat-2 di Sayung: **2021** (`DATA.md` §2.1). Efeknya kecil: "sudah di bawah Pasang Tertinggi" 27% → 26%.
-- [ ] Cek MDT dengan muka laut ICESat-2 di Laut Jawa depan Semarang. Percobaan pertama hanya 1 lintasan (1,21 m di atas EGM2008, tidak bisa dipakai karena pasang-surut). Diulang di kotak yang lebih luas.
+- [x] Cek MDT dengan muka laut ICESat-2: **0,75 ± 0,04 m** di atas EGM2008 dari 7 lintasan 2019–2025 yang dikoreksi pasang stasiun. Menggantikan DTU22 (1,008 m, geoid berbeda).
+- [x] Tingkat ketiga Tahun Hilang ke Laut (di bawah Surut Harian −0,31 m).
 - [x] `compute.py` + `compute_check.py` (angka buatan dengan jawaban yang diketahui). Masa Terukur menyusul setelah ada deret waktu InSAR.
 - [x] `compute.py` pertama dengan data asli: 31.096 titik. 27% sudah di bawah Pasang Tertinggi, 3% 2026–2030, 8% 2031–2040, 6% 2041–2050, 56% tidak sebelum 2050. Genuk −0,33 m dan Kaligawe −0,21 m di bawah MSL, kemungkinan terlalu rendah karena MDT dan `t0`. **Belum boleh ditampilkan.**
 - [ ] `backtest.py`: Uji Mundur sesuai `DATA.md` §5.
@@ -76,7 +77,9 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 - [x] Slider tahun 2026–2050 + Play + Skenario Lanjut/Henti.
 - [ ] Masa Terukur 2015–2025 di slider: perlu `timeseries.h5` dari MintPy di artifact.
 - [x] Kartu klik titik: titik terukur terdekat ≤ 150 m, kasus di luar Wilayah Cakupan, tanpa data, sudah kena, tidak sebelum 2050, belum bisa diperkirakan.
-- [ ] Putuskan cara menangani celah InSAR (baru 25% daratan < 3 m yang terukur).
+- [x] Celah InSAR diisi dari titik terukur dalam ±1 km (min. 10 tetangga), berlabel. 58.387 titik (27.291 isian).
+- [x] Pilihan tingkat Rob / Terendam / Hilang ke Laut di peta + legenda.
+- [ ] Pemilik: jalankan `insar` step `process` sekali lagi dengan ambang koherensi 0,5, supaya lebih banyak titik terukur langsung.
 
 **Checkpoint:** di desktop dan 375×812, geser slider dan lihat Area Bawah Pasang berubah, ketuk titik di Sayung dan lihat Rentang Tahun.
 

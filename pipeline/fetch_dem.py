@@ -1,10 +1,9 @@
-"""Tinggi Tanah above mean sea level: DeltaDTM minus the DTU22 MDT (docs/DATA.md §2.1).
+"""Tinggi Tanah above mean sea level: DeltaDTM minus local mean sea level above EGM2008 (docs/DATA.md §2.1).
 
     python pipeline/fetch_dem.py   # -> work/elevation.tif (m above MSL, reference year compute.T0)
 
 DeltaDTM only ships as per-continent zips (Asia 17 GB). HTTP range requests pull just our tiles out.
 """
-import gzip
 import io
 import urllib.request
 import zipfile
@@ -14,8 +13,10 @@ import numpy as np
 
 ASIA_ZIP = "https://data.4tu.nl/file/1da2e70f-6c4d-4b03-86bd-b53e789cc629/672eba4c-1334-44c6-8119-8879ded25912"
 TILES = ["DeltaDTM_v1_1_S07E110.tif", "DeltaDTM_v1_1_S08E110.tif"]  # named by their lower-left corner
-MDT_URL = "https://ftp.space.dtu.dk/pub/DTU22/MDT/dtu22mdt.xyz.gz"
-MDT_AT = (110.45, -6.85)  # open water off Semarang–Sayung, where the 0.125° MDT grid is valid
+# Mean sea level off Semarang above the EGM2008 geoid that DeltaDTM uses: 7 ICESat-2 passes 2019–2025,
+# each corrected for the tide at that moment from the IOC sema gauge (0.62–0.78 m, ±0.04 m).
+# DTU22 MDT gives 1.008 m here but is referenced to the XGM2019e geoid, not EGM2008.
+MSL_ABOVE_EGM2008 = 0.75
 BOUNDS = (110.30, -7.02, 110.65, -6.82)  # Wilayah Cakupan, same box as fetch_insar.AOI
 WORK = Path(__file__).parent / "work"
 
@@ -51,21 +52,6 @@ class HTTPRange(io.RawIOBase):
         return len(data)
 
 
-def mdt():
-    """Nearest DTU22 MDT value to MDT_AT, in m."""
-    f = WORK / "dtu22mdt.xyz.gz"
-    if not f.exists():
-        urllib.request.urlretrieve(MDT_URL, f)
-    best = (np.inf, None)
-    with gzip.open(f, "rt") as lines:
-        for line in lines:
-            x, y, v = (float(p) for p in line.split()[:3])
-            d = (x - MDT_AT[0]) ** 2 + (y - MDT_AT[1]) ** 2
-            if d < best[0]:
-                best = (d, v)
-    return best[1]
-
-
 def main():
     import rasterio
     from rasterio.merge import merge
@@ -77,14 +63,14 @@ def main():
             (WORK / name).write_bytes(z.read(name))
     srcs = [rasterio.open(WORK / n) for n in TILES]
     elev, transform = merge(srcs, bounds=BOUNDS, nodata=np.nan, dtype="float32")
-    offset = mdt()
+    offset = MSL_ABOVE_EGM2008
     elev = elev[0] - offset
     prof = srcs[0].profile | {"height": elev.shape[0], "width": elev.shape[1], "transform": transform,
                               "dtype": "float32", "nodata": np.nan, "compress": "deflate"}
     with rasterio.open(WORK / "elevation.tif", "w", **prof) as dst:
         dst.write(elev, 1)
-        dst.update_tags(source="DeltaDTM v1.1 minus DTU22 MDT", mdt_m=f"{offset:.3f}")
-    print(f"elevation.tif: MDT {offset:.3f} m, {np.isfinite(elev).mean():.0%} land pixels, "
+        dst.update_tags(source="DeltaDTM v1.1 minus ICESat-2 mean sea level", msl_above_egm2008_m=f"{offset:.3f}")
+    print(f"elevation.tif: MSL {offset:.3f} m above EGM2008, {np.isfinite(elev).mean():.0%} land pixels, "
           f"median {np.nanmedian(elev):.2f} m above MSL")
 
 

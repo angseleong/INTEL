@@ -101,3 +101,6 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--color-spark
 }
 
 .pin { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--color-bone); box-shadow: 0 0 0 2px rgb(0 0 0 / 0.6); }
+
+.levels { display: flex; gap: var(--space-2); margin-top: var(--space-3); padding-top: var(--space-2); border-top: 1px solid rgb(255 255 255 / 0.08); }
+.est { font-size: 12px; color: var(--color-ash); margin: var(--space-1) 0 0; }

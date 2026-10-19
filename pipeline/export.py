@@ -6,35 +6,36 @@ ponytail: plain GeoJSON while the map covers only Demak–Semarang (a few MB). S
 """
 import json
 from datetime import date
+from itertools import product
 from pathlib import Path
 
 import numpy as np
 
-from compute import ALREADY, NEVER, WORK, YEARS, load_inputs
+from compute import ALREADY, NEVER, WORK, YEARS, fill_gaps, load_inputs
 
 OUT = Path(__file__).parent.parent / "public" / "data"
 SCENARIOS = ("continue", "stop")
+LEVELS = ("rob", "flooded", "lost")  # Pasang Tertinggi, Pasang Harian, Surut Harian
 SIMPLIFY_M = 40  # half an InSAR pixel; keeps the coastline shape, drops stair-steps
 
 
 def below_tide_polygons(rob, transform, crs):
-    """One feature per year per Skenario: every point already below Pasang Tertinggi in that year."""
+    """One feature per level per Skenario per year: every point already below that tide level in that year."""
     from rasterio.features import shapes
     from rasterio.warp import transform_geom
     from shapely.geometry import mapping, shape
     from shapely.ops import unary_union
 
     features = []
-    for scenario in SCENARIOS:
-        mid = rob[f"robYear_{scenario}"]
-        for year in YEARS:
-            mask = ((mid == ALREADY) | ((mid >= YEARS[0]) & (mid <= year) & (mid != NEVER))).astype("uint8")
-            parts = [shape(g) for g, v in shapes(mask, mask=mask.astype(bool), transform=transform) if v == 1]
-            if not parts:
-                continue
-            geom = unary_union(parts).simplify(SIMPLIFY_M)
-            features.append({"type": "Feature", "properties": {"year": int(year), "scenario": scenario},
-                             "geometry": transform_geom(crs, "EPSG:4326", mapping(geom), precision=5)})
+    for level, scenario, year in product(LEVELS, SCENARIOS, YEARS):
+        mid = rob[f"{level}Year_{scenario}"]
+        mask = ((mid == ALREADY) | ((mid >= YEARS[0]) & (mid <= year) & (mid != NEVER))).astype("uint8")
+        parts = [shape(g) for g, v in shapes(mask, mask=mask.astype(bool), transform=transform) if v == 1]
+        if not parts:
+            continue
+        geom = unary_union(parts).simplify(SIMPLIFY_M)
+        features.append({"type": "Feature", "properties": {"level": level, "year": int(year), "scenario": scenario},
+                         "geometry": transform_geom(crs, "EPSG:4326", mapping(geom), precision=5)})
     return features
 
 
@@ -62,15 +63,16 @@ def main():
         rob = {name: r.read(i + 1) for i, name in enumerate(r.descriptions)}
         transform, crs = r.transform, r.crs
     elev, rate, std, _ = load_inputs()
+    rate, std, _ = fill_gaps(rate, std, np.isfinite(elev))  # same values compute.py used
     tide = json.loads((WORK / "tide.json").read_text())
     OUT.mkdir(parents=True, exist_ok=True)
     polys = below_tide_polygons(rob, transform, crs)
     points = point_columns(rob, elev, rate, std, transform, crs)
     (OUT / "below-tide.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": polys}))
-    (OUT / "points.json").write_text(json.dumps(points, separators=(",", ":")))
+    (OUT / "points.json").write_text(json.dumps(points, separators=(",", ":"), allow_nan=False))
     (OUT / "meta.json").write_text(json.dumps({
         "updated": date.today().isoformat(), "years": [int(YEARS[0]), int(YEARS[-1])],
-        "highestTide": tide["highest_tide"], "dailyHighTide": tide["daily_high_tide"],
+        "highestTide": tide["highest_tide"], "dailyHighTide": tide["daily_high_tide"], "dailyLowTide": tide["daily_low_tide"],
         "validated": False,  # flips to true once Uji Mundur Sayung passes (docs/PRD.md §5)
     }, indent=2))
     for f in ("below-tide.geojson", "points.json"):

@@ -1,8 +1,8 @@
 import * as maplibregl from "maplibre-gl";
 import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?url";
-import { cardHtml, nearest, type Points, type Scenario } from "./pointCard";
+import { cardHtml, nearest, type Level, type Points, type Scenario } from "./pointCard";
 
-type Meta = { updated: string; years: [number, number]; highestTide: number; dailyHighTide: number; validated: boolean };
+type Meta = { updated: string; years: [number, number]; highestTide: number; dailyHighTide: number; dailyLowTide: number; validated: boolean };
 
 const AREA = [110.3, -7.02, 110.65, -6.82] as const; // Wilayah Cakupan, same box as the pipeline
 const NOW = 2026;
@@ -11,6 +11,8 @@ const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const slider = $<HTMLInputElement>("year");
 let scenario: Scenario = "continue";
+let level: Level = "rob";
+let meta: Meta | null = null;
 let points: Points | null = null;
 
 maplibregl.setWorkerUrl(workerUrl); // Vite serves the worker as its own file
@@ -38,7 +40,18 @@ const map = new maplibregl.Map({
   },
 });
 
-const filter = (year: number): maplibregl.FilterSpecification => ["all", ["==", ["get", "year"], year], ["==", ["get", "scenario"], scenario]];
+const filter = (year: number): maplibregl.FilterSpecification =>
+  ["all", ["==", ["get", "level"], level], ["==", ["get", "year"], year], ["==", ["get", "scenario"], scenario]];
+
+const m = (x: number) => `${x < 0 ? "−" : "+"}${Math.abs(x).toLocaleString("id-ID", { maximumFractionDigits: 2 })} m`;
+function levelText() {
+  if (!meta) return;
+  $("levelText").textContent = {
+    rob: `Biru = tanah di bawah Pasang Tertinggi (${m(meta.highestTide)}). Tanpa tanggul dan pompa, kena Rob beberapa kali setahun.`,
+    flooded: `Biru = tanah di bawah Pasang Harian (${m(meta.dailyHighTide)}). Tanpa tanggul dan pompa, terendam tiap kali pasang.`,
+    lost: `Biru = tanah di bawah Surut Harian (${m(meta.dailyLowTide)}). Tanpa tanggul dan pompa, air tidak pernah surut lagi.`,
+  }[level];
+}
 
 // Keep the Wilayah Cakupan in the part of the map the panel doesn't cover.
 function fitArea(animate: boolean) {
@@ -65,11 +78,13 @@ map.on("load", async () => {
   map.addLayer({ id: "coastYear", type: "line", source: "belowTide", filter: filter(NOW),
     paint: { "line-color": "#ffb829", "line-width": 2, "line-dasharray": [3, 2] } });
 
-  const [meta, pts] = await Promise.all([
+  const [loadedMeta, pts] = await Promise.all([
     fetch("/data/meta.json").then((r) => r.json() as Promise<Meta>),
     fetch("/data/points.json").then((r) => r.json() as Promise<Points>),
   ]);
   points = pts;
+  meta = loadedMeta;
+  levelText();
   $("unvalidated").hidden = meta.validated;
   $("source").textContent = `Data: Sentinel-1 (InSAR), DeltaDTM, pasang IOC Semarang. Diperbarui ${new Date(meta.updated).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}.${meta.validated ? "" : " Belum lulus Uji Mundur: angka bisa berubah."}`;
 });
@@ -105,17 +120,22 @@ function showCard() {
   $("card").innerHTML = cardHtml(points, points && inside ? nearest(points, lon, lat) : null, scenario, inside);
 }
 
-document.querySelectorAll<HTMLButtonElement>("[data-scenario]").forEach((b) =>
-  b.addEventListener("click", () => {
-    scenario = b.dataset.scenario as Scenario;
-    document.querySelectorAll<HTMLButtonElement>("[data-scenario]").forEach((x) => {
-      x.classList.toggle("on", x === b);
-      x.setAttribute("aria-pressed", String(x === b));
-    });
-    setYear(Number(slider.value));
-    showCard();
-  }),
-);
+function toggleGroup(attr: string, onPick: (value: string) => void) {
+  const buttons = document.querySelectorAll<HTMLButtonElement>(`[${attr}]`);
+  buttons.forEach((b) =>
+    b.addEventListener("click", () => {
+      buttons.forEach((x) => {
+        x.classList.toggle("on", x === b);
+        x.setAttribute("aria-pressed", String(x === b));
+      });
+      onPick(b.getAttribute(attr)!);
+      setYear(Number(slider.value));
+      showCard();
+    }),
+  );
+}
+toggleGroup("data-level", (v) => { level = v as Level; levelText(); });
+toggleGroup("data-scenario", (v) => { scenario = v as Scenario; });
 
 const marker = new maplibregl.Marker({ element: Object.assign(document.createElement("div"), { className: "pin" }) });
 map.on("click", (e: maplibregl.MapMouseEvent) => {

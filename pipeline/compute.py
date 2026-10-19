@@ -1,4 +1,4 @@
-"""Tahun Rob and Tahun Terendam for every point (docs/DATA.md §2–3).
+"""Tahun Rob, Tahun Terendam and Tahun Hilang ke Laut for every point (docs/DATA.md §2–3).
 
     python pipeline/compute.py   # work/elevation.tif + work/subsidence_rate.tif + work/tide.json -> work/rob.tif
 
@@ -16,6 +16,8 @@ STOP_FROM = 2027      # Skenario Henti: groundwater pumping stops this year
 HENTI_TAHUN = 10      # ... and subsidence slows linearly to zero over this many years (Tokyo, DATA.md §2.2)
 YEARS = np.arange(2026, 2051)
 RENTANG_MAKS = 10     # Rentang Tahun wider than this reads "belum bisa diperkirakan" (DATA.md §3.3)
+FILL_RADIUS_PX = 12   # gaps get the mean Laju Penurunan of measured pixels within ±12 px (±1 km at 80 m)
+FILL_MIN_NEIGHBOURS = 10  # ... but only where at least this many neighbours were measured
 ALREADY = 0           # already below the tide in the first year
 NEVER = 9999          # not below the tide before 2050
 
@@ -74,23 +76,49 @@ def load_inputs():
     return elev, rate_cm, std_cm, prof
 
 
+def box_sum(a, r):
+    """Sum of `a` over the (2r+1)² window around every pixel (zero outside the grid)."""
+    c = np.pad(a, ((r + 1, r), (r + 1, r))).cumsum(0).cumsum(1)
+    n = 2 * r + 1
+    return c[n:, n:] - c[:-n, n:] - c[n:, :-n] + c[:-n, :-n]
+
+
+def fill_gaps(rate, std, land):
+    """Fill land pixels with no InSAR value from measured neighbours (DATA.md §2.3).
+    Returns (rate, std, filled). Filled std = neighbours' own std plus how much they disagree."""
+    measured = np.isfinite(rate)
+    r0, s0 = np.where(measured, rate, 0.0), np.where(measured, std, 0.0)
+    count = box_sum(measured.astype("float64"), FILL_RADIUS_PX)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        mean = box_sum(r0, FILL_RADIUS_PX) / count
+        spread = np.sqrt(np.maximum(box_sum(r0 ** 2, FILL_RADIUS_PX) / count - mean ** 2, 0))
+        mean_std = box_sum(s0, FILL_RADIUS_PX) / count
+    filled = land & ~measured & (count >= FILL_MIN_NEIGHBOURS)
+    return (np.where(filled, mean, rate).astype("float32"),
+            np.where(filled, mean_std + spread, std).astype("float32"), filled)
+
+
 def main():
     import rasterio
 
     tide = json.loads((WORK / "tide.json").read_text())
     elev, rate_cm, std_cm, prof = load_inputs()
+    rate_cm, std_cm, filled = fill_gaps(rate_cm, std_cm, np.isfinite(elev))
     ok = np.isfinite(elev) & np.isfinite(rate_cm)
     bands, names = [], []
     for scenario in ("continue", "stop"):
-        for key, level in (("rob", tide["highest_tide"]), ("flooded", tide["daily_high_tide"])):
+        for key, level in (("rob", tide["highest_tide"]), ("flooded", tide["daily_high_tide"]),
+                           ("lost", tide["daily_low_tide"])):
             for part, years in zip(("Min", "", "Max"), year_range(elev, rate_cm / 100, std_cm / 100, level, scenario)):
                 bands.append(np.where(ok, years, -1).astype("int16"))
                 names.append(f"{key}Year{part}_{scenario}")
+    bands.append(np.where(ok, filled, -1).astype("int16"))
+    names.append("filled")
     with rasterio.open(WORK / "rob.tif", "w", **(prof | {"count": len(bands), "dtype": "int16", "nodata": -1})) as dst:
         dst.write(np.stack(bands))
         for i, n in enumerate(names, 1):
             dst.set_band_description(i, n)
-    print(f"{WORK / 'rob.tif'}: {len(bands)} bands, {ok.sum()} points")
+    print(f"{WORK / 'rob.tif'}: {len(bands)} bands, {ok.sum()} points ({filled.sum()} filled from neighbours)")
 
 
 if __name__ == "__main__":
