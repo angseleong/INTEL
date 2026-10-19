@@ -48,6 +48,14 @@ _Hindari_: tahun hilang, rob permanen, tenggelam total
 Tahun Rob atau Tahun Terendam paling cepat sampai paling lambat, dihitung dari ketidakpastian Tinggi Tanah dan Laju Penurunan.
 _Hindari_: margin error, ± tahun
 
+**Masa Terukur**:
+Tahun-tahun sampai Rilis Data terakhir, ketika Tinggi Tanah dihitung dari penurunan yang benar-benar diukur satelit.
+_Hindari_: historis, data lama, masa lalu
+
+**Masa Perkiraan**:
+Tahun-tahun setelah Rilis Data terakhir, ketika Tinggi Tanah diproyeksikan dengan Laju Penurunan.
+_Hindari_: prediksi (sebagai nama bagian), masa depan
+
 **Area Bawah Pasang**:
 Semua titik yang Tinggi Tanah-nya di bawah Pasang Tertinggi pada tahun yang dipilih.
 _Hindari_: area tenggelam, genangan, zona banjir

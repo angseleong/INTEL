@@ -31,6 +31,7 @@ Tahun Rob      = tahun pertama saat Tinggi Tanah(t) < Pasang Tertinggi(t)
 Tahun Terendam = tahun pertama saat Tinggi Tanah(t) < Pasang Harian(t)
 ```
 
+- Rumus di atas berlaku untuk Masa Perkiraan. Untuk Masa Terukur (2015 sampai tahun Rilis Data), `Laju Penurunan × (t − t0)` diganti dengan penurunan kumulatif yang benar-benar terukur di deret waktu InSAR pada tahun `t`, dan Pasang memakai data pasang tahun itu.
 - Pasang Tertinggi dan Pasang Harian dihitung dari data pasang per jam beberapa tahun terakhir: Pasang Tertinggi = pasang tertinggi tahunan rata-rata (tanpa badai), Pasang Harian = rata-rata pasang tinggi harian.
 - Peta (Area Bawah Pasang, Garis Pantai) memakai Pasang Tertinggi. Kartu titik menampilkan Tahun Rob dan Tahun Terendam.
 

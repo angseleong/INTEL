@@ -13,7 +13,7 @@ Proyek pribadi, open source, biaya Rp0.
 ### 1.3 Ruang Lingkup
 **Termasuk (v1)**
 - Wilayah Cakupan: Demak dan Semarang (lihat ADR-0004).
-- Peta interaktif dengan slider tahun 2026–2050, tombol Play, Garis Pantai per tahun, geser-bandingkan dua tahun.
+- Peta interaktif dengan slider tahun 2015–2050 (Masa Terukur lalu Masa Perkiraan), tombol Play, Garis Pantai per tahun, geser-bandingkan dua tahun.
 - Klik satu titik untuk melihat Tinggi Tanah, Laju Penurunan, dan Rentang Tahun.
 - Dua Skenario: Lanjut dan Henti.
 - Info Pasang Tertinggi minggu ini dari data pasang.
@@ -23,6 +23,8 @@ Proyek pribadi, open source, biaya Rp0.
 
 **Tidak termasuk (untuk sekarang)**
 - Jakarta Utara (v1.1), seluruh Pantura (v2).
+- Lapisan area yang benar-benar terendam per tahun dari citra air satelit (v1.1).
+- Membandingkan dua Rilis Data langsung di peta. Untuk sekarang cukup lewat unduhan di halaman Peliput.
 - Model ML untuk mengisi celah data penurunan tanah (v2).
 - Data NISAR (v2).
 - Akun, login, notifikasi, laporan warga, atau apa pun yang menyimpan data Pengunjung.
@@ -50,7 +52,8 @@ Proyek pribadi, open source, biaya Rp0.
 - Lapisan Tanggul sebagai garis informasi.
 
 ### FR-2 — Slider Tahun & Play
-- Slider 2026–2050, langkah satu tahun. Peta berubah saat slider digeser, tanpa jeda yang terasa.
+- Slider 2015–2050, langkah satu tahun, dibuka di tahun sekarang. Peta berubah saat slider digeser, tanpa jeda yang terasa.
+- Slider terbagi dua: Masa Terukur (2015 sampai tahun Rilis Data terakhir) dan Masa Perkiraan (sesudahnya). Keduanya dibedakan dengan gaya garis dan label "terukur" / "perkiraan".
 - Tombol Play menganimasikan tahun dari posisi sekarang sampai 2050, lalu berhenti.
 
 ### FR-3 — Geser Bandingkan
@@ -70,7 +73,7 @@ Proyek pribadi, open source, biaya Rp0.
 ### FR-7 — Halaman Peliput
 - Tabel peringkat Kelurahan menurut Rentang Tahun paling awal, bisa diurutkan.
 - Grafik Laju Penurunan rata-rata per kota.
-- Unduhan: CSV per Kelurahan dan GeoJSON Area Bawah Pasang per tahun, dengan link ke Rilis Data di GitHub Releases.
+- Unduhan: CSV per Kelurahan dan GeoJSON Area Bawah Pasang per tahun, dengan link ke semua Rilis Data di GitHub Releases supaya prediksi antar Rilis Data bisa dibandingkan.
 
 ### FR-8 — Link yang Bisa Dibagikan
 - URL hash menyimpan lokasi, zoom, tahun, dan Skenario. Membuka link itu menampilkan keadaan yang sama.

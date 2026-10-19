@@ -56,7 +56,7 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 ## Blok 4: Peta Dasar
 - [ ] `export.py` → `below-tide.pmtiles`, `points.pmtiles`.
 - [ ] Peta MapLibre + lapisan Area Bawah Pasang + Garis Pantai.
-- [ ] Slider tahun + Play.
+- [ ] Slider tahun 2015–2050 (Masa Terukur + Masa Perkiraan) + Play.
 - [ ] Kartu klik titik, termasuk semua kasus khusus di `USERFLOW.md` §4.
 
 **Checkpoint:** di desktop dan 375×812, geser slider dan lihat Area Bawah Pasang berubah, ketuk titik di Sayung dan lihat Rentang Tahun.
@@ -82,6 +82,7 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 
 ## Backlog
 - v1.1: Jakarta Utara.
+- v1.1: lapisan area yang benar-benar terendam per tahun (citra air Sentinel-1/2), memakai ulang peta air dari Uji Mundur.
 - v2: ML untuk mengisi celah InSAR (tambak, sawah, vegetasi).
 - v2: NISAR L-band.
 - v2: seluruh Pantura.

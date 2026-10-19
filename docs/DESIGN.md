@@ -15,7 +15,7 @@ Tenang dan bisa dipercaya, bukan menakut-nakuti. INTEL harus terasa seperti alat
 |---|---|---|
 | Area Bawah Pasang | Biru, opasitas 50% | Satu warna untuk tahun terpilih. Tidak pakai gradien merah |
 | Garis Pantai tahun ini | Putih, 2 px | Selalu tampil |
-| Garis Pantai tahun terpilih | Oranye, 2 px | Kontras dengan biru dan citra satelit |
+| Garis Pantai tahun terpilih | Oranye, 2 px. **Garis penuh** di Masa Terukur, **putus-putus** di Masa Perkiraan | Kontras dengan biru dan citra satelit |
 | Tanggul | Abu-abu putus-putus, 2 px | Hanya informasi |
 | Titik terpilih | Lingkaran putih bertepi hitam | |
 
@@ -25,7 +25,8 @@ Semua warna harus terbaca di atas citra satelit, di layar terang maupun gelap. C
 - **Ponsel dulu.** Peta penuh layar. Slider dan tombol Play menempel di bawah. Kartu titik muncul sebagai lembar yang naik dari bawah.
 - **Desktop**: kartu titik di panel kanan, slider tetap di bawah.
 - Area ketuk minimal 44×44 px.
-- Pilihan Skenario berupa dua tombol berdampingan, bukan dropdown, supaya keduanya selalu kelihatan.
+- Pilihan Skenario berupa dua tombol berdampingan, bukan dropdown, supaya keduanya selalu kelihatan. Di Masa Terukur tombolnya nonaktif, karena yang tampil hasil ukur.
+- Jalur slider terbagi dua: bagian Masa Terukur warna penuh dengan label "terukur", bagian Masa Perkiraan bergaris dengan label "perkiraan". Penanda "hari ini" di batasnya.
 
 ## 5. Aksesibilitas
 - Slider bisa digeser dengan tombol panah keyboard dan dibacakan pembaca layar ("Tahun 2035").

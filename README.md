@@ -2,7 +2,7 @@
 
 **Indonesia Tenggelam? Cek datanya.**
 
-Peta web interaktif yang memperkirakan kapan sebuah lokasi di pesisir utara Jawa mulai berada di bawah Pasang Tertinggi, dari Laju Penurunan tanah yang diukur satelit dan Kenaikan Muka Laut. Geser tahun 2026–2050 dan lihat Garis Pantai bergerak.
+Peta web interaktif yang memperkirakan kapan sebuah lokasi di pesisir utara Jawa mulai berada di bawah Pasang Tertinggi, dari Laju Penurunan tanah yang diukur satelit dan Kenaikan Muka Laut. Geser tahun 2015–2050 dan lihat Garis Pantai bergerak: terukur sampai hari ini, perkiraan sesudahnya.
 
 Nama diambil dari Kolam Intel (Indonesia Tenggelam) di kampus ITB.
 
