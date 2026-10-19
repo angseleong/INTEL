@@ -2,10 +2,11 @@
 
     python pipeline/fetch_insar.py search              # stack summary, no login needed
     python pipeline/fetch_insar.py submit [--dry-run]  # send missing pairs to HyP3
+    python pipeline/fetch_insar.py status              # how many pairs HyP3 has finished
     python pipeline/fetch_insar.py download            # fetch finished pairs into pipeline/work/hyp3/
+    python pipeline/fetch_insar.py timeseries          # MintPy -> pipeline/work/subsidence_rate.tif (needs GDAL + mintpy)
 
 Login comes from EARTHDATA_USERNAME / EARTHDATA_PASSWORD, or ~/.netrc.
-The time series (MintPy) step is added once the first products exist (docs/TODO.md Blok 2).
 """
 import argparse
 import os
@@ -24,6 +25,10 @@ NEIGHBOURS = 2  # each date is paired with its next 2 dates (small-baseline netw
 LOOKS = "20x4"  # ±80 m pixels, 1 credit per job
 KEEP = ("_unw_phase.tif", "_corr.tif", "_conncomp.tif", "_dem.tif", "_lv_theta.tif", "_lv_phi.tif", "_water_mask.tif", ".txt")
 WORK = Path(__file__).parent / "work" / "hyp3"
+MINTPY = WORK.parent / "mintpy"
+OUT = WORK.parent / "subsidence_rate.tif"
+# ponytail: reference pixel assumed stable (Semarang uplands, Gajahmungkur). Check it on the first velocity map.
+REF_LALO = (-7.01, 110.42)
 
 
 def make_pairs(dates, neighbours=NEIGHBOURS):
@@ -83,13 +88,27 @@ def cmd_submit(args):
     print(f"submitted {len(jobs)} jobs")
 
 
+def job_counts(batch):
+    return {"total": len(batch), "ready": sum(j.succeeded() and not j.expired() for j in batch),
+            "running": sum(j.running() for j in batch), "failed": sum(j.failed() for j in batch)}
+
+
+def cmd_status(_):
+    c = job_counts(hyp3().find_jobs(name=JOB_NAME))
+    print(f"{c['total']} jobs: {c['ready']} ready, {c['running']} running, {c['failed']} failed")
+    if os.environ.get("GITHUB_OUTPUT"):  # lets the workflow open a "done" issue
+        with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+            f.write(f"done={str(c['total'] > 0 and c['running'] == 0).lower()}\n")
+            f.write(f"summary={c['ready']} siap, {c['failed']} gagal dari {c['total']} pasangan\n")
+
+
 def cmd_download(_):
     api = hyp3()
     batch = api.find_jobs(name=JOB_NAME)
     WORK.mkdir(parents=True, exist_ok=True)
     ready = [j for j in batch if j.succeeded() and not j.expired()]
-    print(f"{len(batch)} jobs: {len(ready)} ready, "
-          f"{sum(j.running() for j in batch)} running, {sum(j.failed() for j in batch)} failed")
+    c = job_counts(batch)
+    print(f"{c['total']} jobs: {c['ready']} ready, {c['running']} running, {c['failed']} failed")
     for j in ready:
         name = j.files[0]["filename"].removesuffix(".zip")
         if (WORK / name).exists():
@@ -104,6 +123,75 @@ def cmd_download(_):
     print(f"{WORK}: {size / 1e9:.2f} GB")
 
 
+def clip_to_overlap():
+    """MintPy needs every layer on the same grid: cut all products to their common overlap."""
+    import rasterio
+    from rasterio.windows import from_bounds
+
+    files = sorted(f for f in WORK.glob("*/*.tif") if not f.stem.endswith("_clip"))
+    bounds = []
+    for f in files:
+        with rasterio.open(f) as r:
+            bounds.append(r.bounds)
+    box = (max(b.left for b in bounds), max(b.bottom for b in bounds),
+           min(b.right for b in bounds), min(b.top for b in bounds))
+    for f in files:
+        out = f.with_name(f.stem + "_clip.tif")
+        if out.exists():
+            continue
+        with rasterio.open(f) as src:
+            w = from_bounds(*box, src.transform).round_offsets().round_lengths()
+            prof = src.profile | {"width": w.width, "height": w.height, "transform": src.window_transform(w)}
+            with rasterio.open(out, "w", **prof) as dst:
+                dst.write(src.read(window=w))
+
+
+def cmd_timeseries(_):
+    """HyP3 pairs -> MintPy small-baseline time series -> Laju Penurunan GeoTIFF (cm/tahun, positif = turun)."""
+    import subprocess
+
+    import numpy as np
+    import rasterio
+
+    clip_to_overlap()
+    MINTPY.mkdir(parents=True, exist_ok=True)
+    geo = sorted(WORK.glob("*/"))[0]  # geometry layers are the same in every product
+    (MINTPY / "intel.cfg").write_text(f"""
+mintpy.load.processor      = hyp3
+mintpy.load.unwFile        = {WORK}/*/*_unw_phase_clip.tif
+mintpy.load.corFile        = {WORK}/*/*_corr_clip.tif
+mintpy.load.connCompFile   = {WORK}/*/*_conncomp_clip.tif
+mintpy.load.demFile        = {geo}/*_dem_clip.tif
+mintpy.load.incAngleFile   = {geo}/*_lv_theta_clip.tif
+mintpy.load.azAngleFile    = {geo}/*_lv_phi_clip.tif
+mintpy.load.waterMaskFile  = {geo}/*_water_mask_clip.tif
+mintpy.reference.lalo      = {REF_LALO[0]},{REF_LALO[1]}
+mintpy.troposphericDelay.method = no
+mintpy.deramp              = no
+mintpy.topographicResidual = yes
+""")
+    subprocess.run(["smallbaselineApp.py", "intel.cfg"], cwd=MINTPY, check=True)
+    for src, dset, out in [("velocity.h5", "velocity", "vel.tif"), ("velocity.h5", "velocityStd", "std.tif"),
+                           ("inputs/geometryGeo.h5", "incidenceAngle", "inc.tif"), ("maskTempCoh.h5", "mask", "mask.tif")]:
+        subprocess.run(["save_gdal.py", src, "-d", dset, "-o", out], cwd=MINTPY, check=True)
+
+    read = lambda n: rasterio.open(MINTPY / n).read(1).astype("float32")
+    cos_inc = np.cos(np.radians(read("inc.tif")))
+    # MintPy line-of-sight velocity is m/yr, positive toward the satellite. Read as purely vertical (see BURSTS).
+    rate = -read("vel.tif") / cos_inc * 100
+    std = read("std.tif") / cos_inc * 100
+    rate[read("mask.tif") == 0] = np.nan
+    std[np.isnan(rate)] = np.nan
+    with rasterio.open(MINTPY / "vel.tif") as r:
+        prof = r.profile | {"count": 2, "dtype": "float32", "nodata": np.nan}
+    with rasterio.open(OUT, "w", **prof) as dst:
+        dst.write(np.stack([rate, std]))
+        dst.set_band_description(1, "subsidence_rate_cm_per_year")
+        dst.set_band_description(2, "subsidence_rate_std_cm_per_year")
+    print(f"{OUT}: median {np.nanmedian(rate):.1f} cm/tahun, p95 {np.nanpercentile(rate, 95):.1f} cm/tahun, "
+          f"{np.isfinite(rate).mean():.0%} piksel terukur")
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -111,6 +199,8 @@ if __name__ == "__main__":
     p = sub.add_parser("submit")
     p.add_argument("--dry-run", action="store_true")
     p.set_defaults(fn=cmd_submit)
+    sub.add_parser("status").set_defaults(fn=cmd_status)
     sub.add_parser("download").set_defaults(fn=cmd_download)
+    sub.add_parser("timeseries").set_defaults(fn=cmd_timeseries)
     args = ap.parse_args()
     sys.exit(args.fn(args))

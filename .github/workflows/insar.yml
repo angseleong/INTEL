@@ -1,18 +1,26 @@
 name: insar
 
-# Blok 2: started by hand from the Actions tab. The quarterly schedule is added in Blok 6.
+# Blok 2: started by hand from the Actions tab, plus a status check every 6 hours that opens
+# an issue (notification + email to the owner) once HyP3 has finished every pair.
+# The quarterly re-run is added in Blok 6.
 on:
+  schedule:
+    - cron: "0 */6 * * *"
   workflow_dispatch:
     inputs:
       step:
-        description: "submit = kirim pasangan ke HyP3, download = ambil hasil yang sudah jadi"
+        description: "submit = kirim pasangan ke HyP3, status = cek progres, process = unduh + MintPy"
         type: choice
-        options: [submit, download]
-        default: submit
+        options: [submit, status, process]
+        default: status
       dry_run:
         description: "submit saja: hitung pasangan tanpa mengirim"
         type: boolean
         default: true
+
+permissions:
+  contents: read
+  issues: write
 
 jobs:
   insar:
@@ -21,6 +29,7 @@ jobs:
     env:
       EARTHDATA_USERNAME: ${{ secrets.EARTHDATA_USERNAME }}
       EARTHDATA_PASSWORD: ${{ secrets.EARTHDATA_PASSWORD }}
+      STEP: ${{ inputs.step || 'status' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -30,13 +39,43 @@ jobs:
           cache-dependency-path: pipeline/requirements.txt
       - run: pip install -r pipeline/requirements.txt
       - run: python pipeline/fetch_insar_check.py
+
       - name: submit
-        if: inputs.step == 'submit'
+        if: env.STEP == 'submit'
         run: python pipeline/fetch_insar.py submit ${{ inputs.dry_run && '--dry-run' || '' }}
-      - name: download
-        if: inputs.step == 'download'
+
+      - name: status
+        id: status
+        if: env.STEP == 'status'
+        run: python pipeline/fetch_insar.py status
+      - name: kabari kalau HyP3 selesai
+        if: steps.status.outputs.done == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: "HyP3 selesai: jalankan insar → process"
+        run: |
+          if [ -z "$(gh issue list --state all --search "in:title \"$TITLE\"" --json number -q '.[].number')" ]; then
+            gh issue create --title "$TITLE" --body "${{ steps.status.outputs.summary }}. Buka Actions → insar → Run workflow → step: process. Hasil HyP3 dihapus 14 hari setelah selesai."
+          fi
+
+      - name: pasang GDAL + MintPy
+        if: env.STEP == 'process'
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq gdal-bin libgdal-dev
+          pip install "GDAL==$(gdal-config --version)" mintpy
+      - name: process
+        if: env.STEP == 'process'
         run: |
           start=$(date +%s)
           python pipeline/fetch_insar.py download
-          echo "waktu unduh: $(( $(date +%s) - start )) detik"
           df -h .
+          python pipeline/fetch_insar.py timeseries
+          echo "waktu total: $(( $(date +%s) - start )) detik"
+          df -h .
+      - uses: actions/upload-artifact@v4
+        if: env.STEP == 'process'
+        with:
+          name: subsidence-rate
+          path: |
+            pipeline/work/subsidence_rate.tif
+            pipeline/work/mintpy/pic/
