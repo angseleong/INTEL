@@ -27,8 +27,11 @@ KEEP = ("_unw_phase.tif", "_corr.tif", "_conncomp.tif", "_dem.tif", "_lv_theta.t
 WORK = Path(__file__).parent / "work" / "hyp3"
 MINTPY = WORK.parent / "mintpy"
 OUT = WORK.parent / "subsidence_rate.tif"
-# ponytail: reference pixel assumed stable (Semarang uplands, Gajahmungkur). Check it on the first velocity map.
-REF_LALO = (-7.01, 110.42)
+# Rates are relative to one reference pixel, so it must sit on ground that is not sinking.
+# MintPy picks the most coherent pixel inside this box: Semarang's southern hills (Banyumanik, Tembalang).
+# ponytail: assumed stable from published maps (subsidence is concentrated in the north). Confirm with GNSS later.
+STABLE_BOX = (-7.10, 110.38, -7.04, 110.47)  # lat_min, lon_min, lat_max, lon_max
+STABLE_MIN_HEIGHT = 100  # m, keeps the pick off the coastal plain
 
 
 def make_pairs(dates, neighbours=NEIGHBOURS):
@@ -146,6 +149,24 @@ def clip_to_overlap():
                 dst.write(src.read(window=w))
 
 
+def write_reference_mask():
+    """refMask.h5: pixels inside STABLE_BOX and above STABLE_MIN_HEIGHT, where MintPy may put the reference."""
+    import numpy as np
+    from mintpy.utils import readfile, utils as ut, writefile
+
+    height, atr = readfile.read(str(MINTPY / "inputs/geometryGeo.h5"), datasetName="height")
+    coord = ut.coordinate(atr)
+    lat0, lon0, lat1, lon1 = STABLE_BOX
+    (y_a, x_a), (y_b, x_b) = (coord.geo2radar(la, lo)[:2] for la, lo in ((lat1, lon0), (lat0, lon1)))
+    mask = np.zeros(height.shape, bool)
+    mask[max(min(y_a, y_b), 0):max(y_a, y_b) + 1, max(min(x_a, x_b), 0):max(x_a, x_b) + 1] = True
+    mask &= np.nan_to_num(height) > STABLE_MIN_HEIGHT
+    if not mask.any():
+        sys.exit(f"STABLE_BOX {STABLE_BOX} has no pixel above {STABLE_MIN_HEIGHT} m inside the InSAR frame")
+    writefile.write({"mask": mask}, out_file=str(MINTPY / "refMask.h5"), metadata=atr | {"FILE_TYPE": "mask"})
+    print(f"refMask.h5: {mask.sum()} candidate reference pixels")
+
+
 def cmd_timeseries(_):
     """HyP3 pairs -> MintPy small-baseline time series -> Laju Penurunan GeoTIFF (cm/tahun, positif = turun)."""
     import subprocess
@@ -165,12 +186,16 @@ mintpy.load.demFile        = {geo}/*_dem_clip.tif
 mintpy.load.incAngleFile   = {geo}/*_lv_theta_clip.tif
 mintpy.load.azAngleFile    = {geo}/*_lv_phi_clip.tif
 mintpy.load.waterMaskFile  = {geo}/*_water_mask_clip.tif
-mintpy.reference.lalo      = {REF_LALO[0]},{REF_LALO[1]}
+mintpy.reference.lalo      = auto
+mintpy.reference.maskFile  = refMask.h5
+mintpy.reference.minCoherence = 0.5
 mintpy.troposphericDelay.method = no
 mintpy.deramp              = no
 mintpy.topographicResidual = yes
 """)
-    subprocess.run(["smallbaselineApp.py", "intel.cfg"], cwd=MINTPY, check=True)
+    subprocess.run(["smallbaselineApp.py", "intel.cfg", "--end", "load_data"], cwd=MINTPY, check=True)
+    write_reference_mask()
+    subprocess.run(["smallbaselineApp.py", "intel.cfg", "--start", "modify_network"], cwd=MINTPY, check=True)
     for src, dset, out in [("velocity.h5", "velocity", "vel.tif"), ("velocity.h5", "velocityStd", "std.tif"),
                            ("inputs/geometryGeo.h5", "incidenceAngle", "inc.tif"), ("maskTempCoh.h5", "mask", "mask.tif")]:
         subprocess.run(["save_gdal.py", src, "-d", dset, "-o", out], cwd=MINTPY, check=True)
