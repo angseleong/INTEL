@@ -21,11 +21,13 @@ Banner di atas: "Wilayah Cakupan: sementara baru Semarang & Demak". Badge "Belum
 
 ## 2. Mengecek Lokasi Sendiri (Pengunjung)
 1. Ketik alamat atau nama Kelurahan, lalu pilih dari saran. Peta terbang ke sana.
-2. Ketuk titik rumah. Kartu titik muncul: Tinggi Tanah, Laju Penurunan, nama Kelurahan, dan dua Rentang Tahun:
+2. Ketuk titik rumah. Kartu titik muncul: Tinggi Tanah, Laju Penurunan, nama Kelurahan, dan tiga Rentang Tahun:
    ```
    Mulai kena Rob sesekali: ±2029–2032   (Tahun Rob)
-   Terendam tiap hari:      ±2036–2041   (Tahun Terendam)
+   Terendam tiap pasang:    ±2036–2041   (Tahun Terendam)
+   Hilang ke laut:          ±2044–2050   (Tahun Hilang ke Laut)
    ```
+   Kalau Laju Penurunan titik itu diisi dari tetangga, kartu menulis "diperkirakan dari titik terukur dalam ±1 km".
 3. Geser slider atau tekan Play. Area Bawah Pasang dan Garis Pantai bergerak per tahun. Geser ke kiri sampai 2015 untuk melihat seberapa jauh Garis Pantai sudah maju (Masa Terukur). Geser ke kanan sampai 2050 untuk perkiraan (Masa Perkiraan).
 4. Ganti ke Skenario Henti. Peta dan kartu berubah, menunjukkan berapa tahun yang bisa diselamatkan.
 5. Salin link dari address bar. Penerima link melihat titik, tahun, dan Skenario yang sama.
