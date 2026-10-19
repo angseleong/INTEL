@@ -106,6 +106,15 @@ Catatan:
 - Sebagian Bedono kemungkinan sudah terendam sebelum 2015 (cek dari citra lama). Kalau benar, area yang baru terendam di antara 2017 dan 2025 adalah ujian yang lebih adil.
 - DeltaDTM lebih baru dari 2017. Tinggi Tanah 2017 dihitung mundur: `Tinggi Tanah(2017) = Tinggi Tanah(t0) + Laju Penurunan × (t0 − 2017)`. Ini membocorkan sedikit informasi masa depan, jadi tulis hasilnya apa adanya.
 
+### 5.1 Hasil Uji Mundur pertama (20 Okt 2026): belum lulus
+
+- Data: laju InSAR 2015–2017 (artifact `subsidence-rate-until-20171231`), air Sentinel-2 2017 (28 scene) dan 2025 (41 scene). Area uji: 6.907 piksel 80 m di kotak Sayung yang kering di 2017. 610 piksel (±9%) jadi air permanen di 2025 (±638 ha di grid 20 m).
+- Laju 2015–2017 konsisten dengan laju penuh di titik kunci (Sayung 11,5 vs 11,2 cm/tahun).
+- Tingkat Hilang ke Laut (< Surut Harian): tertangkap 9%. Terendam (< Pasang Harian): tertangkap 68%.
+- **Masalah utama: rumus tidak punya daya beda di Sayung.** Tinggi Tanah perkiraan 2025 sama untuk lahan yang jadi air (median +0,07 m) dan yang tetap darat (+0,08 m). Di ambang mana pun, "tepat" tetap ±9%, sama dengan tebakan acak. Persentase "tertangkap" hanya naik karena area yang ditebak ikut membesar.
+- Tafsiran: hampir semua darat Sayung sudah setinggi muka laut. Di sana yang menentukan lahan jadi air adalah Tanggul, pompa, urugan, dan pembuatan tambak, bukan Tinggi Tanah. Galat DeltaDTM (±0,5 m) juga lebih besar dari beda tinggi antar lahan.
+- Kriteria "tertangkap ≥ 70%" ternyata tidak cukup, karena bisa dicapai dengan menebak semuanya. Kriteria berikutnya harus membandingkan dengan tebakan acak.
+
 ## 6. Angka di Halaman Pembuka
 
 Angka ini dari riset dan pemberitaan, bukan hitungan INTEL. Selalu tampilkan sumbernya di bawah angka.
