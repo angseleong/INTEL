@@ -226,12 +226,14 @@ mintpy.network.endDate     = {args.end_date or "auto"}
     # MintPy line-of-sight velocity is m/yr, positive toward the satellite. Read as purely vertical (see BURSTS).
     rate = -read("vel.tif") / cos_inc * 100
     std = read("std.tif") / cos_inc * 100
-    rate[read("mask.tif") == 0] = np.nan
-    std[np.isnan(rate)] = np.nan
     with rasterio.open(MINTPY / "vel.tif") as r:
         prof = r.profile | {"count": 2, "dtype": "float32", "nodata": np.nan}
+    # Offset from every pixel in the box, before the coherence mask: with few dates (Uji Mundur 2015–2017)
+    # the mask keeps only a handful of hill pixels, but the median of ~9,000 noisy ones is still steady.
     offset = stable_offset(rate, prof["transform"], prof["crs"])
     rate -= offset
+    rate[read("mask.tif") == 0] = np.nan
+    std[np.isnan(rate)] = np.nan
     print(f"re-referenced to STABLE_BOX median: {offset:+.2f} cm/tahun removed")
     out = OUT.with_name(f"subsidence_rate_until_{args.end_date}.tif") if args.end_date else OUT
     with rasterio.open(out, "w", **prof) as dst:
