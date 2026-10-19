@@ -99,3 +99,19 @@ Semua pembaruan berjalan otomatis. Setiap pembaruan Laju Penurunan menghasilkan 
 Catatan:
 - Sebagian Bedono kemungkinan sudah terendam sebelum 2015 (cek dari citra lama). Kalau benar, area yang baru terendam di antara 2017 dan 2025 adalah ujian yang lebih adil.
 - DeltaDTM lebih baru dari 2017. Tinggi Tanah 2017 dihitung mundur: `Tinggi Tanah(2017) = Tinggi Tanah(t0) + Laju Penurunan × (t0 − 2017)`. Ini membocorkan sedikit informasi masa depan, jadi tulis hasilnya apa adanya.
+
+## 6. Angka di Halaman Pembuka
+
+Angka ini dari riset dan pemberitaan, bukan hitungan INTEL. Selalu tampilkan sumbernya di bawah angka.
+
+| Angka | Sumber |
+|---|---|
+| 55 juta penduduk di 20 kabupaten + 5 kota Pantura berada di kawasan berisiko rob dan penurunan tanah (26% tinggal di pesisir) | Menko IPK, rapat 4 Mei 2026 ([Republika](https://news.republika.co.id/berita/tey68d484/menko-ahy-penurunan-tanah-dan-banjir-rob-ancaman-puluhan-juta-warga-pantura?), [Bisnis](https://ekonomi.bisnis.com/read/20260504/45/1971114/ahy-ri-terancam-rugi-rp6396-triliun-jika-giant-sea-wall-tak-dibangun)). Dibaca sebagai "tinggal di kawasan berisiko", bukan "sudah terdampak" |
+| 115.000 ha sawah Pantura terdampak rob | Menko IPK, Mei 2026 ([CNBC](https://www.cnbcindonesia.com/news/20260504140644-4-732033/kondisi-pantura-jawa-lagi-genting-ahy-cemas-nasib-sawah-di-karawang)) |
+| Kota pesisir yang tanahnya turun: Jakarta, Bekasi, Indramayu, Cirebon, Subang, Pemalang, Pekalongan, Demak | BRIN, BRIGHTS Seri 2, 26 Mei 2026 ([Republika](https://news.republika.co.id/berita/tfw5st475/temuan-brin-jakarta-cirebon-hingga-demak-permukaan-tanah-pesisir-pantura-terus-menurun?)) |
+| Cirebon, Pekalongan, Tegal, Semarang turun 2–3× lebih cepat dari Jakarta | Abstrak EGU 2026 ([EGU26-8826](https://meetingorganizer.copernicus.org/EGU26/EGU26-8826.html)), belum makalah penuh |
+| Medan turun rata-rata ±6,4 cm/tahun | BIO Web of Conferences 2026 ([link](https://www.bio-conferences.org/10.1051/bioconf/202622005009)) |
+| Bedono: 65 KK (1999) + 201 KK (2006) direlokasi dari Dusun Tambaksari dan Rejosari Senik | [Mongabay, Des 2024](https://mongabay.co.id/2024/12/28/keluarga-mak-jah-penyintas-terakhir-dusun-rejosari-kami-akan-tetap-tanam-mangrove/) |
+| Timbulsloko: ±140 KK hidup dalam genangan rob | [Metro TV, Jun 2025](https://www.metrotvnews.com/read/bVDCjqW2-menolak-tenggelam-kisah-warga-timbulsloko-demak-bertahan-di-tengah-laut) |
+| Laju Penurunan Sayung–Genuk ±10 cm/tahun | Hitungan INTEL (§1, InSAR run 19 Okt 2026) |
+

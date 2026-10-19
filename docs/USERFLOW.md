@@ -5,11 +5,12 @@
 ### 1.1 Tanpa link khusus: halaman pembuka dulu
 Satu halaman yang digeser ke bawah, gaya void gelap (`DESIGN.md`):
 
-1. **Pembuka**: "Indonesia Tenggelam? Cek datanya." + satu kalimat (tanah turun lebih cepat daripada laut naik, diukur dari satelit). Di bawahnya Konstelasi Titik (`DESIGN.md` §8).
-2. **Kenapa ini dibuat**: tiga angka asli dengan sumbernya: Laju Penurunan Sayung–Genuk (InSAR), Kenaikan Muka Laut (BRIN), dan Bedono yang sudah jadi laut.
-3. **Cara membaca peta**: tiga tingkat (Rob, Terendam, Hilang ke Laut), dihitung tanpa Tanggul dan pompa, tahun selalu berupa Rentang Tahun.
-4. **Mulai**: "Cek lokasimu." + tombol **Mulai lihat peta** (satu-satunya tombol terisi di halaman) + keterangan "Saat ini: Semarang & Demak".
-5. Ketuk Mulai → peta terbuka. Animasi pembuka 2015 → sekarang (`DESIGN.md` §9 A1) jalan sekali di sini.
+1. **Pembuka**: "Indonesia Tenggelam? Cek datanya." + satu kalimat skala Indonesia (dari Medan sampai Pantura Jawa, tanah pesisir turun lebih cepat daripada laut naik). Di bawahnya Konstelasi Titik (`DESIGN.md` §8).
+2. **Bukan cuma satu kota**: jumlah orang di kawasan berisiko Pantura, daftar kota pesisir yang turun, dan kota yang turun lebih cepat dari Jakarta. Angka dan sumbernya di `DATA.md` §6.
+3. **Dampaknya ke orang**: Bedono (KK yang direlokasi), Timbulsloko (KK yang hidup di tengah genangan), sawah Pantura yang terdampak. Hanya kejadian nyata, bukan perkiraan.
+4. **Cara membaca peta**: tiga tingkat (Rob, Terendam, Hilang ke Laut), dihitung tanpa Tanggul dan pompa, tahun selalu berupa Rentang Tahun.
+5. **Mulai**: "Cek lokasimu." + tombol **Mulai lihat peta** (satu-satunya tombol terisi di halaman) + chip kota: yang sudah dihitung (Semarang, Demak) menyala, yang menyusul abu-abu. Baru di sini dijelaskan bahwa INTEL sementara menghitung Semarang & Demak.
+6. Ketuk Mulai → peta terbuka. Animasi pembuka 2015 → sekarang (`DESIGN.md` §9 A1) jalan sekali di sini.
 
 Kunjungan kedua dan seterusnya: halaman pembuka tetap muncul, tapi ada tombol hantu **Langsung ke peta** di atas.
 
