@@ -37,16 +37,16 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 
 ---
 
-## ACTIVE — Blok 2: Laju Penurunan Pertama
+## DONE — Blok 2: Laju Penurunan Pertama
 - [x] `fetch_insar.py`: cari stack, kirim pasangan ke HyP3, unduh hasil. Jalur naik 127, burst `272740` + `272741` IW1: 436 tanggal (Okt 2014 – Okt 2026), 869 pasangan.
 - [x] Pemilik: jalankan workflow `insar` submit. 869 pasangan terkirim ke HyP3, 19 Okt 2026 (run #2).
 - [x] Cek status otomatis tiap 6 jam: workflow membuka Issue "HyP3 selesai" begitu semua pasangan selesai.
-- [ ] Pemilik: begitu Issue itu muncul, jalankan workflow `insar` step `process` (unduh + MintPy). Maks 14 hari, setelah itu hasil dihapus HyP3.
+- [x] Pemilik: jalankan workflow `insar` step `process`. Run #6 berhasil, 19 Okt 2026.
 - [x] MintPy: deret waktu → Laju Penurunan + simpangan baku (GeoTIFF), `fetch_insar.py timeseries`. Belum dites sampai hasil HyP3 ada.
-- [ ] Jalankan di GitHub Actions, ukur lama proses dan pemakaian disk. Kalau tidak muat di runner gratis, berhenti dan bahas pilihan lain dengan pemilik.
-- [ ] Bandingkan hasilnya dengan angka paper (Semarang hingga ±10 cm/tahun, Demak hingga ±20 cm/tahun).
+- [x] Jalankan di GitHub Actions: 3 jam 1 menit total (MintPy 2 jam 59 menit), unduhan 6,6 GB, disk 67 dari 145 GB. Muat di runner gratis.
+- [x] Bandingkan dengan paper: Sayung 10,8, Genuk 10,4, Kaligawe 9,2 cm/tahun, maksimum 14,7. Pusat kota ±0,2, perbukitan selatan −1 s/d −1,5. Cocok dengan pola di riset. Cakupan baru 10% piksel (koherensi temporal ≥ 0,7), plus celah di antara dua burst.
 
-**Checkpoint:** GeoTIFF Laju Penurunan terbuka di QGIS dan angkanya masuk akal dibanding paper.
+**Checkpoint:** GeoTIFF Laju Penurunan terbuka di QGIS dan angkanya masuk akal dibanding paper. ✅ 19 Okt 2026.
 
 ## ACTIVE — Blok 3: Hitung & Uji Mundur
 
@@ -59,6 +59,7 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 - [x] Sumber angka BRIN 2,4–4,3 mm/tahun: siaran pers BRIGHTS Seri 2, 26 Mei 2026.
 - [ ] Pilih `t0` DeltaDTM dengan titik ICESat-2 di Sayung (`DATA.md` §2.1).
 - [x] `compute.py` + `compute_check.py` (angka buatan dengan jawaban yang diketahui). Masa Terukur menyusul setelah ada deret waktu InSAR.
+- [x] `compute.py` pertama dengan data asli: 31.096 titik. 27% sudah di bawah Pasang Tertinggi, 3% 2026–2030, 8% 2031–2040, 6% 2041–2050, 56% tidak sebelum 2050. Genuk −0,33 m dan Kaligawe −0,21 m di bawah MSL, kemungkinan terlalu rendah karena MDT dan `t0`. **Belum boleh ditampilkan.**
 - [ ] `backtest.py`: Uji Mundur sesuai `DATA.md` §5.
 - [ ] Setel `RENTANG_MAKS` dan `UJI_MINIMAL` dari hasil Uji Mundur.
 
