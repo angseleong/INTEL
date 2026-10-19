@@ -9,15 +9,15 @@
 ## ACTIVE — Blok 0: Persiapan
 
 **Pemilik (manual):**
-- [ ] Buat akun NASA Earthdata (urs.earthdata.nasa.gov). Dipakai untuk HyP3 dan unduhan Sentinel-1.
+- [x] Buat akun NASA Earthdata (urs.earthdata.nasa.gov). Dipakai untuk HyP3 dan unduhan Sentinel-1.
 - [ ] Jadikan repo GitHub `INTEL` publik. Menit GitHub Actions gratis tanpa batas untuk repo publik.
 - [ ] Sambungkan repo ke Vercel (Add New → Project → pilih repo INTEL).
 - [ ] Simpan `EARTHDATA_USERNAME` dan `EARTHDATA_PASSWORD` di GitHub → Settings → Secrets and variables → Actions.
 - [ ] (Opsional) Beli domain dan sambungkan di Vercel → Settings → Domains.
 
 **Agen:**
-- [ ] Scaffold Vite + TypeScript (strict) di root, dengan skrip `dev` dan `build`.
-- [ ] `pipeline/requirements.txt` + `.gitignore` (abaikan data mentah, GeoTIFF, `.venv/`).
+- [x] Scaffold Vite + TypeScript (strict) di root, dengan skrip `dev` dan `build`.
+- [x] `pipeline/requirements.txt` + `.gitignore` (abaikan data mentah, GeoTIFF, `.venv/`).
 
 **Checkpoint:** `npm run dev` menampilkan halaman kosong tanpa error, `pip install -r pipeline/requirements.txt` berhasil, dan link `*.vercel.app` menampilkan halaman yang sama.
 

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.venv/
+__pycache__/
+.DS_Store
+
+# Raw and intermediate pipeline data (archived in GitHub Releases, not git)
+pipeline/work/
+*.tif
+*.tiff
+*.h5
+*.zip
