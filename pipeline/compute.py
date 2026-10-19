@@ -9,7 +9,7 @@ from pathlib import Path
 
 import numpy as np
 
-T0 = 2020             # Tinggi Tanah reference year of DeltaDTM, initial value until checked (DATA.md §2.1)
+T0 = 2021             # Tinggi Tanah reference year of DeltaDTM, from 1,604 dated ICESat-2 points (DATA.md §2.1)
 DEM_SIGMA = 0.50      # m, DeltaDTM mean absolute error in Indonesia (DATA.md §1)
 SLR_MM = (2.4, 4.3)   # mm/tahun, Kenaikan Muka Laut range (BRIN)
 STOP_FROM = 2027      # Skenario Henti: groundwater pumping stops this year

@@ -1,6 +1,9 @@
 import numpy as np
 
+import compute
 from compute import ALREADY, NEVER, first_year_below, too_uncertain, year_range
+
+compute.T0 = 2020  # the hand-worked cases below assume this reference year, whatever the pipeline uses
 
 # Ground 1.5 m above MSL in 2020, sinking 10 cm/tahun, tide 0.65 m, sea not rising:
 # 1.5 - 0.1(t - 2020) < 0.65  ->  t > 2028.5  ->  2029   (cases avoid landing exactly on the boundary)

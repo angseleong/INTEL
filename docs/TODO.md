@@ -57,7 +57,8 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 - [x] Uji asap `compute.py` dari ujung ke ujung dengan laju buatan 10 cm/tahun: jalan, 70.956 titik.
 - [x] Cek geoid acuan DTU22 MDT: XGM2019e, bukan EGM2008. Dipakai apa adanya dulu, diganti kalau Uji Mundur meleset sistematis.
 - [x] Sumber angka BRIN 2,4–4,3 mm/tahun: siaran pers BRIGHTS Seri 2, 26 Mei 2026.
-- [ ] Pilih `t0` DeltaDTM dengan titik ICESat-2 di Sayung (`DATA.md` §2.1).
+- [x] Pilih `t0` DeltaDTM dengan titik ICESat-2 di Sayung: **2021** (`DATA.md` §2.1). Efeknya kecil: "sudah di bawah Pasang Tertinggi" 27% → 26%.
+- [ ] Cek MDT dengan muka laut ICESat-2 di Laut Jawa depan Semarang. Percobaan pertama hanya 1 lintasan (1,21 m di atas EGM2008, tidak bisa dipakai karena pasang-surut). Diulang di kotak yang lebih luas.
 - [x] `compute.py` + `compute_check.py` (angka buatan dengan jawaban yang diketahui). Masa Terukur menyusul setelah ada deret waktu InSAR.
 - [x] `compute.py` pertama dengan data asli: 31.096 titik. 27% sudah di bawah Pasang Tertinggi, 3% 2026–2030, 8% 2031–2040, 6% 2041–2050, 56% tidak sebelum 2050. Genuk −0,33 m dan Kaligawe −0,21 m di bawah MSL, kemungkinan terlalu rendah karena MDT dan `t0`. **Belum boleh ditampilkan.**
 - [ ] `backtest.py`: Uji Mundur sesuai `DATA.md` §5.
