@@ -168,6 +168,24 @@ def write_reference_mask():
     print(f"refMask.h5: {mask.sum()} candidate reference pixels")
 
 
+def stable_offset(rate, transform, crs):
+    """Median Laju Penurunan inside STABLE_BOX. MintPy references one pixel, and on run 2 (19 Oct 2026)
+    that pixel itself was sinking, which shifted every rate by −4.3 cm/tahun. Subtracting this median makes
+    the stable hills read 0 on average instead."""
+    import numpy as np
+    import rasterio.transform
+    from rasterio.warp import transform as reproject_xy
+
+    rows, cols = np.indices(rate.shape)
+    lon, lat = (np.array(v).reshape(rate.shape) for v in
+                reproject_xy(crs, "EPSG:4326", *rasterio.transform.xy(transform, rows.ravel(), cols.ravel())))
+    lat0, lon0, lat1, lon1 = STABLE_BOX
+    box = (lat >= lat0) & (lat <= lat1) & (lon >= lon0) & (lon <= lon1) & np.isfinite(rate)
+    if box.sum() < 100:
+        sys.exit(f"only {box.sum()} measured pixels in STABLE_BOX, cannot re-reference")
+    return float(np.median(rate[box]))
+
+
 def cmd_timeseries(_):
     """HyP3 pairs -> MintPy small-baseline time series -> Laju Penurunan GeoTIFF (cm/tahun, positif = turun)."""
     import subprocess
@@ -211,6 +229,9 @@ mintpy.networkInversion.minTempCoh = 0.5
     std[np.isnan(rate)] = np.nan
     with rasterio.open(MINTPY / "vel.tif") as r:
         prof = r.profile | {"count": 2, "dtype": "float32", "nodata": np.nan}
+    offset = stable_offset(rate, prof["transform"], prof["crs"])
+    rate -= offset
+    print(f"re-referenced to STABLE_BOX median: {offset:+.2f} cm/tahun removed")
     with rasterio.open(OUT, "w", **prof) as dst:
         dst.write(np.stack([rate, std]))
         dst.set_band_description(1, "subsidence_rate_cm_per_year")

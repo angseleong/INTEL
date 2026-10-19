@@ -31,7 +31,7 @@ INTEL/
 │   └── style.css
 ├── public/
 │   └── data/               # Data terbaru, ditimpa oleh pipeline setiap pembaruan
-│       ├── below-tide.geojson  # v1, PMTiles setelah Pantura
+│       ├── below-tide-{rob,flooded,lost}.geojson  # satu file per tingkat, PMTiles setelah Pantura
 │       ├── points.json         # titik per kolom
 │       ├── meta.json           # tanggal, Pasang, status Uji Mundur
 │       ├── dikes.pmtiles
@@ -72,7 +72,7 @@ Batas runner gratis GitHub Actions: 6 jam per job, ±14 GB disk. Pemakaian seben
 
 | File | Isi | Dipakai oleh |
 |---|---|---|
-| `below-tide.geojson` | Satu poligon gabungan per tahun (2015–2050) per Skenario. Properti: `year`, `scenario`, `measured` (true untuk Masa Terukur; Skenario tidak berlaku di sana) | Lapisan Area Bawah Pasang dan Garis Pantai (garis tepi poligon). Slider cukup mengganti filter `year`, tanpa menghitung ulang |
+| `below-tide-{rob,flooded,lost}.geojson` | Satu file per tingkat, hanya tingkat yang aktif yang diunduh. Satu poligon gabungan per tahun per Skenario. Properti: `level`, `year`, `scenario` (nanti `measured` untuk Masa Terukur) | Lapisan Area Bawah Pasang dan Garis Pantai (garis tepi poligon). Slider cukup mengganti filter `year`, tanpa menghitung ulang |
 | `points.json` | Titik grid ±80 m, disimpan per kolom (satu daftar per properti), dicari terdekatnya di browser. Properti: `elevation`, `subsidenceRate`, `robYearMin`, `robYearMax`, `floodedYearMin`, `floodedYearMax` per Skenario, `kelurahan` | Kartu klik titik |
 | `dikes.pmtiles` | Garis Tanggul | Lapisan informasi |
 | `tide.json` | Waktu dan tinggi pasang 7 hari ke depan | Banner pasang |

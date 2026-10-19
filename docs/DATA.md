@@ -4,7 +4,7 @@
 
 | Data | Sumber | Resolusi | Lisensi | Status |
 |---|---|---|---|---|
-| Laju Penurunan | Sentinel-1 (ESA Copernicus), diolah jadi interferogram oleh [ASF HyP3](https://hyp3-docs.asf.alaska.edu/) (burst InSAR), deret waktu dengan MintPy | ±80 m | Copernicus: bebas dengan atribusi | ✅ Run pertama 19 Okt 2026: maks 14,7 cm/tahun (Sayung–Genuk), pusat kota ±0,2. Cakupan 10% piksel pada koherensi temporal ≥ 0,7. Celah data di batas dua burst |
+| Laju Penurunan | Sentinel-1 (ESA Copernicus), diolah jadi interferogram oleh [ASF HyP3](https://hyp3-docs.asf.alaska.edu/) (burst InSAR), deret waktu dengan MintPy | ±80 m | Copernicus: bebas dengan atribusi | ✅ Run 2 (20 Okt 2026, koherensi temporal ≥ 0,5): 30% piksel terukur, 75% daratan < 3 m. Sayung 11,2, Genuk 10,3, Kaligawe 10,1, kota Demak 7,4 cm/tahun, pusat kota dan perbukitan ±0. Diacu ulang supaya median STABLE_BOX = 0 (lihat §2.4). Selisih dengan run 1 setelah diacu ulang: median −0,29, p95 1,4 cm/tahun. Masih ada celah di batas dua burst |
 | Tinggi Tanah | [DeltaDTM v1.1](https://doi.org/10.4121/21997565) (Deltares/TU Delft), CopernicusDEM yang dikoreksi lidar ICESat-2 dan GEDI. CRS `EPSG:9518` (WGS84 + tinggi EGM2008). Dipotong di +10 m. Galat di Indonesia: MAE 0,50 m, RMSE 0,67 m ([paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC10917791/)) | 30 m | CC BY 4.0 + atribusi Copernicus WorldDEM-30 | ✅ Tile `DeltaDTM_v1_1_S07E110.tif` (8,5 MB, lintang −7…−6, bujur 110…111) diambil langsung dari dalam `Asia.zip` dengan HTTP range request, tanpa mengunduh 17 GB. Nama tile memakai pojok **kiri bawah**. Daerah Demak di selatan −7° ada di tile `S08E110` |
 | Pasang | Stasiun **IOC `sema` Semarang** (operator BIG), -6,948 / 110,420. Data per menit, arsip mulai 2015, lewat API `ioc-sealevelmonitoring.org/service.php?query=data&code=sema` | 1 titik | Data IOC, bebas dengan atribusi (cek syaratnya) | ✅ Diunduh 2015–2026 (sensor tekanan `prs`). **Pasang Tertinggi 0,65 m, Pasang Harian 0,34 m** di atas muka laut rata-rata, rata-rata 5 tahun dengan data cukup (2017, 2018, 2019, 2023, 2024). Portal lama BIG (`ina-sealevelmonitoring.big.go.id`) tidak bisa diakses |
 | Kenaikan Muka Laut | BRIN: 2,4–4,3 mm/tahun dari analisis altimetri, dipaparkan Agung Syetiawan (Pusat Riset Geoinformatika BRIN) di BRIGHTS Seri 2, 26 Mei 2026 ([Republika](https://news.republika.co.id/berita/tfw5st475/temuan-brin-jakarta-cirebon-hingga-demak-permukaan-tanah-pesisir-pantura-terus-menurun?), [detik](https://inet.detik.com/science/d-8513502/pantura-makin-tenggelam-kenaikan-muka-laut-hingga-4-3-mm-per-tahun)). Pembanding: BMKG 4,3 ± 0,4 mm/tahun untuk seluruh Indonesia, proyeksi IPCC AR6 | – | Publik | ✅ Sumbernya siaran pers, makalahnya belum terbit. Batas atas 4,3 mm sama dengan angka BMKG |
@@ -58,6 +58,12 @@ Semua tinggi harus diukur dari acuan yang sama: **rata-rata muka laut (MSL) di p
 ### 2.3 Celah Data InSAR
 
 Satelit radar C-band gagal mengukur sawah, tambak, dan air. Pada run pertama baru 25% daratan di bawah 3 m yang terukur. Titik daratan tanpa data diisi dengan **rata-rata Laju Penurunan titik terukur dalam ±1 km** (±12 piksel), asalkan ada minimal 10 tetangga terukur. Simpangan bakunya = simpangan baku tetangga + sebaran nilai mereka, jadi Rentang Tahun titik isian otomatis lebih lebar. Titik isian ditandai `filled`, dan kartu titik menulis "diperkirakan dari titik terukur dalam ±1 km". Laut tidak pernah diisi. Ini interpolasi sederhana, bukan ML (ADR-0002).
+
+### 2.4 Titik Acuan InSAR
+
+Laju dari InSAR selalu relatif terhadap satu piksel acuan. Kalau piksel itu ikut turun, semua laju ikut bergeser. Di run 2 (20 Okt 2026) MintPy menaruh acuannya di pesisir Demak utara, di luar STABLE_BOX, dan seluruh perbukitan Semarang kebaca naik −4,26 cm/tahun. Sebabnya belum diketahui (cek log baris `refMask.h5` dan `reference point` di run berikutnya).
+
+**Koreksi**: setelah MintPy, `fetch_insar.py` mengurangkan median laju di dalam STABLE_BOX (perbukitan Banyumanik–Tembalang) dari semua piksel. Hasilnya tidak bergantung lagi pada piksel acuan pilihan MintPy. Run 1 bergeser +0,98, run 2 +4,26 cm/tahun.
 
 ## 3. Ketidakpastian
 

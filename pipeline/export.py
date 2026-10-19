@@ -1,6 +1,6 @@
 """work/rob.tif -> files the web map reads (docs/ARCHITECTURE.md §4).
 
-    python pipeline/export.py   # -> public/data/below-tide.geojson, points.json, meta.json
+    python pipeline/export.py   # -> public/data/below-tide-{rob,flooded,lost}.geojson, points.json, meta.json
 
 ponytail: plain GeoJSON while the map covers only Demak–Semarang (a few MB). Switch to PMTiles once Pantura is in.
 """
@@ -16,7 +16,7 @@ from compute import ALREADY, NEVER, WORK, YEARS, fill_gaps, load_inputs
 OUT = Path(__file__).parent.parent / "public" / "data"
 SCENARIOS = ("continue", "stop")
 LEVELS = ("rob", "flooded", "lost")  # Pasang Tertinggi, Pasang Harian, Surut Harian
-SIMPLIFY_M = 40  # half an InSAR pixel; keeps the coastline shape, drops stair-steps
+SIMPLIFY_M = 60  # ¾ of an InSAR pixel; keeps the coastline shape, drops stair-steps
 
 
 def below_tide_polygons(rob, transform, crs):
@@ -35,7 +35,7 @@ def below_tide_polygons(rob, transform, crs):
             continue
         geom = unary_union(parts).simplify(SIMPLIFY_M)
         features.append({"type": "Feature", "properties": {"level": level, "year": int(year), "scenario": scenario},
-                         "geometry": transform_geom(crs, "EPSG:4326", mapping(geom), precision=5)})
+                         "geometry": transform_geom(crs, "EPSG:4326", mapping(geom), precision=4)})  # 4 decimals ≈ 11 m
     return features
 
 
@@ -68,14 +68,17 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     polys = below_tide_polygons(rob, transform, crs)
     points = point_columns(rob, elev, rate, std, transform, crs)
-    (OUT / "below-tide.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": polys}))
+    for level in LEVELS:  # one file per level, so the browser only downloads the level being looked at
+        feats = [f for f in polys if f["properties"]["level"] == level]
+        (OUT / f"below-tide-{level}.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": feats}))
+    (OUT / "below-tide.geojson").unlink(missing_ok=True)
     (OUT / "points.json").write_text(json.dumps(points, separators=(",", ":"), allow_nan=False))
     (OUT / "meta.json").write_text(json.dumps({
         "updated": date.today().isoformat(), "years": [int(YEARS[0]), int(YEARS[-1])],
         "highestTide": tide["highest_tide"], "dailyHighTide": tide["daily_high_tide"], "dailyLowTide": tide["daily_low_tide"],
         "validated": False,  # flips to true once Uji Mundur Sayung passes (docs/PRD.md §5)
     }, indent=2))
-    for f in ("below-tide.geojson", "points.json"):
+    for f in [f"below-tide-{lv}.geojson" for lv in LEVELS] + ["points.json"]:
         print(f"{f}: {(OUT / f).stat().st_size / 1e6:.1f} MB")
     print(f"{len(polys)} polygons, {len(points['lon'])} points")
 

@@ -68,7 +68,7 @@ map.on("load", async () => {
   fitArea(false);
   map.addSource("belowTide", {
     type: "geojson",
-    data: "/data/below-tide.geojson",
+    data: `/data/below-tide-${level}.geojson`,
     attribution: "Data: Sentinel-1 via ASF HyP3, DeltaDTM (Deltares), pasang IOC Semarang",
   });
   map.addLayer({ id: "belowTide", type: "fill", source: "belowTide", filter: filter(NOW),
@@ -134,7 +134,11 @@ function toggleGroup(attr: string, onPick: (value: string) => void) {
     }),
   );
 }
-toggleGroup("data-level", (v) => { level = v as Level; levelText(); });
+toggleGroup("data-level", (v) => {
+  level = v as Level;
+  levelText();
+  (map.getSource("belowTide") as maplibregl.GeoJSONSource | undefined)?.setData(`/data/below-tide-${level}.geojson`);
+});
 toggleGroup("data-scenario", (v) => { scenario = v as Scenario; });
 
 const marker = new maplibregl.Marker({ element: Object.assign(document.createElement("div"), { className: "pin" }) });
