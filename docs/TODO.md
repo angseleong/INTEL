@@ -66,12 +66,17 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 
 **Checkpoint:** `python pipeline/backtest.py` mencetak persentase kecocokan ≥ `UJI_MINIMAL`. Kalau gagal, berhenti dan perbaiki sebelum lanjut.
 
-## Blok 4: Peta Dasar
+## ACTIVE — Blok 4: Peta Dasar
+
+> Dibuka 19 Okt 2026 atas persetujuan pemilik, sebelum Uji Mundur lulus. Peta wajib berlabel "Belum tervalidasi" sampai `meta.json` `validated: true`.
+
 - [ ] Pemilik: sambungkan repo ke Vercel (Add New → Project → pilih INTEL). Opsional: domain di Vercel → Settings → Domains.
-- [ ] `export.py` → `below-tide.pmtiles`, `points.pmtiles`.
-- [ ] Peta MapLibre + lapisan Area Bawah Pasang + Garis Pantai.
-- [ ] Slider tahun 2015–2050 (Masa Terukur + Masa Perkiraan) + Play.
-- [ ] Kartu klik titik, termasuk semua kasus khusus di `USERFLOW.md` §4.
+- [x] `export.py` → `below-tide.geojson` (50 poligon, 0,6 MB gzip) + `points.json` (31.096 titik per kolom, 0,2 MB gzip) + `meta.json`. GeoJSON dulu, PMTiles kalau sudah Pantura.
+- [x] Peta MapLibre (peta dasar EOX 2024) + Area Bawah Pasang + Garis Pantai 2026 (putih) dan tahun terpilih (oranye putus-putus).
+- [x] Slider tahun 2026–2050 + Play + Skenario Lanjut/Henti.
+- [ ] Masa Terukur 2015–2025 di slider: perlu `timeseries.h5` dari MintPy di artifact.
+- [x] Kartu klik titik: titik terukur terdekat ≤ 150 m, kasus di luar Wilayah Cakupan, tanpa data, sudah kena, tidak sebelum 2050, belum bisa diperkirakan.
+- [ ] Putuskan cara menangani celah InSAR (baru 25% daratan < 3 m yang terukur).
 
 **Checkpoint:** di desktop dan 375×812, geser slider dan lihat Area Bawah Pasang berubah, ketuk titik di Sayung dan lihat Rentang Tahun.
 

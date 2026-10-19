@@ -1,0 +1,82 @@
+"""work/rob.tif -> files the web map reads (docs/ARCHITECTURE.md §4).
+
+    python pipeline/export.py   # -> public/data/below-tide.geojson, points.json, meta.json
+
+ponytail: plain GeoJSON while the map covers only Demak–Semarang (a few MB). Switch to PMTiles once Pantura is in.
+"""
+import json
+from datetime import date
+from pathlib import Path
+
+import numpy as np
+
+from compute import ALREADY, NEVER, WORK, YEARS, load_inputs
+
+OUT = Path(__file__).parent.parent / "public" / "data"
+SCENARIOS = ("continue", "stop")
+SIMPLIFY_M = 40  # half an InSAR pixel; keeps the coastline shape, drops stair-steps
+
+
+def below_tide_polygons(rob, transform, crs):
+    """One feature per year per Skenario: every point already below Pasang Tertinggi in that year."""
+    from rasterio.features import shapes
+    from rasterio.warp import transform_geom
+    from shapely.geometry import mapping, shape
+    from shapely.ops import unary_union
+
+    features = []
+    for scenario in SCENARIOS:
+        mid = rob[f"robYear_{scenario}"]
+        for year in YEARS:
+            mask = ((mid == ALREADY) | ((mid >= YEARS[0]) & (mid <= year) & (mid != NEVER))).astype("uint8")
+            parts = [shape(g) for g, v in shapes(mask, mask=mask.astype(bool), transform=transform) if v == 1]
+            if not parts:
+                continue
+            geom = unary_union(parts).simplify(SIMPLIFY_M)
+            features.append({"type": "Feature", "properties": {"year": int(year), "scenario": scenario},
+                             "geometry": transform_geom(crs, "EPSG:4326", mapping(geom), precision=5)})
+    return features
+
+
+def point_columns(rob, elev, rate, std, transform, crs):
+    """Every measured InSAR pixel, column by column (one list per field). The browser finds the nearest
+    point to a tap itself, so the 31k points never have to be drawn."""
+    from rasterio.transform import xy
+    from rasterio.warp import transform as reproject_xy
+
+    rows, cols = np.nonzero(rob["robYear_continue"] != -1)
+    lons, lats = reproject_xy(crs, "EPSG:4326", *xy(transform, rows, cols))
+    out = {"lon": np.round(lons, 5).tolist(), "lat": np.round(lats, 5).tolist(),
+           "elevation": np.round(elev[rows, cols], 2).tolist(),
+           "subsidenceRate": np.round(rate[rows, cols], 1).tolist(),
+           "subsidenceRateStd": np.round(std[rows, cols], 1).tolist()}
+    for name, band in rob.items():
+        out[name] = band[rows, cols].astype(int).tolist()
+    return out
+
+
+def main():
+    import rasterio
+
+    with rasterio.open(WORK / "rob.tif") as r:
+        rob = {name: r.read(i + 1) for i, name in enumerate(r.descriptions)}
+        transform, crs = r.transform, r.crs
+    elev, rate, std, _ = load_inputs()
+    tide = json.loads((WORK / "tide.json").read_text())
+    OUT.mkdir(parents=True, exist_ok=True)
+    polys = below_tide_polygons(rob, transform, crs)
+    points = point_columns(rob, elev, rate, std, transform, crs)
+    (OUT / "below-tide.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": polys}))
+    (OUT / "points.json").write_text(json.dumps(points, separators=(",", ":")))
+    (OUT / "meta.json").write_text(json.dumps({
+        "updated": date.today().isoformat(), "years": [int(YEARS[0]), int(YEARS[-1])],
+        "highestTide": tide["highest_tide"], "dailyHighTide": tide["daily_high_tide"],
+        "validated": False,  # flips to true once Uji Mundur Sayung passes (docs/PRD.md §5)
+    }, indent=2))
+    for f in ("below-tide.geojson", "points.json"):
+        print(f"{f}: {(OUT / f).stat().st_size / 1e6:.1f} MB")
+    print(f"{len(polys)} polygons, {len(points['lon'])} points")
+
+
+if __name__ == "__main__":
+    main()

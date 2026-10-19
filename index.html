@@ -2,17 +2,43 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>INTEL — Indonesia Tenggelam? Cek datanya.</title>
     <meta name="description" content="Peta kapan pesisir utara Jawa berada di bawah Pasang Tertinggi, dari data penurunan tanah satelit." />
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <main id="app">
-      <p class="label">INTEL</p>
-      <h1>Indonesia Tenggelam? Cek datanya.</h1>
-      <p class="caption">Peta sedang dibangun.</p>
-    </main>
+    <div id="map" aria-label="Peta Area Bawah Pasang Demak–Semarang"></div>
+
+    <header class="top">
+      <span class="brand">INTEL</span>
+      <span class="badge" id="unvalidated" hidden>Belum tervalidasi</span>
+    </header>
+
+    <section class="sheet" id="sheet" aria-live="polite">
+      <div class="card" id="card">
+        <p class="label">Ketuk peta</p>
+        <p class="ui">Ketuk satu titik di pesisir Demak–Semarang untuk melihat Tahun Rob-nya.</p>
+      </div>
+
+      <div class="timebar">
+        <div class="yearrow">
+          <span class="label muted" id="phase">Perkiraan</span>
+          <span class="year" id="yearOut">2026</span>
+          <span class="label muted">2050</span>
+        </div>
+        <input id="year" type="range" min="2026" max="2050" step="1" value="2026" aria-label="Tahun" />
+        <div class="controls">
+          <button class="btn" id="play" type="button">▶ Play</button>
+          <div class="scenarios" role="group" aria-label="Skenario">
+            <button class="ghost on" data-scenario="continue" type="button" aria-pressed="true">Lanjut</button>
+            <button class="ghost" data-scenario="stop" type="button" aria-pressed="false">Henti</button>
+          </div>
+        </div>
+      </div>
+      <p class="caption" id="source"></p>
+    </section>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

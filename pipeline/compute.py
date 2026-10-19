@@ -59,18 +59,26 @@ def too_uncertain(earliest, latest):
     return (b - a > RENTANG_MAKS) & ~((earliest == NEVER) & (latest == NEVER))
 
 
-def main():
+def load_inputs():
+    """Tinggi Tanah (m above MSL, averaged from 30 m) and Laju Penurunan ± std (cm/tahun) on the InSAR grid."""
     import rasterio
     from rasterio.warp import Resampling, reproject
 
-    tide = json.loads((WORK / "tide.json").read_text())
     with rasterio.open(WORK / "subsidence_rate.tif") as r:
         rate_cm, std_cm = r.read(1), r.read(2)
         prof = r.profile
     elev = np.full(rate_cm.shape, np.nan, "float32")
-    with rasterio.open(WORK / "elevation.tif") as d:  # 30 m -> InSAR grid, averaged
+    with rasterio.open(WORK / "elevation.tif") as d:
         reproject(rasterio.band(d, 1), elev, dst_transform=prof["transform"], dst_crs=prof["crs"],
                   dst_nodata=np.nan, resampling=Resampling.average)
+    return elev, rate_cm, std_cm, prof
+
+
+def main():
+    import rasterio
+
+    tide = json.loads((WORK / "tide.json").read_text())
+    elev, rate_cm, std_cm, prof = load_inputs()
     ok = np.isfinite(elev) & np.isfinite(rate_cm)
     bands, names = [], []
     for scenario in ("continue", "stop"):

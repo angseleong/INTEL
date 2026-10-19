@@ -1,3 +1,5 @@
+@import "maplibre-gl/dist/maplibre-gl.css";
+
 :root {
   --color-void: #000000;
   --color-bone: #ffffff;
@@ -27,22 +29,75 @@
 
 html, body {
   margin: 0;
-  min-height: 100%;
+  height: 100%;
+  overflow: hidden;
   background: var(--color-void);
   color: var(--color-bone);
   font-family: var(--font);
   font-variant-numeric: tabular-nums;
 }
 
-#app { padding: var(--space-7) var(--space-4); max-width: 1200px; margin: 0 auto; }
-
-h1 {
-  font-weight: 400;
-  font-size: clamp(48px, 9vw, 96px);
-  line-height: 1;
-  letter-spacing: -0.04em;
-  margin: var(--space-2) 0;
-}
+#map { position: fixed; inset: 0; }
 
 .label { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-spark); margin: 0; }
-.caption { font-size: 12px; color: var(--color-mist); }
+.muted { color: var(--color-ash); }
+.ui { font-size: 15px; line-height: 1.3; margin: var(--space-1) 0 0; color: var(--color-mist); }
+.caption { font-size: 12px; line-height: 1.5; color: var(--color-mist); margin: var(--space-2) 0 0; }
+
+.top {
+  position: fixed; top: var(--space-3); left: var(--space-3); right: var(--space-3);
+  display: flex; align-items: center; gap: var(--space-2); pointer-events: none;
+}
+.brand { font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-shadow: 0 0 8px #000; }
+.badge {
+  background: var(--panel); border-radius: var(--radius-pill); padding: var(--space-1) var(--space-2);
+  font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-spark);
+}
+
+.sheet {
+  position: fixed; left: var(--space-2); right: var(--space-2); bottom: var(--space-2);
+  background: var(--panel); border-radius: var(--radius); padding: var(--space-3);
+  max-height: 70vh; overflow-y: auto;
+}
+@media (min-width: 900px) {
+  .sheet { left: auto; top: var(--space-3); bottom: var(--space-3); width: 380px; max-height: none; }
+}
+
+.card { min-height: 92px; transition: opacity var(--dur-base) var(--ease); }
+.big { font-size: 36px; font-weight: 400; line-height: 1; letter-spacing: -0.04em; color: var(--color-spark); margin: var(--space-1) 0 var(--space-2); }
+@media (min-width: 900px) { .big { font-size: 42px; } }
+.row { display: flex; justify-content: space-between; gap: var(--space-2); font-size: 15px; margin: var(--space-1) 0; }
+.row b { font-weight: 400; color: var(--color-bone); }
+.row span { color: var(--color-mist); }
+.title { font-size: 27px; font-weight: 400; letter-spacing: -0.02em; margin: var(--space-2) 0 0; }
+
+.timebar { margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid rgb(255 255 255 / 0.08); }
+.yearrow { display: flex; justify-content: space-between; align-items: baseline; }
+.year { font-size: 27px; letter-spacing: -0.02em; }
+input[type="range"] { width: 100%; height: 44px; margin: 0; accent-color: var(--color-bone); }
+
+.controls { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.btn {
+  background: var(--color-tide); color: var(--color-bone); border: 0; border-radius: var(--radius-pill);
+  min-height: 44px; padding: 0 var(--space-3); font: 600 14px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer; transition: transform var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease);
+}
+.btn:active { transform: scale(0.97); }
+@media (hover: hover) { .btn:hover { filter: brightness(1.12); } }
+.scenarios { display: flex; gap: var(--space-2); }
+.ghost {
+  background: none; border: 0; min-height: 44px; padding: 0 var(--space-1); cursor: pointer;
+  font: 400 15px var(--font); color: var(--color-ash); border-bottom: 2px solid transparent;
+}
+.ghost.on { color: var(--color-bone); border-bottom-color: var(--color-spark); }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--color-spark); outline-offset: 2px; }
+
+.maplibregl-ctrl-attrib { background: rgb(0 0 0 / 0.6) !important; color: var(--color-mist); font-size: 11px; }
+.maplibregl-ctrl-attrib a { color: var(--color-mist); }
+.maplibregl-ctrl-attrib-button { filter: invert(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+.pin { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--color-bone); box-shadow: 0 0 0 2px rgb(0 0 0 / 0.6); }

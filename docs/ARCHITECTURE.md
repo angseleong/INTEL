@@ -22,19 +22,18 @@ INTEL/
 ├── peliput.html            # Halaman Peliput: peringkat + unduhan
 ├── tentang.html            # Halaman Tentang: cara hitung, atribusi
 ├── src/
-│   ├── main.ts             # Boot peta, baca/tulis URL hash
-│   ├── map.ts              # MapLibre: lapisan Area Bawah Pasang, Garis Pantai, Tanggul
-│   ├── slider.ts           # Slider tahun + Play
+│   ├── main.ts             # Peta MapLibre, lapisan Area Bawah Pasang + Garis Pantai, slider, Play, Skenario
 │   ├── compare.ts          # Geser bandingkan: dua peta tersinkron, dipotong CSS
-│   ├── pointCard.ts        # Kartu klik titik
+│   ├── pointCard.ts        # Kartu klik titik + cari titik terdekat
 │   ├── search.ts           # Pencarian alamat (Nominatim)
 │   ├── tide.ts             # Banner pasang minggu ini
 │   ├── peliput.ts          # Tabel peringkat + grafik
 │   └── style.css
 ├── public/
 │   └── data/               # Data terbaru, ditimpa oleh pipeline setiap pembaruan
-│       ├── below-tide.pmtiles
-│       ├── points.pmtiles
+│       ├── below-tide.geojson  # v1, PMTiles setelah Pantura
+│       ├── points.json         # titik per kolom
+│       ├── meta.json           # tanggal, Pasang, status Uji Mundur
 │       ├── dikes.pmtiles
 │       ├── tide.json        # Pasang 7 hari ke depan
 │       └── ranking.csv
@@ -73,8 +72,8 @@ Batas runner gratis GitHub Actions: 6 jam per job, ±14 GB disk. Pemakaian seben
 
 | File | Isi | Dipakai oleh |
 |---|---|---|
-| `below-tide.pmtiles` | Satu poligon gabungan per tahun (2015–2050) per Skenario. Properti: `year`, `scenario`, `measured` (true untuk Masa Terukur; Skenario tidak berlaku di sana) | Lapisan Area Bawah Pasang dan Garis Pantai (garis tepi poligon). Slider cukup mengganti filter `year`, tanpa menghitung ulang |
-| `points.pmtiles` | Titik grid ±80 m. Properti: `elevation`, `subsidenceRate`, `robYearMin`, `robYearMax`, `floodedYearMin`, `floodedYearMax` per Skenario, `kelurahan` | Kartu klik titik |
+| `below-tide.geojson` | Satu poligon gabungan per tahun (2015–2050) per Skenario. Properti: `year`, `scenario`, `measured` (true untuk Masa Terukur; Skenario tidak berlaku di sana) | Lapisan Area Bawah Pasang dan Garis Pantai (garis tepi poligon). Slider cukup mengganti filter `year`, tanpa menghitung ulang |
+| `points.json` | Titik grid ±80 m, disimpan per kolom (satu daftar per properti), dicari terdekatnya di browser. Properti: `elevation`, `subsidenceRate`, `robYearMin`, `robYearMax`, `floodedYearMin`, `floodedYearMax` per Skenario, `kelurahan` | Kartu klik titik |
 | `dikes.pmtiles` | Garis Tanggul | Lapisan informasi |
 | `tide.json` | Waktu dan tinggi pasang 7 hari ke depan | Banner pasang |
 | `ranking.csv` | Satu baris per Kelurahan | Halaman Peliput, unduhan |
