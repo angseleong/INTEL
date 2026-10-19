@@ -45,6 +45,11 @@ Proyek pribadi, open source, biaya Rp0.
 
 ## 4. Kebutuhan Fungsional
 
+### FR-0 — Halaman Pembuka
+- Halaman yang digeser sebelum peta: pembuka, kenapa INTEL dibuat (tiga angka asli bersumber), cara membaca tiga tingkat, lalu tombol **Mulai lihat peta**.
+- Menyebut Wilayah Cakupan saat ini ("Saat ini: Semarang & Demak").
+- Dilewati kalau link berisi hash. Kunjungan berikutnya mendapat tombol "Langsung ke peta".
+
 ### FR-1 — Peta
 - Peta dasar citra satelit, dibuka pada Wilayah Cakupan.
 - Lapisan Area Bawah Pasang untuk tahun yang dipilih, sesuai Skenario aktif dan tingkat yang dipilih: Rob (bawaan), Terendam, Hilang ke Laut. Setiap tingkat punya satu kalimat legenda.

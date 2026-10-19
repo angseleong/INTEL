@@ -91,6 +91,7 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 - [ ] Lapisan Tanggul.
 - [ ] Banner pasang minggu ini.
 - [ ] Halaman Peliput + `ranking.csv`.
+- [ ] Halaman pembuka (FR-0, `USERFLOW.md` §1.1) + banner Wilayah Cakupan di peta.
 - [ ] Halaman Tentang + semua atribusi.
 
 **Checkpoint:** semua FR di `PRD.md` §4 bisa dicoba di ponsel.
@@ -104,6 +105,7 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 
 ## Backlog
 - v1.1: Jakarta Utara.
+- v1.1: tampilan 3D setelah Uji Mundur lulus: citra tajam (Esri World Imagery atau MapTiler, cek syaratnya), gedung 3D dari OpenFreeMap, lapisan air 3D setinggi (pasang − Tinggi Tanah), kamera sinematik untuk animasi pembuka. Google Photorealistic 3D tidak dipakai karena wajib kartu kredit.
 - v1.1: lapisan area yang benar-benar terendam per tahun (citra air Sentinel-1/2), memakai ulang peta air dari Uji Mundur.
 - v2: ML untuk mengisi celah InSAR (tambak, sawah, vegetasi).
 - v2: NISAR L-band.

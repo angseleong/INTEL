@@ -1,8 +1,23 @@
 # INTEL — Alur Pengguna
 
 ## 1. Kedatangan
-1. Pengunjung membuka situs dari link. Kalau link berisi hash (`#lat,lon,zoom,tahun,skenario`), peta langsung membuka keadaan itu.
-2. Tanpa hash: peta membuka seluruh Wilayah Cakupan pada tahun 2026, Skenario Lanjut, dengan kotak pencarian aktif.
+
+### 1.1 Tanpa link khusus: halaman pembuka dulu
+Satu halaman yang digeser ke bawah, gaya void gelap (`DESIGN.md`):
+
+1. **Pembuka**: "Indonesia Tenggelam? Cek datanya." + satu kalimat (tanah turun lebih cepat daripada laut naik, diukur dari satelit). Di bawahnya Konstelasi Titik (`DESIGN.md` §8).
+2. **Kenapa ini dibuat**: tiga angka asli dengan sumbernya: Laju Penurunan Sayung–Genuk (InSAR), Kenaikan Muka Laut (BRIN), dan Bedono yang sudah jadi laut.
+3. **Cara membaca peta**: tiga tingkat (Rob, Terendam, Hilang ke Laut), dihitung tanpa Tanggul dan pompa, tahun selalu berupa Rentang Tahun.
+4. **Mulai**: "Cek lokasimu." + tombol **Mulai lihat peta** (satu-satunya tombol terisi di halaman) + keterangan "Saat ini: Semarang & Demak".
+5. Ketuk Mulai → peta terbuka. Animasi pembuka 2015 → sekarang (`DESIGN.md` §9 A1) jalan sekali di sini.
+
+Kunjungan kedua dan seterusnya: halaman pembuka tetap muncul, tapi ada tombol hantu **Langsung ke peta** di atas.
+
+### 1.2 Dengan link yang dibagikan
+Kalau link berisi hash (`#lat,lon,zoom,tahun,skenario`), halaman pembuka dilewati dan peta langsung membuka keadaan itu.
+
+### 1.3 Di peta
+Banner di atas: "Wilayah Cakupan: sementara baru Semarang & Demak". Badge "Belum tervalidasi" sampai Uji Mundur lulus.
 
 ## 2. Mengecek Lokasi Sendiri (Pengunjung)
 1. Ketik alamat atau nama Kelurahan, lalu pilih dari saran. Peta terbang ke sana.
