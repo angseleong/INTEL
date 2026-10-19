@@ -39,7 +39,8 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 
 ## ACTIVE — Blok 2: Laju Penurunan Pertama
 - [x] `fetch_insar.py`: cari stack, kirim pasangan ke HyP3, unduh hasil. Jalur naik 127, burst `272740` + `272741` IW1: 436 tanggal (Okt 2014 – Okt 2026), 869 pasangan.
-- [ ] Pemilik: jalankan workflow `insar` (submit, dry run dulu), lalu submit sungguhan, lalu download setelah HyP3 selesai.
+- [x] Pemilik: jalankan workflow `insar` submit. 869 pasangan terkirim ke HyP3, 19 Okt 2026 (run #2).
+- [ ] Pemilik: jalankan workflow `insar` download setelah HyP3 selesai (maks 14 hari, setelah itu hasil dihapus HyP3).
 - [ ] MintPy: deret waktu → Laju Penurunan + simpangan baku (GeoTIFF).
 - [ ] Jalankan di GitHub Actions, ukur lama proses dan pemakaian disk. Kalau tidak muat di runner gratis, berhenti dan bahas pilihan lain dengan pemilik.
 - [ ] Bandingkan hasilnya dengan angka paper (Semarang hingga ±10 cm/tahun, Demak hingga ±20 cm/tahun).
