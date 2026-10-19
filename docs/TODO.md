@@ -6,20 +6,18 @@
 
 ---
 
-## ACTIVE — Blok 0: Persiapan
+## DONE — Blok 0: Persiapan
 
 **Pemilik (manual):**
 - [x] Buat akun NASA Earthdata (urs.earthdata.nasa.gov). Dipakai untuk HyP3 dan unduhan Sentinel-1.
-- [ ] Jadikan repo GitHub `INTEL` publik. Menit GitHub Actions gratis tanpa batas untuk repo publik.
-- [ ] Sambungkan repo ke Vercel (Add New → Project → pilih repo INTEL).
-- [ ] Simpan `EARTHDATA_USERNAME` dan `EARTHDATA_PASSWORD` di GitHub → Settings → Secrets and variables → Actions.
-- [ ] (Opsional) Beli domain dan sambungkan di Vercel → Settings → Domains.
+- [x] Jadikan repo GitHub `INTEL` publik. Menit GitHub Actions gratis tanpa batas untuk repo publik.
+- [x] Simpan `EARTHDATA_USERNAME` dan `EARTHDATA_PASSWORD` di GitHub → Settings → Secrets and variables → Actions.
 
 **Agen:**
 - [x] Scaffold Vite + TypeScript (strict) di root, dengan skrip `dev` dan `build`.
 - [x] `pipeline/requirements.txt` + `.gitignore` (abaikan data mentah, GeoTIFF, `.venv/`).
 
-**Checkpoint:** `npm run dev` menampilkan halaman kosong tanpa error, `pip install -r pipeline/requirements.txt` berhasil, dan link `*.vercel.app` menampilkan halaman yang sama.
+**Checkpoint:** `npm run dev` menampilkan halaman kosong tanpa error, dan `pip install -r pipeline/requirements.txt` berhasil. ✅ 19 Okt 2026.
 
 ## ACTIVE — Blok 1: Cek Data
 
@@ -54,6 +52,7 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 **Checkpoint:** `python pipeline/backtest.py` mencetak persentase kecocokan ≥ `UJI_MINIMAL`. Kalau gagal, berhenti dan perbaiki sebelum lanjut.
 
 ## Blok 4: Peta Dasar
+- [ ] Pemilik: sambungkan repo ke Vercel (Add New → Project → pilih INTEL). Opsional: domain di Vercel → Settings → Domains.
 - [ ] `export.py` → `below-tide.pmtiles`, `points.pmtiles`.
 - [ ] Peta MapLibre + lapisan Area Bawah Pasang + Garis Pantai.
 - [ ] Slider tahun 2015–2050 (Masa Terukur + Masa Perkiraan) + Play.
