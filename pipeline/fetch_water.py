@@ -1,6 +1,6 @@
 """Where the water really is, per year, from Sentinel-2 (docs/DATA.md §5, Uji Mundur).
 
-    python pipeline/fetch_water.py 2017 2025   # -> work/water_2017.tif, work/water_2025.tif
+    python pipeline/fetch_water.py 2017 2025   # -> work/water_coast_2017.tif, work/water_coast_2025.tif
 
 Per 20 m pixel: share of cloud-free scenes in which it looks like water (MNDWI > 0), and how many
 cloud-free scenes there were. Scenes come from the public Sentinel-2 COG archive on AWS, no login.
@@ -12,7 +12,8 @@ import numpy as np
 
 STAC = "https://earth-search.aws.element84.com/v1/search"
 TILE = "49MDN"  # the one Sentinel-2 tile covering Sayung
-BOX = (110.46, -6.97, 110.56, -6.88)  # Kecamatan Sayung, Demak (lon/lat). ponytail: box, not the admin outline
+SAYUNG = (110.46, -6.97, 110.56, -6.88)  # Kecamatan Sayung, Demak (lon/lat). ponytail: box, not the admin outline
+BOX = (110.30, -7.02, 110.65, -6.82)  # whole Wilayah Cakupan: low and high land, so elevation has something to tell apart
 MAX_CLOUD = 60
 CLEAR_SCL = (4, 5, 6, 7)  # vegetation, bare soil, water, unclassified. Excludes cloud, shadow, no data
 WORK = Path(__file__).parent / "work"
@@ -63,7 +64,7 @@ def year_water(year):
                 gw = from_bounds(*transform_bounds("EPSG:4326", r.crs, *BOX), r.transform)
                 greens.append(r.read(1, window=gw, out_shape=shape, resampling=Resampling.average).astype("float32"))
     frac, clear = water_fraction(greens, swirs, scls)
-    out = WORK / f"water_{year}.tif"
+    out = WORK / f"water_coast_{year}.tif"
     with rasterio.open(out, "w", **(prof | {"count": 2, "dtype": "float32", "nodata": np.nan, "driver": "GTiff"})) as d:
         d.write(np.stack([frac, clear]).astype("float32"))
         d.set_band_description(1, "water_fraction")

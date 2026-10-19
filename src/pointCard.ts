@@ -44,15 +44,23 @@ export function cardHtml(points: Points | null, i: number | null, scenario: Scen
       <p class="ui">Data penurunan tanah belum tersedia di titik ini. Satelit radar sulit mengukur sawah, tambak, dan air.</p>`;
   }
   const v = (k: string) => points[k][i];
+  const elevation = v("elevation");
+  const facts = `<div class="row"><span>Tinggi Tanah</span><b>${num(Math.abs(elevation), 2)} m ${elevation < 0 ? "di bawah" : "di atas"} laut</b></div>
+    <div class="row"><span>Laju Penurunan</span><b>${num(v("subsidenceRate"), 1)} ± ${num(v("subsidenceRateStd"), 1)} cm/tahun</b></div>
+    ${v("filled") === 1 ? '<p class="est">Laju diperkirakan dari titik terukur dalam ±1 km, bukan diukur langsung di titik ini.</p>' : ""}`;
+  // Uji Mundur (DATA.md §5.1): once land is already below the tide, elevation no longer tells which plots
+  // turn into sea; tanggul, pumps and fill do. So no per-plot years there.
+  if (v(`robYear_${scenario}`) === ALREADY) {
+    return `<p class="label">Sudah di bawah Pasang Tertinggi</p>
+    <p class="ui">Tanah di sini sudah lebih rendah dari pasang tertinggi. Tergenang atau tidak sekarang bergantung pada tanggul, pompa, dan urugan, yang tidak bisa dilihat satelit.</p>
+    ${facts}`;
+  }
   const rob = range(v(`robYearMin_${scenario}`), v(`robYearMax_${scenario}`), "Sudah kena");
   const flooded = range(v(`floodedYearMin_${scenario}`), v(`floodedYearMax_${scenario}`), "Sudah terendam");
   const lost = range(v(`lostYearMin_${scenario}`), v(`lostYearMax_${scenario}`), "Sudah di bawah surut");
-  const elevation = v("elevation");
   return `<p class="label">Mulai kena Rob sesekali</p>
     <p class="big">${rob}</p>
     <div class="row"><span>Terendam tiap pasang</span><b>${flooded}</b></div>
     <div class="row"><span>Hilang ke laut</span><b>${lost}</b></div>
-    <div class="row"><span>Tinggi Tanah</span><b>${num(Math.abs(elevation), 2)} m ${elevation < 0 ? "di bawah" : "di atas"} laut</b></div>
-    <div class="row"><span>Laju Penurunan</span><b>${num(v("subsidenceRate"), 1)} ± ${num(v("subsidenceRateStd"), 1)} cm/tahun</b></div>
-    ${v("filled") === 1 ? '<p class="est">Laju diperkirakan dari titik terukur dalam ±1 km, bukan diukur langsung di titik ini.</p>' : ""}`;
+    ${facts}`;
 }
