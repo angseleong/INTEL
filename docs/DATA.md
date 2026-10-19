@@ -5,12 +5,13 @@
 | Data | Sumber | Resolusi | Lisensi | Status |
 |---|---|---|---|---|
 | Laju Penurunan | Sentinel-1 (ESA Copernicus), diolah jadi interferogram oleh [ASF HyP3](https://hyp3-docs.asf.alaska.edu/) (burst InSAR), deret waktu dengan MintPy | ±80 m | Copernicus: bebas dengan atribusi | Belum dites untuk Demak–Semarang |
-| Tinggi Tanah | [DeltaDTM](https://doi.org/10.4121/21997565) (Deltares/TU Delft), CopernicusDEM yang dikoreksi lidar ICESat-2 dan GEDI | 30 m | CC BY 4.0 (cek ulang di halaman repositori) | Belum diunduh |
-| Pasang | Stasiun pasang BIG Semarang, kode `0042SMRG01`, data per jam (InaSeaLevel / iPASOET) | 1 titik | Belum dicek | Alamat portal perlu dicek ulang |
+| Tinggi Tanah | [DeltaDTM v1.1](https://doi.org/10.4121/21997565) (Deltares/TU Delft), CopernicusDEM yang dikoreksi lidar ICESat-2 dan GEDI. CRS `EPSG:9518` (WGS84 + tinggi EGM2008). Dipotong di +10 m. Galat di Indonesia: MAE 0,50 m, RMSE 0,67 m ([paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC10917791/)) | 30 m | CC BY 4.0 + atribusi Copernicus WorldDEM-30 | Belum diunduh. Hanya ada zip per benua (Asia 17,3 GB) atau koleksi Google Earth Engine `users/maartenpronk/deltadtm/v1`. Coba ambil satu tile dengan range request ke zip |
+| Pasang | Stasiun **IOC `sema` Semarang** (operator BIG), -6,948 / 110,420. Data per menit, arsip mulai 2015, lewat API `ioc-sealevelmonitoring.org/service.php?query=data&code=sema` | 1 titik | Data IOC, bebas dengan atribusi (cek syaratnya) | ✅ Aktif, diuji 19 Okt 2026. Portal lama BIG (`ina-sealevelmonitoring.big.go.id`) tidak bisa diakses |
 | Kenaikan Muka Laut | BRIN: 2,4–4,3 mm/tahun. Pembanding: proyeksi IPCC AR6 (NASA Sea Level Projection Tool) | – | Publik | Angka BRIN dari pemberitaan 2026, cari dokumen asli |
-| Tanggul | OpenStreetMap | vektor | ODbL | Tag OSM yang dipakai belum dipilih |
-| Batas Kelurahan | Kandidat: BIG, BPS, geoBoundaries | vektor | Belum dicek | Belum dicek |
-| Peta dasar citra | Belum dipilih (harus gratis tanpa kartu kredit) | – | – | Belum dipilih |
+| Selisih geoid–laut (MDT) | Produk Mean Dynamic Topography, kandidat DTU22 MDT atau CNES-CLS22 | ±12 km | Belum dicek | Belum diunduh. Lihat §2.1 |
+| Tanggul | OpenStreetMap, tag `man_made=dyke`, `man_made=embankment`, `embankment=yes`, `man_made=breakwater`, `barrier=wall` + `wall=flood_wall`. **Bukan** dari nama: "Jalan Tanggul …" adalah nama jalan | vektor | ODbL | ✅ 368 garis di Semarang–Demak (309 `man_made=embankment`). Tag embankment juga dipakai untuk tanggul jalan dan rel, jadi difilter dengan jarak ke pantai |
+| Batas Kelurahan | Kandidat utama: BIG via geoportal `tanahair.indonesia.go.id`. Cadangan: geodatabase desa Kementan edisi Mei 2021, layanan peta BPS SP2020 | vektor | Belum dicek | Belum diunduh |
+| Peta dasar citra | [EOX Sentinel-2 cloudless](https://s2maps.eu), WMTS tanpa kunci API | ±10 m | Tahun 2018–2025: CC BY-NC-SA 4.0 (INTEL non-komersial, jadi boleh). 2016: CC BY 4.0. Wajib atribusi "Sentinel-2 cloudless - https://s2maps.eu by EOX IT Services GmbH" | ✅ Dipilih |
 | Pencarian alamat | Nominatim (OpenStreetMap), maks 1 permintaan/detik | – | ODbL | – |
 
 Data yang **tidak** dipakai di v1 dan alasannya:
@@ -35,13 +36,22 @@ Tahun Terendam = tahun pertama saat Tinggi Tanah(t) < Pasang Harian(t)
 - Pasang Tertinggi dan Pasang Harian dihitung dari data pasang per jam beberapa tahun terakhir: Pasang Tertinggi = pasang tertinggi tahunan rata-rata (tanpa badai), Pasang Harian = rata-rata pasang tinggi harian.
 - Peta (Area Bawah Pasang, Garis Pantai) memakai Pasang Tertinggi. Kartu titik menampilkan Tahun Rob dan Tahun Terendam.
 
-- `t0` = tahun acuan Tinggi Tanah dari DeltaDTM. **Perlu dicek**: DeltaDTM dibangun dari data beberapa tahun, jadi tahun acuannya harus dipilih dan ditulis di sini.
-- **Datum vertikal harus sama.** DeltaDTM dan data pasang BIG bisa memakai acuan tinggi yang berbeda (geoid vs datum stasiun). Konversinya harus dicek sebelum hitung pertama. Ini sumber kesalahan terbesar kalau terlewat.
 - Laju Penurunan dari InSAR diukur searah pandang satelit. v1 menganggap gerakan tanah hanya vertikal. Kalau data orbit naik dan turun tersedia, gabungkan keduanya.
 
-### 2.1 Skenario
+### 2.1 Datum Vertikal
+
+Semua tinggi harus diukur dari acuan yang sama: **rata-rata muka laut (MSL) di pesisir Semarang**. Ada tiga jebakan:
+
+1. **DeltaDTM mengukur dari geoid EGM2008, bukan dari muka laut.** Paper DeltaDTM menganggap keduanya sama, padahal di perairan Indonesia muka laut rata-rata 0,5–1,2 m di atas EGM2008 ([ITB](https://lppm.itb.ac.id/?p=48618)). Kalau tidak dikoreksi, semua Tinggi Tanah kebaca terlalu tinggi setengah meter atau lebih, setara 5 tahun atau lebih di titik yang turun 10 cm/tahun.
+   **Koreksi**: `Tinggi Tanah (dari MSL) = DeltaDTM − MDT`, dengan MDT dari produk §1 di lokasi Semarang.
+2. **Stasiun pasang ikut turun bersama tanah, dan datumnya pernah berubah.** Stasiun `sema` dipasang ulang lebih tinggi (catatan IOC: "Re-Installation, same location, but elevated"). Nilai mentahnya sekitar 1,2 m di 2015 dan -4,2 m di 2026, jadi angka mentah tidak bisa dipakai.
+   **Koreksi**: Pasang Tertinggi dan Pasang Harian dihitung sebagai **tinggi di atas rata-rata stasiun itu sendiri** pada jendela 1 tahun, tanpa melewati tanggal pemasangan ulang. Hasilnya sudah relatif terhadap MSL dan tidak bergantung pada datum stasiun.
+3. **Tahun acuan DeltaDTM (`t0`) tidak tunggal.** Bentuk permukaannya dari CopernicusDEM 2012–2015, lalu dikoreksi titik lidar ICESat-2 dan GEDI 2018–2023. Di tanah yang turun 10 cm/tahun, beda 5 tahun = 50 cm.
+   **Langkah**: bandingkan DeltaDTM dengan titik ICESat-2 bertanggal di Sayung, koreksi tiap titik ICESat-2 ke tahun yang sama memakai deret waktu InSAR, lalu pilih `t0` yang selisihnya paling kecil. Nilai awal sebelum dicek: `t0 = 2020`.
+
+### 2.2 Skenario
 - **Skenario Lanjut**: Laju Penurunan tetap sama setiap tahun.
-- **Skenario Henti**: pengambilan air tanah dihentikan mulai 2027, Laju Penurunan menyusut linear sampai nol dalam `HENTI_TAHUN` tahun. Nilai awal `HENTI_TAHUN = 10`. **Perlu sumber**: cari contoh kota yang penurunannya berhenti setelah air tanah dibatasi (misalnya Tokyo atau Bangkok) dan sesuaikan angkanya.
+- **Skenario Henti**: pengambilan air tanah dihentikan mulai 2027, Laju Penurunan menyusut linear sampai nol dalam `HENTI_TAHUN` tahun. Nilai `HENTI_TAHUN = 10`, dari Tokyo: setelah pengambilan air tanah dibatasi mulai awal 1960-an, penurunan tanah berhenti sekitar 10 tahun kemudian ([PIAHS 2015](https://piahs.copernicus.org/articles/372/485/2015/piahs-372-485-2015.pdf), [JICA](https://www.jica.go.jp/english/activities/issues/water/n_files/theme_slides_07.pdf)). Ini skenario optimis. Bangkok, yang mengatur air tanah sejak 1977, sampai sekarang masih turun walau jauh lebih pelan, karena pengaturannya baru efektif setelah ada pasokan air PAM pengganti. Halaman Tentang harus menyebut bahwa Skenario Henti mengikuti kasus Tokyo.
 
 ## 3. Ketidakpastian
 

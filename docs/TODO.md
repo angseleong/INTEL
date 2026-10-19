@@ -23,13 +23,15 @@
 
 Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode hitung.
 
-- [ ] Cek portal pasang BIG masih aktif, unduh contoh data stasiun `0042SMRG01`, catat datum vertikalnya.
-- [ ] Unduh potongan DeltaDTM untuk Demak–Semarang, catat datum vertikal dan tahun acuannya (`t0`).
-- [ ] Cek konversi datum antara DeltaDTM dan data pasang BIG. Tulis caranya di `DATA.md` §2.
-- [ ] Pilih sumber batas Kelurahan, catat lisensinya.
-- [ ] Pilih peta dasar citra yang gratis tanpa kartu kredit, catat lisensinya.
-- [ ] Pilih tag OSM untuk Tanggul.
-- [ ] Cari sumber untuk `HENTI_TAHUN` (Skenario Henti), tulis di `DATA.md` §2.1.
+- [x] Cek sumber data pasang. Portal BIG tidak bisa diakses, diganti stasiun IOC `sema` (arsip mulai 2015). Datumnya pernah berubah, caranya di `DATA.md` §2.1.
+- [x] Cek DeltaDTM: datum EGM2008, tahun acuan campuran 2012–2023. Lihat `DATA.md` §2.1.
+- [x] Tulis cara menyamakan datum DeltaDTM dan data pasang di `DATA.md` §2.1.
+- [ ] Unduh MDT (DTU22 atau CNES-CLS22), catat nilainya di Semarang dan lisensinya.
+- [ ] Ambil satu tile DeltaDTM untuk Demak–Semarang tanpa mengunduh Asia.zip 17 GB (range request ke zip, atau Earth Engine).
+- [ ] Unduh batas Kelurahan Demak + Semarang dari BIG, catat lisensinya.
+- [x] Pilih peta dasar citra: EOX Sentinel-2 cloudless.
+- [x] Pilih tag OSM untuk Tanggul.
+- [x] Cari sumber `HENTI_TAHUN`: Tokyo, ±10 tahun. Lihat `DATA.md` §2.2.
 
 **Checkpoint:** `DATA.md` §1 tidak punya baris "belum dicek" lagi.
 
