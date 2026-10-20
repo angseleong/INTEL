@@ -84,6 +84,7 @@ Setiap file menyimpan tanggal pembaruannya (metadata PMTiles atau field `updated
 
 - Vite + TypeScript strict, tanpa framework UI. Tiga halaman HTML biasa.
 - MapLibre GL JS + protokol `pmtiles`.
+- GSAP + ScrollTrigger hanya untuk animasi scroll di halaman pembuka (ADR-0006). Tidak dimuat di halaman peta.
 - Slider: `map.setFilter(layer, ["all", ["==", "year", y], ["==", "scenario", s]])`.
 - Geser bandingkan: dua instance MapLibre yang posisinya disinkronkan, peta kanan dipotong dengan `clip-path`. Ditulis sendiri, tanpa plugin.
 - URL hash: `#lat,lon,zoom,tahun,skenario`.

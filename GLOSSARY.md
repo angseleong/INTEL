@@ -20,6 +20,10 @@ _Hindari_: pasang normal, MHHW, pasang rata-rata
 Seberapa cepat rata-rata permukaan laut naik dari tahun ke tahun, dalam mm per tahun.
 _Hindari_: sea level rise, naiknya air laut
 
+**Kartu Upaya**:
+Kartu di halaman Apa yang Bisa Dilakukan tentang satu upaya nyata menahan rob atau penurunan tanah (Tanggul, mangrove, pembatasan air tanah, pompa): apa, kapan, siapa, dan dampaknya menurut sumber dan data INTEL.
+_Hindari_: solusi, program, proyek mitigasi
+
 **Tanggul**:
 Bangunan penahan air laut di pesisir. INTEL hanya menunjukkan letaknya dan tidak menghitung efeknya.
 _Hindari_: sea wall, giant sea wall (kecuali nama proyek)

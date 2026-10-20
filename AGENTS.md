@@ -20,7 +20,7 @@ Baca sebelum mengambil keputusan desain atau memulai tugas:
 - **Web**: Vite + TypeScript (strict), tanpa framework UI. Peta pakai MapLibre GL JS, data peta dalam PMTiles.
 - **Tanpa server, tanpa database** (lihat ADR-0001). Kalau sebuah fitur butuh menulis data dari Pengunjung, berhenti dan tanya pemilik.
 - **Hosting**: Vercel, deploy otomatis tiap push. Otomasi pipeline: GitHub Actions (terjadwal, tanpa campur tangan pemilik). Arsip Rilis Data: GitHub Releases.
-- **Dependensi**: tanya pemilik sebelum menambah dependensi web selain `maplibre-gl`, `pmtiles`, `vite`, `typescript`.
+- **Dependensi**: tanya pemilik sebelum menambah dependensi web selain `maplibre-gl`, `pmtiles`, `vite`, `typescript`, `gsap` (hanya halaman pembuka, ADR-0006).
 
 ## 2. Aturan Data
 - Setiap angka di layar harus bisa ditelusuri ke sumber di `docs/DATA.md`. Tidak ada angka karangan atau angka contoh di build produksi.

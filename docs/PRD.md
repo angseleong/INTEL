@@ -46,8 +46,9 @@ Proyek pribadi, open source, biaya Rp0.
 ## 4. Kebutuhan Fungsional
 
 ### FR-0 — Halaman Pembuka
-- Halaman yang digeser sebelum peta: pembuka, kenapa INTEL dibuat (tiga angka asli bersumber), cara membaca dua tingkat, lalu tombol **Mulai lihat peta**.
-- Menyebut Wilayah Cakupan saat ini ("Saat ini: Semarang & Demak").
+- Scrollytelling sebelum peta (`USERFLOW.md` §1.1): hero INTEL di atas peta Indonesia dengan air yang naik, masalah penurunan tanah dan kota-kota yang terdampak (angka asli bersumber), chip kota, Cerita Kota, cara membaca dua tingkat, lalu tombol **Cek lokasimu**.
+- Chip kota menyebut Wilayah Cakupan saat ini. Kota yang belum dihitung tampil dengan label "belum tercakup".
+- Cerita Kota untuk Demak dan Semarang: kejadian nyata, foto berlisensi (`DESIGN.md` §13), geser sebelum/sesudah Air Nyata 2017 vs 2025.
 - Dilewati kalau link berisi hash. Kunjungan berikutnya mendapat tombol "Langsung ke peta".
 
 ### FR-1 — Peta
@@ -87,6 +88,11 @@ Proyek pribadi, open source, biaya Rp0.
 
 ### FR-9 — Halaman Tentang
 - Asal nama (Kolam Intel ITB), cara hitung dalam bahasa awam, keterbatasan, atribusi dan lisensi setiap dataset.
+
+### FR-10 — Apa yang Bisa Dilakukan
+- Dibuka dari tombol di peta (`USERFLOW.md` §1.4).
+- Kartu Upaya untuk upaya yang sudah dilakukan: apa, kapan, siapa, dampak dari berita atau laporan, dan Laju Penurunan sebelum dan sesudah upaya di lokasinya dari InSAR kalau datanya cukup.
+- Perbandingan Skenario Lanjut vs Henti, plus mangrove dan Tanggul dengan catatan bahwa Tanggul tidak menghentikan tanah turun.
 
 ## 5. Syarat Rilis v1
 1. **Uji Mundur lulus**: dengan data InSAR 2015–2017 saja, prediksi 2025 harus lebih baik dari tebakan acak di seluruh pesisir Semarang–Demak (AUC ≥ 0,7 dan ketepatan ≥ 2× acak). Kriteria di `DATA.md` §5. ✅ Lulus 20 Okt 2026 (AUC 0,87, 3,9× acak).

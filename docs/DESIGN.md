@@ -7,6 +7,14 @@ Panggung hitam pekat. Peta satelit dan data adalah satu-satunya yang menyala. In
 
 Tetap tenang dan bisa dipercaya, bukan film bencana. Gelap di sini artinya fokus, bukan seram. Kalau ragu antara dramatis dan jujur, pilih jujur.
 
+### 1.1 Halaman Pembuka: makin dalam makin gelap
+Halaman pembuka bercerita lewat warna latar. Awalnya terang seperti langit di atas daratan. Tiap kali digeser, latar bergeser pelan ke biru tua, seolah Pengunjung ikut turun ke bawah air. Peta yang void gelap di akhir terasa seperti dasar laut.
+
+- Gradien latar dikendalikan posisi scroll, dari Langit `#dfe9ef` → Laut Dalam `#0b2a4a` → Void `#000000`. Ini satu-satunya gradien di luar logo.
+- Teks di bagian terang memakai Void. Begitu latar cukup gelap, teks berganti ke Tulang. Kontras teks tetap minimal 4,5:1 di setiap titik gradien.
+- Foto ditampilkan full layar dengan gradasi gelap di bagian bawah supaya teks Tulang terbaca (§13).
+- Pilihan lain yang ditolak: void gelap dari awal (dingin, kurang manusiawi untuk foto warga), dokumenter terang ala long-read (kurang terasa "pelan-pelan tenggelam"), foto hitam-putih dengan warna alarm (terasa menakut-nakuti).
+
 ## 2. Warna
 
 | Nama | Nilai | Token | Peran |
@@ -19,11 +27,12 @@ Tetap tenang dan bisa dipercaya, bukan film bencana. Gelap di sini artinya fokus
 | Air | `#4da3ff` | `--color-water` | Area Bawah Pasang (opasitas 45%). Hanya untuk data, tidak pernah untuk tombol |
 | Laut Pasang | `#123f86` | `--color-sea` | Air Nyata dari foto satelit. Hanya untuk data |
 | Sorot | `#ffb829` | `--color-spark` | Garis Pantai tahun terpilih, angka Rentang Tahun, label kecil kapital. 12,1:1 di atas hitam |
-| Laut Dalam | `#0b2a4a` | `--color-deep` | Ujung gradien logo saja |
+| Laut Dalam | `#0b2a4a` | `--color-deep` | Ujung gradien logo dan titik tengah gradien halaman pembuka |
+| Langit | `#dfe9ef` | `--color-sky` | Awal gradien halaman pembuka saja |
 
 Aturan:
 - Biru Pasang hanya untuk tombol aksi utama, satu per tampilan. Air hanya untuk data. Keduanya sengaja beda terang supaya tombol tidak terbaca sebagai data.
-- Tidak ada merah. Tidak ada gradien di komponen UI, gradien hanya di logo.
+- Tidak ada merah. Tidak ada gradien di komponen UI. Gradien hanya di logo dan latar halaman pembuka (§1.1).
 - Link berwarna Sorot atau Tulang, tidak pernah biru bawaan browser.
 
 ## 3. Lapisan Peta
@@ -81,6 +90,12 @@ Seperti referensi, hierarki datang dari **ukuran dan tracking, bukan ketebalan**
 - **Ponsel dulu.** Peta penuh layar. Logo dan menu hantu di kiri atas, langsung di atas peta. Slider dan tombol Play menempel di bawah. Kartu titik naik dari bawah sebagai lembar.
 - **Desktop**: kartu titik di panel kanan selebar 380px, slider tetap di bawah.
 
+### Halaman Pembuka
+- Scrollytelling: setiap bagian setinggi satu layar (`100svh`), satu ide per layar. Urutan di `USERFLOW.md` §1.1.
+- Peta Indonesia di hero dan bagian "Masalahnya" adalah satu instance MapLibre yang menempel di belakang teks. Peta pindah dengan `flyTo` antar bagian, interaksi dimatikan supaya scroll tidak tertelan.
+- Chip kota: pil hantu. Yang tercakup: teks Tulang. Yang belum: teks Abu + label "BELUM TERCAKUP".
+- Cerita kota: foto full layar, teks pendek di atasnya (maksimal ±40 kata per layar), satu angka besar Sorot per layar.
+
 ### Halaman Tentang & Peliput
 - Latar Void penuh, lebar konten maksimal 1200px.
 - Pola dua kolom asimetris seperti referensi: judul besar di kiri, teks badan di kanan, label Sorot kecil di atas teks badan. Jarak antar bagian 60–96px.
@@ -110,14 +125,18 @@ Animasi dipakai untuk **menunjukkan perubahan waktu**, bukan hiasan. Setiap anim
 | A7 | Geser bandingkan | Pembatas mengikuti jari tanpa jeda. Saat dibuka, pembatas meluncur dari kanan ke tengah | 400 ms |
 | A8 | Hero halaman Tentang | Konstelasi Titik (§8): titik ukur turun sesuai Laju Penurunan masing-masing, sambil tahun di pojok berjalan 2015 → 2050 | loop 12 dtk |
 | A9 | Halaman Tentang & Peliput | Setiap bagian muncul pelan (naik 12px + pudar) saat digulir ke layar | 400 ms |
+| B1 | Hero halaman pembuka | Air naik dari bawah layar mengikuti scroll sampai menutup judul INTEL. Permukaannya bergelombang pelan | ikut scroll |
+| B2 | Halaman pembuka | Latar bergeser Langit → Laut Dalam → Void (§1.1) | ikut scroll |
+| B3 | Bagian "Masalahnya" | Peta Indonesia `flyTo` antar kota, titik kota menyala satu per satu, angka menghitung naik | ikut scroll |
+| B4 | Cerita kota | Foto muncul pelan dan sedikit membesar (zoom 1,0 → 1,05). Geser sebelum/sesudah 2017 vs 2025 | ikut scroll |
 | A10 | Tombol | Ditekan: mengecil ke 0,97. Hover (desktop): terang sedikit | 150 ms |
 
 ### 9.2 Aturan Gerak
 - Kurva: `cubic-bezier(0.2, 0.7, 0.2, 1)` untuk semuanya. Masuk cepat, berhenti halus.
 - Token durasi: `--dur-fast: 150ms`, `--dur-base: 300ms`, `--dur-slow: 600ms`.
 - Hanya animasikan `opacity` dan `transform` di DOM, dan properti cat (`fill-opacity`, `line-dasharray`) di MapLibre. Jangan animasikan ukuran atau tata letak.
-- Tanpa library animasi. Cukup CSS transition, Web Animations API, dan animasi bawaan MapLibre.
-- **`prefers-reduced-motion`**: A1, A3, A8, A9 mati. A2, A5, A6 langsung lompat tanpa transisi. A4 jadi `jumpTo`.
+- Animasi yang mengikuti scroll (B1–B4) memakai GSAP + ScrollTrigger (ADR-0006). Sisanya cukup CSS transition, Web Animations API, dan animasi bawaan MapLibre. GSAP tidak dimuat di halaman peta.
+- **`prefers-reduced-motion`**: A1, A3, A8, A9, B1, B3, B4 mati. B2 langsung berganti per bagian tanpa gradien bergerak. A2, A5, A6 langsung lompat tanpa transisi. A4 jadi `jumpTo`.
 - A1 hanya sekali per perangkat. Ingatannya disimpan di `localStorage` (dibungkus `try/catch`). Link dengan hash langsung membuka keadaan di hash, tanpa A1.
 
 ## 10. Logo
@@ -135,7 +154,14 @@ Peta pulau Jawa yang separuh bawahnya terpotong garis air, seperti Kolam Intel d
 - Informasi tidak boleh hanya disampaikan lewat warna. Kartu titik selalu menuliskan angkanya, dan Masa Terukur/Perkiraan selalu punya label teks.
 - Animasi Play dan Konstelasi Titik mengikuti `prefers-reduced-motion`.
 
-## 13. Token CSS
+## 13. Foto
+- Sumber: Wikimedia Commons berlisensi CC (CC0, CC BY, CC BY-SA) dan foto milik pemilik proyek. **Tidak** mengambil foto media berita atau LSM tanpa izin tertulis.
+- Setiap foto punya keterangan kecil (gaya Keterangan): tempat, tahun, fotografer, lisensi. Daftar lengkap juga ada di halaman Tentang.
+- Hanya foto kejadian nyata di tempat yang disebut. Tidak memakai foto kota lain sebagai ilustrasi.
+- Wajah warga yang bisa dikenali hanya dipakai kalau fotonya dari Commons dengan izin yang jelas atau difoto sendiri dengan persetujuan.
+- Full layar, `object-fit: cover`, gradasi Void 0 → 80% di sepertiga bawah. Format `webp`, lebar maksimal 1600px, dimuat `loading="lazy"` kecuali foto pertama.
+
+## 14. Token CSS
 
 ```css
 :root {
@@ -148,6 +174,7 @@ Peta pulau Jawa yang separuh bawahnya terpotong garis air, seperti Kolam Intel d
   --color-sea: #123f86;
   --color-spark: #ffb829;
   --color-deep: #0b2a4a;
+  --color-sky: #dfe9ef;
   --panel: rgb(0 0 0 / 0.85);
 
   --font: "Inter", system-ui, sans-serif;

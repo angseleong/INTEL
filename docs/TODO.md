@@ -97,7 +97,9 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 - [ ] Lapisan Tanggul.
 - [ ] Banner pasang minggu ini.
 - [ ] Halaman Peliput + `ranking.csv`.
-- [ ] Halaman pembuka (FR-0, `USERFLOW.md` §1.1) + banner Wilayah Cakupan di peta.
+- [ ] Halaman pembuka scrollytelling (FR-0, `USERFLOW.md` §1.1, `DESIGN.md` §1.1, §9 B1–B4) + banner Wilayah Cakupan di peta.
+- [ ] Cerita Kota Demak dan Semarang: kumpulkan foto CC dari Wikimedia Commons, catat atribusinya, tulis angka KK dan sumbernya di `DATA.md` §6.
+- [ ] Halaman Apa yang Bisa Dilakukan (FR-10): riset Kartu Upaya (apa, kapan, siapa, sumber), lalu hitung Laju Penurunan sebelum/sesudah upaya dari InSAR per lokasi.
 - [ ] Halaman Tentang + semua atribusi.
 
 **Checkpoint:** semua FR di `PRD.md` §4 bisa dicoba di ponsel.

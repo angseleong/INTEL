@@ -3,14 +3,17 @@
 ## 1. Kedatangan
 
 ### 1.1 Tanpa link khusus: halaman pembuka dulu
-Satu halaman yang digeser ke bawah, gaya void gelap (`DESIGN.md`):
+Satu halaman scrollytelling: tiap kali digeser, layar berganti satu ide. Latarnya makin dalam makin gelap (`DESIGN.md` §1.1). Urutannya:
 
-1. **Pembuka**: "Indonesia Tenggelam? Cek datanya." + satu kalimat skala Indonesia (dari Medan sampai Pantura Jawa, tanah pesisir turun lebih cepat daripada laut naik). Di bawahnya Konstelasi Titik (`DESIGN.md` §8).
-2. **Bukan cuma satu kota**: jumlah orang di kawasan berisiko Pantura, daftar kota pesisir yang turun, dan kota yang turun lebih cepat dari Jakarta. Angka dan sumbernya di `DATA.md` §6.
-3. **Dampaknya ke orang**: Bedono (KK yang direlokasi), Timbulsloko (KK yang hidup di tengah genangan), sawah Pantura yang terdampak. Hanya kejadian nyata, bukan perkiraan.
-4. **Cara membaca peta**: dua tingkat, Rob (di bawah pasang tertinggi) dan Pasang Harian (di bawah pasang harian), plus Air Nyata dari foto satelit, dihitung tanpa Tanggul dan pompa, tahun selalu berupa Rentang Tahun.
-5. **Mulai**: "Cek lokasimu." + tombol **Mulai lihat peta** (satu-satunya tombol terisi di halaman) + chip kota: yang sudah dihitung (Semarang, Demak) menyala, yang menyusul abu-abu. Baru di sini dijelaskan bahwa INTEL sementara menghitung Semarang & Demak.
-6. Ketuk Mulai → peta terbuka. Animasi pembuka 2015 → sekarang (`DESIGN.md` §9 A1) jalan sekali di sini.
+1. **Hero**: wordmark **INTEL** besar di atas peta Indonesia, tagline berupa pertanyaan "Indonesia Tenggelam? Cek datanya."
+2. **Air naik**: makin digeser, air naik dari bawah layar sampai menutup judul (`DESIGN.md` §9 B1). Air menutup layar, bukan pulau di peta, supaya tidak terbaca sebagai klaim "Indonesia tenggelam".
+3. **Masalahnya**: tanah pesisir turun pelan, beberapa cm per tahun, tidak terasa sampai rob datang tiap bulan. Peta Indonesia menyalakan kota-kota pesisir yang turun (Jakarta, Pekalongan, Semarang, Demak, Medan, dll.) dan jumlah orang di kawasan berisiko. Angka dan sumber di `DATA.md` §6.
+4. **Cek tempatmu**: chip kota. Yang sudah dihitung (Semarang, Demak) menyala. Yang belum tetap tampil dengan label "belum tercakup". Di sini dijelaskan bahwa INTEL sementara baru menghitung Semarang & Demak.
+5. **Cerita kota**: ketuk chip, lalu muncul cerita kota itu (±3 layar): apa yang sudah terjadi, siapa yang terdampak, foto, dan geser sebelum/sesudah citra satelit 2017 vs 2025 (Air Nyata). Hanya kejadian nyata, bukan perkiraan.
+   - **Demak**: Bedono (KK yang direlokasi), Timbulsloko (KK yang hidup di tengah genangan).
+   - **Semarang**: Tambak Lorok, rob di kawasan kota, tembok laut yang retak.
+6. **Peta**: tombol **Cek lokasimu** (satu-satunya tombol terisi di layar ini) membuka peta di kota yang dipilih. Sebelum peta, satu layar cara membaca: dua tingkat (Rob dan Pasang Harian), Air Nyata, dihitung tanpa Tanggul dan pompa, tahun selalu berupa Rentang Tahun. Animasi pembuka 2015 → sekarang (`DESIGN.md` §9 A1) jalan sekali di sini.
+7. **Mitigasi**: di peta ada tombol hantu **Apa yang bisa dilakukan?**, karena di ponsel peta penuh layar menelan gerakan scroll. Isinya ada di §1.4.
 
 Kunjungan kedua dan seterusnya: halaman pembuka tetap muncul, tapi ada tombol hantu **Langsung ke peta** di atas.
 
@@ -19,6 +22,17 @@ Kalau link berisi hash (`#lat,lon,zoom,tahun,skenario`), halaman pembuka dilewat
 
 ### 1.3 Di peta
 Banner di atas: "Wilayah Cakupan: sementara baru Semarang & Demak". Badge "Belum tervalidasi" sampai Uji Mundur lulus.
+
+### 1.4 Apa yang bisa dilakukan (mitigasi)
+Dibuka dari tombol di peta. Satu halaman gulir, dua bagian:
+
+1. **Yang sudah dilakukan**: satu Kartu Upaya per upaya nyata (misalnya tembok laut Tambak Lorok, Tol Tanggul Laut Semarang–Demak, mangrove dan pemecah ombak di Bedono/Timbulsloko, pembatasan air tanah, polder dan pompa). Isi kartu: apa, kapan, siapa, dan dampaknya. Dampak ditulis dari dua sumber:
+   - berita atau laporan, dengan link sumber;
+   - data INTEL sendiri di lokasi itu, yaitu Laju Penurunan sebelum dan sesudah upaya dari InSAR (misalnya "di belakang tembok ini tanah masih turun ±X cm/tahun").
+   Kalau data InSAR di lokasi itu kurang, kartu menulis "Dampak ke penurunan tanah belum bisa diukur".
+2. **Yang masih bisa dilakukan**: perbandingan Skenario Lanjut vs Henti (berapa tahun yang bisa diselamatkan kalau air tanah berhenti disedot), lalu mangrove dan Tanggul, dengan catatan jujur: Tanggul menahan laut, tapi tidak menghentikan tanah turun.
+
+Tanggul tetap hanya garis informasi. Kartu Upaya tidak boleh menyiratkan area di belakangnya aman atau pasti tergenang.
 
 ## 2. Mengecek Lokasi Sendiri (Pengunjung)
 1. Ketik alamat atau nama Kelurahan, lalu pilih dari saran. Peta terbang ke sana.
