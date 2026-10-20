@@ -12,7 +12,7 @@
 | Tanggul | OpenStreetMap, tag `man_made=dyke`, `man_made=embankment`, `embankment=yes`, `man_made=breakwater`, `barrier=wall` + `wall=flood_wall`. **Bukan** dari nama: "Jalan Tanggul …" adalah nama jalan | vektor | ODbL | ✅ 368 garis di Semarang–Demak (309 `man_made=embankment`). Tag embankment juga dipakai untuk tanggul jalan dan rel, jadi difilter dengan jarak ke pantai |
 | Batas Kelurahan | [HDX COD-AB Indonesia](https://data.humdata.org/dataset/cod-ab-idn), sumber BPS, file `idn_admin4` (berlaku 1 April 2020) | vektor | CC BY-IGO | ✅ 81.912 desa/kelurahan. Demak (`ID3321`) 249, Kota Semarang (`ID3374`) 177. Bedono `ID3321040015` dan Timbulsloko `ID3321040016` ada. Saring pakai kode, karena nama "Semarang" juga dipakai Kabupaten Semarang (`ID3322`). `idn_admin4.shp` 183 MB terkompresi |
 | Peta dasar citra | [EOX Sentinel-2 cloudless](https://s2maps.eu), WMTS tanpa kunci API | ±10 m | Tahun 2018–2025: CC BY-NC-SA 4.0 (INTEL non-komersial, jadi boleh). 2016: CC BY 4.0. Wajib atribusi "Sentinel-2 cloudless - https://s2maps.eu by EOX IT Services GmbH" | ✅ Dipilih |
-| Pencarian alamat | Nominatim (OpenStreetMap), maks 1 permintaan/detik | – | ODbL | – |
+| Pencarian alamat | Nominatim (OpenStreetMap), maks 1 permintaan/detik | – | ODbL | | ✅ Dicari hanya saat Enter, dibatasi kotak Wilayah Cakupan |
 
 Data yang **tidak** dipakai di v1 dan alasannya:
 - **FABDEM**: lisensi non-komersial (CC BY-NC-SA). DeltaDTM lebih bebas dan khusus pesisir.
@@ -48,6 +48,9 @@ Semua tinggi harus diukur dari acuan yang sama: **rata-rata muka laut (MSL) di p
    **Koreksi**: sensor ini sering bergeser level, bukan cuma waktu dipasang ulang. Jadi tinggi pasang dihitung **di atas muka laut rata-rata setempat**, yaitu median berjalan 31 hari, tanpa melewati lompatan level. Hari dengan rentang pasang tidak wajar (di bawah 0,2 m atau di atas 2 m) dibuang. Pasang Harian = rata-rata air tinggi harian. Pasang Tertinggi = air tinggi harian tertinggi dalam setahun, dirata-rata antar tahun. Keterbatasan: jendela 31 hari juga menghapus siklus musiman muka laut (±10–15 cm), jadi Pasang Tertinggi sedikit terlalu rendah.
 3. **Tahun acuan DeltaDTM (`t0`) tidak tunggal.** Bentuk permukaannya dari CopernicusDEM 2012–2015, lalu dikoreksi titik lidar ICESat-2 dan GEDI 2018–2023. Di tanah yang turun 10 cm/tahun, beda 5 tahun = 50 cm.
    **Hasil (19 Okt 2026)**: dibandingkan dengan 1.604 titik tanah ICESat-2 bertanggal di Sayung–Genuk (laju ≥ 5 cm/tahun), DeltaDTM paling cocok dengan keadaan tanah tahun **±2021** (median 2021,4; dari data 2019: 2021,9; dari data 2020: 2021,0). Dipakai `t0 = 2021`. Kalau DeltaDTM dari 2012–2015, ia akan ±0,6 m lebih tinggi dari ICESat-2 2019–2020, dan itu tidak terjadi.
+
+### 2.1a Pasang Minggu Ini
+Banner pasang memakai **perkiraan pasang** dari stasiun IOC `sema`: analisis harmonik (Q1, O1, P1, K1, N2, M2, S2, K2, M4, MS4) dengan kuadrat terkecil pada 365 hari data terakhir, tinggi di atas muka laut rata-rata setempat (§2.1 no. 2). `fetch_tide.py` menulis air tinggi harian 120 hari ke depan ke `tide.json`, dan browser memilih yang tertinggi dalam 7 hari ke depan. Uji pada 30 hari terakhir yang tidak ikut dihitung: tinggi air harian meleset rata-rata 7 cm, jamnya tepat (median 0 jam). Tanpa koreksi nodal (siklus 18,6 tahun) dan tanpa siklus musiman muka laut, jadi angka tingginya perkiraan kasar.
 
 ### 2.2 Skenario
 - **Skenario Lanjut**: Laju Penurunan tetap sama setiap tahun.

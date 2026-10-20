@@ -27,6 +27,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 
 html, body {
   margin: 0;
@@ -45,13 +46,26 @@ html, body {
 .ui { font-size: 15px; line-height: 1.3; margin: var(--space-1) 0 0; color: var(--color-mist); }
 .caption { font-size: 12px; line-height: 1.5; color: var(--color-mist); margin: var(--space-2) 0 0; }
 
-.top {
-  position: fixed; top: var(--space-3); left: var(--space-3); right: var(--space-3);
-  display: flex; align-items: center; gap: var(--space-2); pointer-events: none;
-}
+.top { position: fixed; top: var(--space-2); left: var(--space-2); right: var(--space-2); pointer-events: none; }
+@media (min-width: 900px) { .top { right: calc(380px + var(--space-6)); max-width: 520px; } }
+.toprow { display: flex; align-items: center; gap: var(--space-2); }
 .brand { font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-shadow: 0 0 8px #000; }
+.search { flex: 1; pointer-events: auto; }
+.search input {
+  width: 100%; min-height: 44px; border: 0; border-radius: var(--radius-pill); padding: 0 var(--space-3);
+  background: var(--panel); color: var(--color-bone); font: 400 16px var(--font);
+}
+.search input::placeholder { color: var(--color-ash); }
+.results { list-style: none; margin: var(--space-1) 0 0; padding: var(--space-1); background: var(--panel); border-radius: var(--radius); pointer-events: auto; }
+.results .caption { margin: 0; padding: var(--space-2); }
+.result {
+  display: block; width: 100%; text-align: left; background: none; border: 0; min-height: 44px; padding: var(--space-1) var(--space-2);
+  color: var(--color-bone); font: 400 15px/1.3 var(--font); cursor: pointer; border-radius: var(--space-2);
+}
+@media (hover: hover) { .result:hover { background: rgb(255 255 255 / 0.08); } }
+.coverage { margin: var(--space-1) 0 0 var(--space-1); font-size: 12px; color: var(--color-mist); text-shadow: 0 0 6px #000; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); }
 .badge {
-  background: var(--panel); border-radius: var(--radius-pill); padding: var(--space-1) var(--space-2);
+  text-shadow: none; background: var(--panel); border-radius: var(--radius-pill); padding: var(--space-1) var(--space-2);
   font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-spark);
 }
 
@@ -109,3 +123,35 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--color-spark
 .legend { display: flex; align-items: center; gap: var(--space-1); margin-top: var(--space-1); }
 .sw { width: 12px; height: 12px; border-radius: 3px; flex: none; }
 .sw-water { background: var(--color-sea); }
+
+.tidebanner { margin: var(--space-1) 0 0; padding: var(--space-1) var(--space-2); background: var(--panel); border-radius: var(--space-2); font-size: 12px; line-height: 1.5; pointer-events: auto; }
+.tidebanner .label { margin-right: var(--space-1); }
+.sw-dike { height: 0; border-top: 2px dashed var(--color-ash); border-radius: 0; }
+
+.map2 { position: fixed; inset: 0; pointer-events: none; }
+.divider {
+  position: fixed; top: 0; bottom: 0; left: -22px; width: 44px; cursor: ew-resize; touch-action: none;
+  display: flex; justify-content: center;
+}
+.divider::before { content: ""; width: 2px; height: 100%; background: var(--color-bone); }
+.divider::after {
+  content: "‹ ›"; position: absolute; top: 35%; translate: 0 -50%; width: 44px; height: 44px; border-radius: 50%;
+  background: var(--color-bone); color: var(--color-void); display: grid; place-items: center; font-size: 15px;
+}
+.cmp { position: absolute; top: 180px; font-size: 27px; letter-spacing: -0.02em; text-shadow: 0 0 8px #000; }
+.cmp-a { right: 34px; }
+.cmp-b { left: 34px; color: var(--color-spark); }
+.compareRow { margin-top: var(--space-2); }
+
+/* Phone: the sheet takes at most half the screen. Card and slider first, the legend scrolls under them. */
+@media (max-width: 899px) {
+  .sheet { display: flex; flex-direction: column; max-height: 50svh; padding: var(--space-2) var(--space-3); }
+  .sheet > * { flex-shrink: 0; }
+  .card { min-height: 0; }
+  .timebar { order: 1; margin-top: var(--space-2); padding-top: var(--space-1); }
+  .levels { order: 2; }
+  #levelText { order: 3; }
+  .legend { order: 4; }
+  #source { order: 5; }
+  .tidebanner .muted { display: none; }
+}

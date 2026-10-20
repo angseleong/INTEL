@@ -1,6 +1,6 @@
 """Pasang Tertinggi and Pasang Harian from the IOC Semarang tide gauge (docs/DATA.md §2.1).
 
-    python pipeline/fetch_tide.py   # -> work/tide.json
+    python pipeline/fetch_tide.py   # -> work/tide.json + public/data/tide.json (daily high water, next PREDICT_DAYS)
 
 Heights are relative to the gauge's own local mean sea level (31-day running median), so the gauge datum
 (which jumps when the sensor is re-installed or re-set) and the gauge sinking with the ground both drop out.
@@ -23,6 +23,13 @@ WINDOW_DAYS = 31         # local mean sea level = running median over this many 
 MIN_COVERAGE = 0.8       # a year needs 80% of its days usable to count
 WORK = Path(__file__).parent / "work"
 RAW = WORK / "tide"
+WEB = Path(__file__).parent.parent / "public" / "data" / "tide.json"
+# Tidal constituents (hours per cycle). One year of hourly data separates K1/P1 and S2/K2.
+PERIODS = {"Q1": 26.868357, "O1": 25.819342, "P1": 24.065890, "K1": 23.934470, "N2": 12.658348,
+           "M2": 12.420601, "S2": 12.0, "K2": 11.967235, "M4": 6.210300, "MS4": 6.103339}
+FIT_DAYS = 365
+PREDICT_DAYS = 120  # so the banner still has the coming week if the weekly update is late
+# ponytail: no nodal corrections (18.6-year cycle); negligible when fitting the last year and predicting months ahead.
 API = "https://www.ioc-sealevelmonitoring.org/service.php"
 
 
@@ -117,10 +124,46 @@ def yearly_levels(t, anom):
     return out
 
 
+def fit_tide(t, h):
+    """Least-squares amplitude of each constituent. Returns (mean, cos/sin coefficients)."""
+    w = 2 * np.pi / (np.array(list(PERIODS.values())) * 3600)
+    a = np.column_stack([np.ones_like(t), np.cos(np.outer(t, w)), np.sin(np.outer(t, w))])
+    return np.linalg.lstsq(a, h, rcond=None)[0]
+
+
+def predict_tide(coef, t):
+    w = 2 * np.pi / (np.array(list(PERIODS.values())) * 3600)
+    n = len(w)
+    return coef[0] + np.cos(np.outer(t, w)) @ coef[1:n + 1] + np.sin(np.outer(t, w)) @ coef[n + 1:]
+
+
+def daily_highs(t, h):
+    """[(time, height)] of the highest water each day (WIB, UTC+7, since that is the day people live in)."""
+    day = ((t + 7 * 3600) // 86400).astype(int)
+    _, idx = np.unique(day, return_index=True)
+    return [(int(c_t[np.argmax(c_h)]), float(c_h.max())) for c_t, c_h in zip(np.split(t, idx[1:]), np.split(h, idx[1:]))]
+
+
+def forecast(t, anom):
+    """Fit the last FIT_DAYS of measured tide, predict every 10 minutes from today. Prints the skill on the
+    last 30 measured days held out, so a broken fit shows up in the log."""
+    test = t > t[-1] - 30 * 86400
+    held = fit_tide(t[~test][t[~test] > t[~test][-1] - FIT_DAYS * 86400], anom[~test][t[~test] > t[~test][-1] - FIT_DAYS * 86400])
+    (mt, mh), (pt, ph) = zip(*daily_highs(t[test], anom[test])), zip(*daily_highs(t[test], predict_tide(held, t[test])))
+    print(f"Uji 30 hari terakhir: tinggi air harian meleset {np.mean(np.abs(np.subtract(mh, ph))) * 100:.0f} cm, "
+          f"jam meleset median {np.median(np.abs(np.subtract(mt, pt))) / 3600:.1f} jam")
+    recent = t > t[-1] - FIT_DAYS * 86400
+    coef = fit_tide(t[recent], anom[recent])
+    start = float(np.datetime64(date.today(), "s").astype(int))
+    future = start + np.arange(0, PREDICT_DAYS * 86400, 600, dtype="float64")
+    return daily_highs(future, predict_tide(coef, future))
+
+
 def main():
     download()
     t, h = good_days(*hourly(*load()))
-    levels = yearly_levels(*anomalies(t, h, segments(t, h)))
+    ta, anom = anomalies(t, h, segments(t, h))
+    levels = yearly_levels(ta, anom)
     for y, (hi, daily) in levels.items():
         print(f"{y}: Pasang Tertinggi {hi:+.2f} m, Pasang Harian {daily:+.2f} m")
     hi, daily = (float(np.mean([v[i] for v in levels.values()])) for i in range(2))
@@ -130,6 +173,9 @@ def main():
               "updated": date.today().isoformat()}
     (WORK / "tide.json").write_text(json.dumps(result, indent=2))
     print(f"Pasang Tertinggi {hi:.2f} m, Pasang Harian {daily:.2f} m di atas MSL ({len(levels)} tahun)")
+    WEB.write_text(json.dumps({"updated": date.today().isoformat(), "station": "IOC Semarang (sema)",
+                               "highs": [[tt, round(hh, 2)] for tt, hh in forecast(ta, anom)]}, separators=(",", ":")))
+    print(f"{WEB.name}: {PREDICT_DAYS} hari pasang tinggi harian")
 
 
 if __name__ == "__main__":

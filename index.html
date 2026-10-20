@@ -9,10 +9,21 @@
   </head>
   <body>
     <div id="map" aria-label="Peta Area Bawah Pasang Demak–Semarang"></div>
+    <div id="map2" class="map2" hidden aria-hidden="true"></div>
+    <div id="divider" class="divider" hidden role="slider" tabindex="0" aria-label="Garis pembatas bandingkan" aria-valuemin="0" aria-valuemax="100">
+      <span class="cmp cmp-a" id="cmpA">2026</span><span class="cmp cmp-b" id="cmpB">2050</span>
+    </div>
 
-    <header class="top">
-      <span class="brand">INTEL</span>
-      <span class="badge" id="unvalidated" hidden>Belum tervalidasi</span>
+    <header class="top" id="top">
+      <div class="toprow">
+        <span class="brand">INTEL</span>
+        <form class="search" id="search" role="search">
+          <input id="q" type="search" placeholder="Cari alamat atau kelurahan" aria-label="Cari alamat atau kelurahan" enterkeyhint="search" autocomplete="off" />
+        </form>
+      </div>
+      <ul class="results" id="results" hidden></ul>
+      <p class="tidebanner" id="tide" hidden></p>
+      <p class="coverage">Wilayah Cakupan: sementara baru Semarang &amp; Demak <span class="badge" id="unvalidated" hidden>Belum tervalidasi</span></p>
     </header>
 
     <section class="sheet" id="sheet" aria-live="polite">
@@ -27,6 +38,7 @@
       </div>
       <p class="caption" id="levelText"></p>
       <p class="caption legend"><i class="sw sw-water"></i>Sudah jadi air menurut foto satelit 2025, termasuk tambak.</p>
+      <p class="caption legend"><i class="sw sw-dike"></i>Tanggul menurut OpenStreetMap. Hanya letaknya: INTEL tidak menghitung apa yang ditahannya.</p>
 
       <div class="timebar">
         <div class="yearrow">
@@ -37,10 +49,15 @@
         <input id="year" type="range" min="2026" max="2050" step="1" value="2026" aria-label="Tahun" />
         <div class="controls">
           <button class="btn" id="play" type="button">▶ Play</button>
+          <button class="ghost" id="compareBtn" type="button" aria-pressed="false">Bandingkan</button>
           <div class="scenarios" role="group" aria-label="Skenario">
             <button class="ghost on" data-scenario="continue" type="button" aria-pressed="true">Lanjut</button>
             <button class="ghost" data-scenario="stop" type="button" aria-pressed="false">Henti</button>
           </div>
+        </div>
+        <div class="compareRow" id="compareRow" hidden>
+          <div class="yearrow"><span class="label muted">Kanan</span><span class="year" id="yearBOut">2050</span></div>
+          <input id="yearB" type="range" min="2026" max="2050" step="1" value="2050" aria-label="Tahun sisi kanan" />
         </div>
       </div>
       <p class="caption" id="source"></p>

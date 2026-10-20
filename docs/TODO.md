@@ -89,13 +89,15 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 
 **Checkpoint:** di desktop dan 375×812, geser slider dan lihat Area Bawah Pasang berubah, ketuk titik di Sayung dan lihat Rentang Tahun.
 
-## Blok 5: Fitur Lengkap v1
-- [ ] Skenario Lanjut / Henti.
-- [ ] Geser bandingkan.
-- [ ] Pencarian alamat.
-- [ ] URL hash.
-- [ ] Lapisan Tanggul.
-- [ ] Banner pasang minggu ini.
+## ACTIVE — Blok 5: Fitur Lengkap v1
+
+> Dibuka 20 Okt 2026 atas permintaan pemilik.
+- [x] Skenario Lanjut / Henti: tombol di peta, ganti peta dan kartu, ikut tersimpan di URL hash.
+- [x] Geser bandingkan: peta kedua di atas peta utama, dipotong `clip-path`, slider kecil untuk sisi kanan. Pilihan cepat "2015 vs sekarang" menyusul Masa Terukur.
+- [x] Pencarian alamat: Nominatim, hanya di dalam Wilayah Cakupan, dicari saat Enter (aturan Nominatim melarang cari-sambil-ketik). Hasil yang dipilih langsung membuka kartu titik.
+- [x] URL hash `#lat,lon,zoom,tahun,skenario`. Lokasi = titik yang diketuk, kalau ada.
+- [x] Lapisan Tanggul: `fetch_dikes.py` → `dikes.geojson`, 138 garis OSM dalam 3 km dari pantai.
+- [x] Banner pasang minggu ini: analisis harmonik 10 komponen dari setahun data IOC `sema` → `tide.json` 120 hari ke depan. Uji 30 hari terakhir: tinggi meleset rata-rata 7 cm, jam tepat.
 - [ ] Halaman Peliput + `ranking.csv`.
 - [ ] Halaman pembuka scrollytelling (FR-0, `USERFLOW.md` §1.1, `DESIGN.md` §1.1, §9 B1–B4) + banner Wilayah Cakupan di peta.
 - [ ] Cerita Kota Demak dan Semarang: kumpulkan foto CC dari Wikimedia Commons, catat atribusinya, tulis angka KK dan sumbernya di `DATA.md` §6.
