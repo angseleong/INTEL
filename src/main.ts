@@ -17,6 +17,7 @@ let scenario: Scenario = "continue";
 let level: Level = "rob";
 let meta: Meta | null = null;
 let points: Points | null = null;
+let kelurahan: string[][] = []; // [code, name, kecamatan, kota], indexed by points.kelurahan
 const sliderB = $<HTMLInputElement>("yearB");
 let compare: ReturnType<typeof compareMap> | null = null;
 
@@ -24,6 +25,7 @@ let compare: ReturnType<typeof compareMap> | null = null;
 const shared = location.hash.slice(1).split(",");
 const [hashLat, hashLon, hashZoom, hashYear] = shared.map(Number);
 const fromHash = shared.length >= 4 && [hashLat, hashLon, hashZoom, hashYear].every(Number.isFinite);
+let introOpen = !location.hash; // halaman pembuka first, unless the link says where to look (USERFLOW.md §1.2)
 
 maplibregl.setWorkerUrl(workerUrl); // Vite serves the worker as its own file
 
@@ -50,6 +52,7 @@ const options: maplibregl.MapOptions = {
   },
 };
 const map = new maplibregl.Map(options);
+if (import.meta.env.DEV) Object.assign(window, { map }); // for poking at it from the console
 
 const filter = (year: number): maplibregl.FilterSpecification =>
   ["all", ["==", ["get", "level"], level], ["==", ["get", "year"], year], ["==", ["get", "scenario"], scenario]];
@@ -104,14 +107,16 @@ function showYear(target: maplibregl.Map, year: number) {
 
 map.on("load", async () => {
   if (fromHash) map.jumpTo({ center: [hashLon, hashLat], zoom: hashZoom, padding: visible() });
-  else fitArea(false);
+  else if (!introOpen) fitArea(false);
   addDataLayers(map);
   setYear(Number(slider.value));
 
-  const [loadedMeta, pts] = await Promise.all([
+  const [loadedMeta, pts, kel] = await Promise.all([
     fetch("/data/meta.json").then((r) => r.json() as Promise<Meta>),
     fetch("/data/points.json").then((r) => r.json() as Promise<Points>),
+    fetch("/data/kelurahan.json").then((r) => r.json() as Promise<string[][]>).catch(() => []), // names only: the card works without
   ]);
+  kelurahan = kel;
   points = pts;
   meta = loadedMeta;
   levelText();
@@ -148,6 +153,7 @@ let lastTap: [number, number] | null = null;
 
 /** The tapped point if there is one, so the receiver of a link sees the same Kartu titik; else the map center. */
 function writeHash() {
+  if (introOpen) return;
   const [lon, lat] = lastTap ?? map.getCenter().toArray();
   history.replaceState(null, "", `#${lat.toFixed(5)},${lon.toFixed(5)},${map.getZoom().toFixed(2)},${slider.value},${scenario}`);
 }
@@ -156,7 +162,9 @@ function showCard() {
   if (!lastTap) return;
   const [lon, lat] = lastTap;
   const inside = lon >= AREA[0] && lon <= AREA[2] && lat >= AREA[1] && lat <= AREA[3];
-  $("card").innerHTML = cardHtml(points, points && inside ? nearest(points, lon, lat) : null, scenario, Number(slider.value), inside);
+  const i = points && inside ? nearest(points, lon, lat) : null;
+  const k = points && i !== null ? kelurahan[points.kelurahan[i]] : undefined;
+  $("card").innerHTML = cardHtml(points, i, scenario, Number(slider.value), inside, k ? `${k[1]}, ${k[2]}, ${k[3]}` : "");
 }
 
 function toggleGroup(attr: string, onPick: (value: string) => void) {
@@ -248,3 +256,15 @@ $("compareBtn").addEventListener("click", (e) => {
   const sheet = $("sheet").getBoundingClientRect();
   compare.open(innerWidth >= 900 ? sheet.left / 2 : innerWidth / 2); // middle of the map the panel leaves visible
 });
+
+if (introOpen) {
+  import("./intro").then(({ runIntro }) => runIntro(map, (city) => {
+    introOpen = false;
+    const view = { demak: { center: [110.5, -6.92] as [number, number], zoom: 13 },
+      semarang: { center: [110.43, -6.96] as [number, number], zoom: 13 } }[city ?? ""];
+    if (!view) fitArea(!reducedMotion);
+    else if (reducedMotion) map.jumpTo({ ...view, padding: visible() });
+    else map.flyTo({ ...view, padding: visible(), duration: 1200 });
+    writeHash();
+  }));
+}

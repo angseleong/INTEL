@@ -16,7 +16,7 @@
 
     <header class="top" id="top">
       <div class="toprow">
-        <span class="brand">INTEL</span>
+        <a class="brand" href="/">INTEL</a>
         <form class="search" id="search" role="search">
           <input id="q" type="search" placeholder="Cari alamat atau kelurahan" aria-label="Cari alamat atau kelurahan" enterkeyhint="search" autocomplete="off" />
         </form>
@@ -61,7 +61,125 @@
         </div>
       </div>
       <p class="caption" id="source"></p>
+      <nav class="mapnav">
+        <a href="/upaya.html">Apa yang bisa dilakukan?</a>
+        <a href="/peliput.html">Peliput</a>
+        <a href="/tentang.html">Tentang</a>
+      </nav>
     </section>
+
+
+    <div class="intro" id="intro" hidden>
+      <div class="tint" id="tint"></div>
+      <div class="sea" id="sea" aria-hidden="true"><div class="wave"></div></div>
+      <button class="ghost skip" id="skip" type="button" hidden>Langsung ke peta</button>
+
+      <section class="scene hero">
+        <h1 class="wordmark">INTEL</h1>
+        <p class="tagline">Indonesia Tenggelam? Cek datanya.</p>
+        <p class="hint">Gulir ke bawah</p>
+      </section>
+
+      <section class="scene" data-fly="java">
+        <p class="lead">Tanah di pesisir utara Jawa turun pelan-pelan, beberapa sentimeter tiap tahun.</p>
+        <p class="lead">Tidak terasa. Sampai rob datang tiap bulan.</p>
+      </section>
+
+      <section class="scene" data-fly="java" data-count>
+        <p class="big"><span class="count" data-to="55">55</span> juta orang</p>
+        <p class="lead">di 20 kabupaten dan 5 kota Pantura tinggal di kawasan yang berisiko rob dan penurunan tanah. 115.000 ha sawah sudah terdampak rob.</p>
+        <p class="caption">Sumber: Menko Infrastruktur dan Pembangunan Kewilayahan, 4 Mei 2026 (<a href="https://news.republika.co.id/berita/tey68d484/menko-ahy-penurunan-tanah-dan-banjir-rob-ancaman-puluhan-juta-warga-pantura">Republika</a>, <a href="https://www.cnbcindonesia.com/news/20260504140644-4-732033/kondisi-pantura-jawa-lagi-genting-ahy-cemas-nasib-sawah-di-karawang">CNBC</a>).</p>
+      </section>
+
+      <section class="scene" data-fly="cities" data-cities>
+        <p class="label">Kota yang tanahnya turun</p>
+        <p class="lead">Jakarta, Bekasi, Subang, Indramayu, Cirebon, Tegal, Pemalang, Pekalongan, Semarang, Demak. Di luar Jawa juga: Medan turun rata-rata ±6,4 cm per tahun.</p>
+        <p class="lead">Cirebon, Pekalongan, Tegal, dan Semarang turun 2–3 kali lebih cepat dari Jakarta.</p>
+        <p class="caption">Sumber: BRIN, 26 Mei 2026 (<a href="https://news.republika.co.id/berita/tfw5st475/temuan-brin-jakarta-cirebon-hingga-demak-permukaan-tanah-pesisir-pantura-terus-menurun">Republika</a>); abstrak <a href="https://meetingorganizer.copernicus.org/EGU26/EGU26-8826.html">EGU26-8826</a>; <a href="https://www.bio-conferences.org/10.1051/bioconf/202622005009">BIO Web of Conferences 2026</a>.</p>
+      </section>
+
+      <section class="scene" data-fly="coverage">
+        <p class="label">Cek tempatmu</p>
+        <p class="lead">INTEL sementara baru menghitung Semarang dan Demak.</p>
+        <div class="chips">
+          <a class="chip" href="#story-semarang" data-city="semarang">Semarang</a>
+          <a class="chip" href="#story-demak" data-city="demak">Demak</a>
+          <span class="chip off">Jakarta <small>Belum tercakup</small></span>
+          <span class="chip off">Pekalongan <small>Belum tercakup</small></span>
+          <span class="chip off">Cirebon <small>Belum tercakup</small></span>
+          <span class="chip off">Tegal <small>Belum tercakup</small></span>
+          <span class="chip off">Medan <small>Belum tercakup</small></span>
+        </div>
+      </section>
+
+      <article class="story" id="story-demak">
+        <section class="scene photo">
+          <img src="/photos/bedono.webp" alt="Rumah bata di Desa Bedono, Demak, berdiri di tengah air dan mangrove" loading="lazy" />
+          <div class="over">
+            <p class="label">Demak · Bedono, Sayung</p>
+            <p class="big">266 KK</p>
+            <p class="lead">direlokasi dari Dusun Tambaksari dan Rejosari Senik: 65 KK pada 1999, 201 KK pada 2006.</p>
+            <p class="caption">Sumber: <a href="https://mongabay.co.id/2024/12/28/keluarga-mak-jah-penyintas-terakhir-dusun-rejosari-kami-akan-tetap-tanam-mangrove/">Mongabay, Desember 2024</a>. Foto: rumah di Desa Bedono, 2025, Tim LindungiHutan, <a href="https://commons.wikimedia.org/wiki/File:Rumah_Mak_Jah_di_Desa_Bedono_yang_Tenggelam_karena_abrasi.jpg">CC BY 4.0</a>.</p>
+          </div>
+        </section>
+        <section class="scene">
+          <p class="label">Demak · Timbulsloko</p>
+          <p class="big">±140 KK</p>
+          <p class="lead">masih tinggal di tengah genangan rob.</p>
+          <p class="caption">Sumber: <a href="https://www.metrotvnews.com/read/bVDCjqW2-menolak-tenggelam-kisah-warga-timbulsloko-demak-bertahan-di-tengah-laut">Metro TV, Juni 2025</a>.</p>
+        </section>
+        <section class="scene">
+          <p class="label">Sayung dari satelit</p>
+          <div class="ba" style="--cut: 50%">
+            <img src="/story/demak-2017.png" alt="Air Nyata di Sayung tahun 2017" loading="lazy" />
+            <img class="after" src="/story/demak-2025.png" alt="Air Nyata di Sayung tahun 2025" loading="lazy" />
+          </div>
+          <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Geser antara 2017 dan 2025" />
+          <p class="ba-years"><span>2017</span><span>2025</span></p>
+          <p class="lead">Biru = sudah jadi air sepanjang tahun menurut foto satelit Sentinel-2, termasuk tambak. Tanah di Sayung turun ±11 cm per tahun.</p>
+          <p class="caption">Hitungan INTEL dari Sentinel-1 dan Sentinel-2.</p>
+        </section>
+      </article>
+
+      <article class="story" id="story-semarang">
+        <section class="scene photo">
+          <img src="/photos/tambak-lorok.webp" alt="Perahu nelayan di Kampung Tambak Lorok, Semarang" loading="lazy" />
+          <div class="over">
+            <p class="label">Semarang · Tambak Lorok</p>
+            <p class="big"><span id="tlRate">±7</span> cm/tahun</p>
+            <p class="lead">Kampung nelayan di Semarang Utara. Tanggul laut dibangun di depannya 2022–2024, tapi tanah di sini tetap turun.</p>
+            <p class="caption">Hitungan INTEL dari Sentinel-1. Foto: Nelayan Tambak Lorok, 2023, Djunaidibd, <a href="https://commons.wikimedia.org/wiki/File:Nelayan_Tambak_Lorok.jpg">CC BY-SA 4.0</a>.</p>
+          </div>
+        </section>
+        <section class="scene">
+          <p class="label">Semarang · Genuk dan Kaligawe</p>
+          <p class="big">±10 cm/tahun</p>
+          <p class="lead">Kawasan industri dan permukiman di timur kota turun sekitar 10 cm tiap tahun. Pusat kota dan perbukitan di selatan hampir tidak turun.</p>
+          <p class="caption">Hitungan INTEL dari Sentinel-1, Oktober 2026.</p>
+        </section>
+        <section class="scene">
+          <p class="label">Pesisir Semarang dari satelit</p>
+          <div class="ba" style="--cut: 50%">
+            <img src="/story/semarang-2017.png" alt="Air Nyata di pesisir Semarang tahun 2017" loading="lazy" />
+            <img class="after" src="/story/semarang-2025.png" alt="Air Nyata di pesisir Semarang tahun 2025" loading="lazy" />
+          </div>
+          <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Geser antara 2017 dan 2025" />
+          <p class="ba-years"><span>2017</span><span>2025</span></p>
+          <p class="lead">Biru = sudah jadi air sepanjang tahun menurut foto satelit Sentinel-2, termasuk tambak.</p>
+        </section>
+      </article>
+
+      <section class="scene read">
+        <p class="label">Cara membaca peta</p>
+        <ul class="lead">
+          <li><b>Rob</b>: tanah lebih rendah dari pasang tertinggi setahun. Tanpa Tanggul dan pompa, kena rob sesekali.</li>
+          <li><b>Pasang harian</b>: tanah lebih rendah dari pasang yang datang hampir tiap hari.</li>
+          <li><b>Air Nyata</b>: yang sudah jadi air menurut foto satelit 2025.</li>
+          <li>Tanggul dan pompa tidak dihitung. Tahun selalu berupa rentang, karena ukurannya punya galat.</li>
+        </ul>
+        <p><button class="btn" id="start" type="button">Cek lokasimu</button></p>
+      </section>
+    </div>
 
     <script type="module" src="/src/main.ts"></script>
   </body>

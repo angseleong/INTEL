@@ -3,3 +3,6 @@ rasterio
 requests
 asf_search
 hyp3_sdk
+shapely
+pyogrio
+geopandas

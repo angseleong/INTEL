@@ -143,4 +143,28 @@ Angka ini dari riset dan pemberitaan, bukan hitungan INTEL. Selalu tampilkan sum
 | Bedono: 65 KK (1999) + 201 KK (2006) direlokasi dari Dusun Tambaksari dan Rejosari Senik | [Mongabay, Des 2024](https://mongabay.co.id/2024/12/28/keluarga-mak-jah-penyintas-terakhir-dusun-rejosari-kami-akan-tetap-tanam-mangrove/) |
 | Timbulsloko: ±140 KK hidup dalam genangan rob | [Metro TV, Jun 2025](https://www.metrotvnews.com/read/bVDCjqW2-menolak-tenggelam-kisah-warga-timbulsloko-demak-bertahan-di-tengah-laut) |
 | Laju Penurunan Sayung–Genuk ±10 cm/tahun | Hitungan INTEL (§1, InSAR run 19 Okt 2026) |
+| Tambak Lorok turun ±7 cm/tahun, Sayung ±11, Genuk dan Kaligawe ±10 | Hitungan INTEL (`upaya.py`, §1) |
+
+### 6.1 Foto Cerita Kota
+
+Semua dari Wikimedia Commons, diperkecil ke 1600 px dan diubah ke `webp` di `public/photos/`. Wajah tidak bisa dikenali.
+
+| File | Tempat, tahun | Pembuat | Lisensi |
+|---|---|---|---|
+| `bedono.webp` | Rumah di Desa Bedono, Sayung, Demak, 2025 ([Commons](https://commons.wikimedia.org/wiki/File:Rumah_Mak_Jah_di_Desa_Bedono_yang_Tenggelam_karena_abrasi.jpg)) | Tim LindungiHutan | CC BY 4.0 |
+| `tambak-lorok.webp` | Nelayan di Kampung Tambak Lorok, Semarang, 2023 ([Commons](https://commons.wikimedia.org/wiki/File:Nelayan_Tambak_Lorok.jpg)) | Djunaidibd | CC BY-SA 4.0 |
+
+Gambar sebelum/sesudah 2017 vs 2025 (`public/story/`) dibuat `story.py` dari peta air Sentinel-2 Uji Mundur (§5), aturan yang sama dengan lapisan Air Nyata (≥ 80% scene bersih).
+
+## 7. Kartu Upaya
+
+Sumber setiap kartu di halaman Apa yang Bisa Dilakukan. Laju Penurunan di kartu: median titik terukur (tanpa isian) dalam radius di sekitar lokasi, dari `upaya.py`. "Sebelum/sesudah" belum bisa dipisah sampai deret waktu Masa Terukur ada, jadi kartu menampilkan laju 2015–2017 dan laju seluruh rekaman Okt 2014 – Okt 2026.
+
+| Upaya | Sumber |
+|---|---|
+| Tanggul laut Tambak Lorok, 2022–2024, 3,6 km, ±56 ha | [Bisnis, 18 Jun 2024](https://ekonomi.bisnis.com/read/20240618/45/1774832/tanggul-tambak-lorok-kementerian-pupr-targetkan-rampung-agustus). Laporan serah terima belum ditemukan |
+| Polder Banger, 530 ha, 10 kelurahan, 5 rumah pompa, selesai 2016 | [The Jakarta Post, 2013](https://www.thejakartapost.com/news/2013/12/12/semarang-build-polder-tackle-floods.html), [RMOL, Jun 2017](https://rmol.id/advertorial/read/2017/06/18/296103/antisipasi-gangguan-jalur-mudik-kementerian-pupr-atasi-banjir-rob-di-semarang) |
+| Pagar penangkap lumpur Timbulsloko, ±1.600 m (2017–2018), Building with Nature 2015–2021 | [Ecoshape](https://www.ecoshape.org/en/cases/rehabilitation-of-a-mangrove-mud-coast-in-timbul-sloko-java-indonesia/). Laporan pelaksana, bukan evaluasi independen |
+| Tol Tanggul Laut Semarang–Demak: Seksi 2 beroperasi Feb 2023, Seksi 1 (10,64 km) target Apr 2027, tanggul "belum optimal" | [detik, Nov 2025](https://finance.detik.com/infrastruktur/d-8236187/konstruksi-tol-semarang-demak-seksi-1-tembus-58-ditargetkan-beroperasi-2027), [Bisnis, 2 Mar 2026](https://ekonomi.bisnis.com/read/20260302/45/1956816/tanggul-laut-tol-semarang-demak-belum-optimal-tahan-rob-menteri-pu-bilang-begini) |
+| Perwali Semarang 23/2023 Zonasi Bebas Air Tanah | [Undip, JPGS](https://ejournal3.undip.ac.id/index.php/jpgs/article/view/60206). Teks peraturannya belum dicek langsung di JDIH |
 

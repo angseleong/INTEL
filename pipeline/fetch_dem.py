@@ -5,6 +5,7 @@
 DeltaDTM only ships as per-continent zips (Asia 17 GB). HTTP range requests pull just our tiles out.
 """
 import io
+import urllib.error
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -25,9 +26,13 @@ class HTTPRange(io.RawIOBase):
     """Seekable read-only file over HTTP Range requests, so zipfile reads one member, not the whole zip."""
 
     def __init__(self, url):
-        r = urllib.request.urlopen(urllib.request.Request(url, headers={"Range": "bytes=0-0"}))
-        self.url, self.pos = r.geturl(), 0
-        self.size = int(r.headers["Content-Range"].split("/")[1])
+        self.origin, self.pos = url, 0
+        self.resolve()
+
+    def resolve(self):
+        """Follow redirects once. Some hosts (HDX) redirect to a signed URL that expires after a while."""
+        r = urllib.request.urlopen(urllib.request.Request(self.origin, headers={"Range": "bytes=0-0"}))
+        self.url, self.size = r.geturl(), int(r.headers["Content-Range"].split("/")[1])
 
     def readable(self):
         return True
@@ -46,7 +51,14 @@ class HTTPRange(io.RawIOBase):
         if not len(b) or self.pos >= self.size:
             return 0
         end = min(self.pos + len(b), self.size) - 1
-        data = urllib.request.urlopen(urllib.request.Request(self.url, headers={"Range": f"bytes={self.pos}-{end}"})).read()
+        get = lambda: urllib.request.urlopen(urllib.request.Request(self.url, headers={"Range": f"bytes={self.pos}-{end}"})).read()
+        try:
+            data = get()
+        except urllib.error.HTTPError as e:
+            if e.code != 403:
+                raise
+            self.resolve()  # signed URL expired
+            data = get()
         b[:len(data)] = data
         self.pos += len(data)
         return len(data)

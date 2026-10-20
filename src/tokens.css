@@ -1,0 +1,27 @@
+/* docs/DESIGN.md §14 */
+:root {
+  --color-void: #000000;
+  --color-bone: #ffffff;
+  --color-ash: #9a9a9a;
+  --color-mist: #bdbdbd;
+  --color-tide: #1f6bff;
+  --color-water: #4da3ff;
+  --color-sea: #123f86;
+  --color-spark: #ffb829;
+  --color-deep: #0b2a4a;
+  --color-sky: #dfe9ef;
+  --panel: rgb(0 0 0 / 0.85);
+
+  --font: "Inter", system-ui, sans-serif;
+
+  --space-1: 6px;  --space-2: 12px; --space-3: 18px; --space-4: 24px;
+  --space-5: 30px; --space-6: 36px; --space-7: 60px; --space-8: 96px;
+
+  --radius: 24px;
+  --radius-pill: 9999px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur-fast: 150ms;
+  --dur-base: 300ms;
+  --dur-slow: 600ms;
+}

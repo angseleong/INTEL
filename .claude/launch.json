@@ -26,6 +26,18 @@
         "--strictPort"
       ],
       "port": 5181
+    },
+    {
+      "name": "preview-5182",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "vite",
+        "preview",
+        "--port",
+        "5182",
+        "--strictPort"
+      ],
+      "port": 5182
     }
   ]
 }

@@ -1,0 +1,35 @@
+{
+  "updated": "2026-10-20",
+  "sites": {
+    "tambaklorok": {
+      "lon": 110.4323,
+      "lat": -6.9507,
+      "radiusM": 750,
+      "laju2015_2017": 7.2,
+      "lajuSemua": 7.4,
+      "titik": 191
+    },
+    "banger": {
+      "lon": 110.4379,
+      "lat": -6.9579,
+      "radiusM": 1000,
+      "laju2015_2017": 9.4,
+      "lajuSemua": 8.9,
+      "titik": 354
+    },
+    "timbulsloko": {
+      "lon": 110.5182,
+      "lat": -6.9135,
+      "radiusM": 1000,
+      "laju2015_2017": 7.7,
+      "lajuSemua": 10.5,
+      "titik": 134
+    }
+  },
+  "scenario": {
+    "haLanjut2050": 35416,
+    "haHenti2050": 27540,
+    "haAlready": 23292,
+    "persenSelamatSampai2050": 65
+  }
+}

@@ -98,16 +98,16 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 - [x] URL hash `#lat,lon,zoom,tahun,skenario`. Lokasi = titik yang diketuk, kalau ada.
 - [x] Lapisan Tanggul: `fetch_dikes.py` → `dikes.geojson`, 138 garis OSM dalam 3 km dari pantai.
 - [x] Banner pasang minggu ini: analisis harmonik 10 komponen dari setahun data IOC `sema` → `tide.json` 120 hari ke depan. Uji 30 hari terakhir: tinggi meleset rata-rata 7 cm, jam tepat.
-- [ ] Halaman Peliput + `ranking.csv`.
-- [ ] Halaman pembuka scrollytelling (FR-0, `USERFLOW.md` §1.1, `DESIGN.md` §1.1, §9 B1–B4) + banner Wilayah Cakupan di peta.
-- [ ] Cerita Kota Demak dan Semarang: kumpulkan foto CC dari Wikimedia Commons, catat atribusinya, tulis angka KK dan sumbernya di `DATA.md` §6.
-- [ ] Halaman Apa yang Bisa Dilakukan (FR-10): riset Kartu Upaya (apa, kapan, siapa, sumber), lalu hitung Laju Penurunan sebelum/sesudah upaya dari InSAR per lokasi.
-- [ ] Halaman Tentang + semua atribusi.
+- [x] Halaman Peliput + `ranking.csv`: batas Kelurahan HDX lewat range request (`fetch_kelurahan.py`, ±190 MB, ±15 menit), peringkat menurut "separuh daratan di bawah Pasang Tertinggi", laju per kota, unduhan. Nama Kelurahan juga tampil di kartu titik.
+- [x] Halaman pembuka scrollytelling (FR-0, B1–B4) di atas peta utama, GSAP dimuat dinamis hanya tanpa hash. Banner Wilayah Cakupan di peta. Animasi A1 (2015 → sekarang) menyusul Masa Terukur.
+- [x] Cerita Kota Demak dan Semarang: 2 foto Commons (`DATA.md` §6.1), angka KK bersumber, geser 2017 vs 2025 dari `story.py`. Belum ada foto Commons untuk Timbulsloko dan tembok laut yang retak.
+- [x] Halaman Apa yang Bisa Dilakukan (FR-10): 5 Kartu Upaya bersumber (`DATA.md` §7), laju 2015–2017 dan seluruh rekaman per lokasi (`upaya.py`), Skenario Lanjut vs Henti. Laju sesudah upaya menyusul deret waktu Masa Terukur.
+- [x] Halaman Tentang + semua atribusi + Konstelasi Titik.
 
 **Checkpoint:** semua FR di `PRD.md` §4 bisa dicoba di ponsel.
 
 ## Blok 6: Otomasi & Rilis
-- [ ] `tide.yml`, `dikes.yml`, `insar.yml`.
+- [ ] `tide.yml`, `dikes.yml`, `insar.yml`. `insar.yml` juga perlu `fetch_kelurahan.py` (simpan `work/kelurahan.geojson` di cache atau Rilis Data, unduhannya ±15 menit), `upaya.py`, `story.py`.
 - [ ] Rilis Data pertama `data-YYYYQn` di GitHub Releases.
 - [ ] Cek semua syarat rilis di `PRD.md` §5.
 

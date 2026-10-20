@@ -42,7 +42,7 @@ function range(min: number, max: number, already: string): string {
 
 const num = (x: number, digits: number) => x.toLocaleString("id-ID", { minimumFractionDigits: digits, maximumFractionDigits: digits });
 
-export function cardHtml(points: Points | null, i: number | null, scenario: Scenario, year: number, insideArea: boolean): string {
+export function cardHtml(points: Points | null, i: number | null, scenario: Scenario, year: number, insideArea: boolean, place = ""): string {
   if (!insideArea) {
     return `<p class="label">Di luar Wilayah Cakupan</p>
       <p class="ui">Wilayah ini belum dihitung. Saat ini: Demak dan Semarang.</p>`;
@@ -52,6 +52,7 @@ export function cardHtml(points: Points | null, i: number | null, scenario: Scen
       <p class="ui">Data penurunan tanah belum tersedia di titik ini. Satelit radar sulit mengukur sawah, tambak, dan air.</p>`;
   }
   const v = (k: string) => points[k][i];
+  const where = place ? `<p class="place">${place}</p>` : "";
   const elevation = v("elevation") - subsided(v("subsidenceRate") / 100, year, scenario);
   const facts = `<div class="row"><span>Tinggi Tanah ${year}</span><b>±${num(Math.abs(elevation), 2)} m ${elevation < 0 ? "di bawah" : "di atas"} laut</b></div>
     <div class="row"><span>Laju Penurunan</span><b>${num(v("subsidenceRate"), 1)} ± ${num(v("subsidenceRateStd"), 1)} cm/tahun</b></div>
@@ -59,13 +60,13 @@ export function cardHtml(points: Points | null, i: number | null, scenario: Scen
   // Uji Mundur (DATA.md §5.1): once land is already below the tide, elevation no longer tells which plots
   // turn into sea; tanggul, pumps and fill do. So no per-plot years there.
   if (v(`robYear_${scenario}`) === ALREADY) {
-    return `<p class="label">Sudah di bawah Pasang Tertinggi</p>
+    return `<p class="label">Sudah di bawah Pasang Tertinggi</p>${where}
     <p class="ui">Tanah di sini sudah lebih rendah dari pasang tertinggi. Tergenang atau tidak sekarang bergantung pada tanggul, pompa, dan urugan, yang tidak bisa dilihat satelit.</p>
     ${facts}`;
   }
   const rob = range(v(`robYearMin_${scenario}`), v(`robYearMax_${scenario}`), "Sudah kena");
   const daily = range(v(`dailyYearMin_${scenario}`), v(`dailyYearMax_${scenario}`), "Sudah");
-  return `<p class="label">Mulai kena Rob sesekali</p>
+  return `<p class="label">Mulai kena Rob sesekali</p>${where}
     <p class="big">${rob}</p>
     <div class="row"><span>Di bawah pasang harian</span><b>${daily}</b></div>
     ${facts}`;

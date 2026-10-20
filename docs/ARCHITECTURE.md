@@ -18,34 +18,52 @@ Tidak ada server dan tidak ada database (ADR-0001). Pengolahan citra radar yang 
 
 ```
 INTEL/
-├── index.html              # Peta (halaman utama)
+├── index.html              # Halaman pembuka (scrollytelling) di atas Peta, lalu Peta
 ├── peliput.html            # Halaman Peliput: peringkat + unduhan
 ├── tentang.html            # Halaman Tentang: cara hitung, atribusi
+├── upaya.html              # Apa yang Bisa Dilakukan: Kartu Upaya + Skenario
+├── vite.config.ts          # empat halaman HTML di atas
 ├── src/
-│   ├── main.ts             # Peta MapLibre, lapisan Area Bawah Pasang + Garis Pantai, slider, Play, Skenario
-│   ├── compare.ts          # Geser bandingkan: dua peta tersinkron, dipotong CSS
+│   ├── main.ts             # Peta MapLibre, lapisan, slider, Play, Skenario, URL hash, pencarian
+│   ├── intro.ts            # Halaman pembuka, GSAP (dimuat dinamis, hanya tanpa hash)
+│   ├── compare.ts          # Geser bandingkan: peta kedua di atas, dipotong clip-path
 │   ├── pointCard.ts        # Kartu klik titik + cari titik terdekat
 │   ├── search.ts           # Pencarian alamat (Nominatim)
 │   ├── tide.ts             # Banner pasang minggu ini
-│   ├── peliput.ts          # Tabel peringkat + grafik
-│   └── style.css
+│   ├── page.ts             # Bersama untuk halaman teks: gaya + A9
+│   ├── tentang.ts          # Konstelasi Titik
+│   ├── peliput.ts          # Tabel peringkat + grafik per kota
+│   ├── upaya.ts            # Angka Kartu Upaya + Skenario
+│   ├── tokens.css          # Token DESIGN.md §14
+│   ├── style.css           # Peta + halaman pembuka
+│   └── page.css            # Halaman teks
 ├── public/
+│   ├── photos/             # Foto Cerita Kota (DATA.md §6.1)
+│   ├── story/              # Air Nyata 2017 vs 2025 untuk Cerita Kota
 │   └── data/               # Data terbaru, ditimpa oleh pipeline setiap pembaruan
 │       ├── below-tide-{rob,daily}.geojson  # satu file per tingkat, PMTiles setelah Pantura
-│       ├── points.json         # titik per kolom
-│       ├── meta.json           # tanggal, Pasang, status Uji Mundur
-│       ├── dikes.pmtiles
-│       ├── tide.json        # Pasang 7 hari ke depan
-│       └── ranking.csv
+│       ├── water-2025.geojson  # Air Nyata
+│       ├── points.json         # titik per kolom, termasuk indeks Kelurahan
+│       ├── kelurahan.json      # [kode, nama, kecamatan, kota] per Kelurahan
+│       ├── meta.json           # tanggal, Pasang, status Uji Mundur, laju per kota
+│       ├── dikes.geojson       # Tanggul, PMTiles setelah Pantura
+│       ├── tide.json           # air tinggi harian 120 hari ke depan
+│       ├── ranking.csv         # satu baris per Kelurahan
+│       ├── constellation.json  # titik untuk Konstelasi Titik
+│       └── upaya.json          # angka halaman Apa yang Bisa Dilakukan
 ├── pipeline/
 │   ├── requirements.txt
 │   ├── fetch_insar.py      # HyP3 burst InSAR → MintPy → Laju Penurunan (GeoTIFF)
 │   ├── fetch_dem.py        # DeltaDTM potongan Wilayah Cakupan
-│   ├── fetch_tide.py       # Data pasang BIG → Pasang Tertinggi, Pasang Harian, tide.json
+│   ├── fetch_tide.py       # Data pasang IOC → Pasang Tertinggi, Pasang Harian, tide.json (+ fetch_tide_check.py)
 │   ├── fetch_dikes.py      # Tanggul dari OpenStreetMap
+│   ├── fetch_kelurahan.py  # Batas Kelurahan HDX COD-AB
+│   ├── fetch_water.py      # Air dari Sentinel-2 (Uji Mundur, Air Nyata)
 │   ├── compute.py          # Rumus DATA.md §2–3 → Tahun Rob + Tahun Bawah Pasang Harian per titik (+ compute_check.py)
 │   ├── backtest.py         # Uji Mundur DATA.md §5
-│   ├── export.py           # GeoTIFF → PMTiles + CSV
+│   ├── export.py           # → file web di public/data + ranking.csv (+ export_check.py)
+│   ├── upaya.py            # → upaya.json
+│   ├── story.py            # → public/story
 │   └── run_all.py          # Langkah 1–6 berurutan untuk satu Rilis Data
 └── .github/workflows/
     ├── tide.yml            # Mingguan
@@ -74,8 +92,9 @@ Batas runner gratis GitHub Actions: 6 jam per job, ±14 GB disk. Pemakaian seben
 |---|---|---|
 | `below-tide-{rob,daily}.geojson` | Satu file per tingkat, hanya tingkat yang aktif yang diunduh. Satu poligon gabungan per tahun per Skenario. Properti: `level`, `year`, `scenario` (nanti `measured` untuk Masa Terukur) | Lapisan Area Bawah Pasang dan Garis Pantai (garis tepi poligon). Slider cukup mengganti filter `year`, tanpa menghitung ulang |
 | `points.json` | Titik grid ±80 m, disimpan per kolom (satu daftar per properti), dicari terdekatnya di browser. Properti: `elevation`, `subsidenceRate`, `robYearMin`, `robYearMax`, `dailyYearMin`, `dailyYearMax` per Skenario, `kelurahan` | Kartu klik titik |
-| `dikes.pmtiles` | Garis Tanggul | Lapisan informasi |
-| `tide.json` | Waktu dan tinggi pasang 7 hari ke depan | Banner pasang |
+| `dikes.geojson` | Garis Tanggul OSM dalam 3 km dari pantai | Lapisan informasi |
+| `tide.json` | Air tinggi harian 120 hari ke depan (waktu, tinggi di atas muka laut rata-rata). Browser memilih yang tertinggi dalam 7 hari | Banner pasang |
+| `kelurahan.json` | `[kode, nama, kecamatan, kota]`, diindeks oleh kolom `kelurahan` di `points.json` | Nama Kelurahan di kartu titik |
 | `ranking.csv` | Satu baris per Kelurahan | Halaman Peliput, unduhan |
 
 Setiap file menyimpan tanggal pembaruannya (metadata PMTiles atau field `updated`).
@@ -87,7 +106,7 @@ Setiap file menyimpan tanggal pembaruannya (metadata PMTiles atau field `updated
 - GSAP + ScrollTrigger hanya untuk animasi scroll di halaman pembuka (ADR-0006). Tidak dimuat di halaman peta.
 - Slider: `map.setFilter(layer, ["all", ["==", "year", y], ["==", "scenario", s]])`.
 - Geser bandingkan: dua instance MapLibre yang posisinya disinkronkan, peta kanan dipotong dengan `clip-path`. Ditulis sendiri, tanpa plugin.
-- URL hash: `#lat,lon,zoom,tahun,skenario`.
+- URL hash: `#lat,lon,zoom,tahun,skenario`. Lokasi = titik yang diketuk kalau ada. Link tanpa hash membuka halaman pembuka dulu.
 
 ## 6. Penyimpanan
 

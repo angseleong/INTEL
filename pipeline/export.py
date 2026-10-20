@@ -1,9 +1,11 @@
 """work/rob.tif -> files the web map reads (docs/ARCHITECTURE.md §4).
 
-    python pipeline/export.py   # -> public/data/below-tide-{rob,daily}.geojson, water-2025.geojson, points.json, meta.json
+    python pipeline/export.py   # -> public/data/below-tide-{rob,daily}.geojson, water-2025.geojson, points.json,
+                                #    kelurahan.json, ranking.csv, constellation.json, meta.json
 
 ponytail: plain GeoJSON while the map covers only Demak–Semarang (a few MB). Switch to PMTiles once Pantura is in.
 """
+import csv
 import json
 from datetime import date
 from itertools import product
@@ -11,12 +13,14 @@ from pathlib import Path
 
 import numpy as np
 
-from compute import ALREADY, NEVER, WORK, YEARS, fill_gaps, load_inputs
+from compute import ALREADY, NEVER, RENTANG_MAKS, WORK, YEARS, fill_gaps, load_inputs
 
 OUT = Path(__file__).parent.parent / "public" / "data"
 SCENARIOS = ("continue", "stop")
 LEVELS = ("rob", "daily")  # below Pasang Tertinggi, below Pasang Harian
 SIMPLIFY_M = 60  # ¾ of an InSAR pixel; keeps the coastline shape, drops stair-steps
+MIN_POINTS = 20  # a Kelurahan needs this many points (±13 ha) in the Wilayah Cakupan to be ranked
+CONSTELLATION = 6000  # measured points drawn in the Tentang hero
 
 
 def below_tide_polygons(rob, transform, crs):
@@ -37,6 +41,66 @@ def below_tide_polygons(rob, transform, crs):
         features.append({"type": "Feature", "properties": {"level": level, "year": int(year), "scenario": scenario},
                          "geometry": transform_geom(crs, "EPSG:4326", mapping(geom), precision=4)})  # 4 decimals ≈ 11 m
     return features
+
+
+def kelurahan_grid(shape, transform, crs):
+    """(list of Kelurahan, index into it per pixel or -1). A pixel belongs to the Kelurahan holding its centre."""
+    import geopandas as gpd
+    from rasterio.features import rasterize
+
+    kel = gpd.read_file(WORK / "kelurahan.geojson")
+    grid = rasterize(zip(kel.to_crs(crs).geometry, range(len(kel))), out_shape=shape, transform=transform, fill=-1, dtype="int32")
+    return kel, grid
+
+
+def ranking(rob, rate, kel, grid, pixel_ha):
+    """One row per Kelurahan (USERFLOW.md §5). "Separuh" = the year half of its land is below Pasang Tertinggi:
+    the median over its points of the earliest and latest Tahun Rob, so it reads like a Kelurahan-wide Rentang Tahun."""
+    has = rob["robYear_continue"] != -1
+    rows = []
+    for k, row in kel.iterrows():
+        m = has & (grid == k)
+        if m.sum() < MIN_POINTS:
+            continue
+        lo, mid, hi = (np.median(rob[f"robYear{p}_continue"][m]) for p in ("Min", "", "Max"))
+        if mid == ALREADY:
+            half = ("sudah", "sudah")
+        elif lo == NEVER:
+            half = (">2050", ">2050")
+        else:
+            a, b = max(int(lo), int(YEARS[0])), int(YEARS[-1]) + 1 if hi == NEVER else int(hi)
+            half = ("belum bisa diperkirakan",) * 2 if b - a > RENTANG_MAKS else (a, ">2050" if hi == NEVER else b)
+        below = lambda s: (rob[f"robYear_{s}"][m] != NEVER).mean()  # ALREADY or a year up to 2050
+        lon, lat = row.geometry.representative_point().coords[0]
+        rows.append({"kode": row.code, "kelurahan": row["name"], "kecamatan": row.kecamatan, "kota": row.kota,
+                     "lon": round(lon, 5), "lat": round(lat, 5), "titik": int(m.sum()),
+                     "persen_isian": round(100 * (rob["filled"][m] == 1).mean()),
+                     "laju_penurunan_median_cm": round(float(np.median(rate[m])), 1),
+                     "persen_bawah_pasang_2026": round(100 * (rob["robYear_continue"][m] == ALREADY).mean()),
+                     "persen_bawah_pasang_2050_lanjut": round(100 * below("continue")),
+                     "persen_bawah_pasang_2050_henti": round(100 * below("stop")),
+                     "ha_bawah_pasang_2050_lanjut": round(float(below("continue") * m.sum() * pixel_ha)),
+                     "separuh_rob_paling_cepat": half[0], "separuh_rob_paling_lambat": half[1]})
+    return rows
+
+
+def kota_summary(rob, rate, kel, grid):
+    """Median Laju Penurunan per kabupaten/kota, measured points only (no gap filling)."""
+    measured = (rob["filled"] == 0)
+    out = []
+    for kota in sorted(kel.kota.unique()):
+        m = measured & np.isin(grid, np.flatnonzero(kel.kota == kota))
+        out.append({"kota": kota, "titik": int(m.sum()), "lajuMedian": round(float(np.median(rate[m])), 1),
+                     "lajuP90": round(float(np.percentile(rate[m], 90)), 1)})
+    return out
+
+
+def constellation(points):
+    """Every n-th measured point (lon, lat, cm/tahun) for the Konstelasi Titik on the Tentang page."""
+    idx = [i for i, f in enumerate(points["filled"]) if f == 0]
+    idx = idx[::max(1, len(idx) // CONSTELLATION)]
+    return {"updated": date.today().isoformat(),
+            "points": [[points["lon"][i], points["lat"][i], points["subsidenceRate"][i]] for i in idx]}
 
 
 def point_columns(rob, elev, rate, std, transform, crs):
@@ -95,6 +159,16 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     polys = below_tide_polygons(rob, transform, crs)
     points = point_columns(rob, elev, rate, std, transform, crs)
+    kel, grid = kelurahan_grid(rob["filled"].shape, transform, crs)
+    rows, cols = np.nonzero(rob["robYear_continue"] != -1)  # same order as point_columns
+    points["kelurahan"] = grid[rows, cols].tolist()
+    (OUT / "kelurahan.json").write_text(json.dumps(kel[["code", "name", "kecamatan", "kota"]].values.tolist()))
+    ranked = ranking(rob, rate, kel, grid, abs(transform.a * transform.e) / 1e4)
+    with open(OUT / "ranking.csv", "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(ranked[0]))
+        w.writeheader()
+        w.writerows(ranked)
+    (OUT / "constellation.json").write_text(json.dumps(constellation(points), separators=(",", ":")))
     for level in LEVELS:  # one file per level, so the browser only downloads the level being looked at
         feats = [f for f in polys if f["properties"]["level"] == level]
         (OUT / f"below-tide-{level}.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": feats}))
@@ -108,10 +182,11 @@ def main():
         "validated": backtest().get("passed", False),  # Uji Mundur passed (docs/PRD.md §5)
         # share of land predicted below Pasang Harian that really turned into water 2017→2025 (legend text)
         "dailyPrecision": backtest().get("coast", {}).get("daily_precision"),
+        "kota": kota_summary(rob, rate, kel, grid),
     }, indent=2))
-    for f in [f"below-tide-{lv}.geojson" for lv in LEVELS] + ["water-2025.geojson", "points.json"]:
+    for f in [f"below-tide-{lv}.geojson" for lv in LEVELS] + ["water-2025.geojson", "points.json", "ranking.csv"]:
         print(f"{f}: {(OUT / f).stat().st_size / 1e6:.1f} MB")
-    print(f"{len(polys)} polygons, {len(points['lon'])} points")
+    print(f"{len(polys)} polygons, {len(points['lon'])} points, {len(ranked)} Kelurahan ranked")
 
 
 if __name__ == "__main__":
