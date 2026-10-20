@@ -12,7 +12,7 @@
 | Tanggul | OpenStreetMap, tag `man_made=dyke`, `man_made=embankment`, `embankment=yes`, `man_made=breakwater`, `barrier=wall` + `wall=flood_wall`. **Bukan** dari nama: "Jalan Tanggul …" adalah nama jalan | vektor | ODbL | ✅ 368 garis di Semarang–Demak (309 `man_made=embankment`). Tag embankment juga dipakai untuk tanggul jalan dan rel, jadi difilter dengan jarak ke pantai |
 | Batas Kelurahan | [HDX COD-AB Indonesia](https://data.humdata.org/dataset/cod-ab-idn), sumber BPS, file `idn_admin4` (berlaku 1 April 2020) | vektor | CC BY-IGO | ✅ 81.912 desa/kelurahan. Demak (`ID3321`) 249, Kota Semarang (`ID3374`) 177. Bedono `ID3321040015` dan Timbulsloko `ID3321040016` ada. Saring pakai kode, karena nama "Semarang" juga dipakai Kabupaten Semarang (`ID3322`). `idn_admin4.shp` 183 MB terkompresi |
 | Peta dasar citra | [EOX Sentinel-2 cloudless](https://s2maps.eu), WMTS tanpa kunci API | ±10 m | Tahun 2018–2025: CC BY-NC-SA 4.0 (INTEL non-komersial, jadi boleh). 2016: CC BY 4.0. Wajib atribusi "Sentinel-2 cloudless - https://s2maps.eu by EOX IT Services GmbH" | ✅ Dipilih |
-| Pencarian alamat | Nominatim (OpenStreetMap), maks 1 permintaan/detik | – | ODbL | | ✅ Dicari hanya saat Enter, dibatasi kotak Wilayah Cakupan |
+| Pencarian alamat | Nominatim (OpenStreetMap), maks 1 permintaan/detik | – | ODbL | ✅ Dicari hanya saat Enter, dibatasi kotak Wilayah Cakupan |
 
 Data yang **tidak** dipakai di v1 dan alasannya:
 - **FABDEM**: lisensi non-komersial (CC BY-NC-SA). DeltaDTM lebih bebas dan khusus pesisir.
