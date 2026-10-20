@@ -38,7 +38,8 @@ Baca sebelum mengambil keputusan desain atau memulai tugas:
 - **Ikuti TODO.md**: kerjakan hanya blok ACTIVE. Jangan membangun fitur dari blok berikutnya lebih awal.
 - **Cara paling sederhana yang jalan**: tanpa abstraksi spekulatif, konfigurasi, atau sistem plugin. Satu skrip per langkah pipeline.
 - **Tumbuh berlapis**: setiap blok berakhir dengan sesuatu yang bisa dibuka atau dijalankan. Jangan mulai blok berikutnya selama checkpoint gagal.
-- **Uji Mundur dulu**: v1 tidak boleh dirilis sebelum Uji Mundur Sayung lulus (lihat `docs/PRD.md` §5).
+- **Uji Mundur dulu**: v1 tidak boleh dirilis sebelum Uji Mundur lulus (lihat `docs/PRD.md` §5). Ulangi setiap kali rumus atau sumber data berubah.
+- **Tidak ada tahun per titik di tanah yang sudah di bawah Pasang Tertinggi** (ADR-0005).
 - **Ponsel adalah target utama**: setiap interaksi harus bisa dengan satu ketukan. Tidak ada UI yang hanya bisa di-hover.
 
 ## 5. Penamaan di Kode

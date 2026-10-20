@@ -56,6 +56,11 @@ def point_columns(rob, elev, rate, std, transform, crs):
     return out
 
 
+def validated():
+    f = WORK / "backtest.json"
+    return f.exists() and json.loads(f.read_text()).get("passed", False)
+
+
 def main():
     import rasterio
 
@@ -76,7 +81,7 @@ def main():
     (OUT / "meta.json").write_text(json.dumps({
         "updated": date.today().isoformat(), "years": [int(YEARS[0]), int(YEARS[-1])],
         "highestTide": tide["highest_tide"], "dailyHighTide": tide["daily_high_tide"], "dailyLowTide": tide["daily_low_tide"],
-        "validated": False,  # flips to true once Uji Mundur Sayung passes (docs/PRD.md §5)
+        "validated": validated(),  # Uji Mundur passed (docs/PRD.md §5)
     }, indent=2))
     for f in [f"below-tide-{lv}.geojson" for lv in LEVELS] + ["points.json"]:
         print(f"{f}: {(OUT / f).stat().st_size / 1e6:.1f} MB")

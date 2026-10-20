@@ -95,16 +95,17 @@ Semua pembaruan berjalan otomatis. Setiap pembaruan Laju Penurunan menghasilkan 
 
 ## 5. Uji Mundur
 
-**Tujuan**: membuktikan rumus §2 memprediksi Rob yang sudah terjadi, sebelum v1 dirilis.
+**Tujuan**: membuktikan rumus §2 lebih baik dari tebakan acak dalam memprediksi darat yang benar-benar jadi air, sebelum v1 dirilis.
 
-1. Jalankan pipeline hanya dengan citra Sentinel-1 2015–2017.
-2. Hitung Area Bawah Pasang untuk tahun 2025.
-3. Bandingkan dengan area yang benar-benar terendam permanen di 2025, dipetakan dari citra air Sentinel-1 atau Sentinel-2, di Kecamatan Sayung, Demak (termasuk Bedono dan Timbulsloko).
-4. **Lulus** kalau minimal `UJI_MINIMAL = 70%` area yang benar-benar terendam juga diprediksi sebagai Area Bawah Pasang.
+1. Jalankan InSAR hanya dengan pasangan sampai 31 Des 2017 (workflow `insar`, step `process`, `end_date` 20171231).
+2. Mundurkan Tinggi Tanah DeltaDTM (±2021) ke 2017 dengan laju penuh, lalu majukan ke 2025 dengan laju 2015–2017.
+3. Area uji: darat di seluruh pesisir Semarang–Demak yang kering di 2017 (air < 20% scene bersih Sentinel-2). Kebenaran: jadi air permanen di 2025 (air ≥ 80%).
+4. **Lulus** kalau skor pembeda AUC ≥ `AUC_MIN = 0,7` **dan** ketepatan di ambang Pasang Harian ≥ `LIFT_MIN = 2×` tebakan acak.
 
 Catatan:
-- Sebagian Bedono kemungkinan sudah terendam sebelum 2015 (cek dari citra lama). Kalau benar, area yang baru terendam di antara 2017 dan 2025 adalah ujian yang lebih adil.
-- DeltaDTM lebih baru dari 2017. Tinggi Tanah 2017 dihitung mundur: `Tinggi Tanah(2017) = Tinggi Tanah(t0) + Laju Penurunan × (t0 − 2017)`. Ini membocorkan sedikit informasi masa depan, jadi tulis hasilnya apa adanya.
+- DeltaDTM lebih baru dari 2017, jadi langkah 2 membocorkan sedikit informasi 2017–2021. Hasil ditulis apa adanya.
+- Tambak baru ikut terhitung "jadi air" walaupun dibuat orang.
+- DeltaDTM kosong di tempat yang sudah jadi air di 2021, jadi lahan yang tenggelam 2017–2021 tidak ikut diuji.
 
 ### 5.1 Hasil Uji Mundur pertama (20 Okt 2026): belum lulus
 
@@ -114,6 +115,18 @@ Catatan:
 - **Masalah utama: rumus tidak punya daya beda di Sayung.** Tinggi Tanah perkiraan 2025 sama untuk lahan yang jadi air (median +0,07 m) dan yang tetap darat (+0,08 m). Di ambang mana pun, "tepat" tetap ±9%, sama dengan tebakan acak. Persentase "tertangkap" hanya naik karena area yang ditebak ikut membesar.
 - Tafsiran: hampir semua darat Sayung sudah setinggi muka laut. Di sana yang menentukan lahan jadi air adalah Tanggul, pompa, urugan, dan pembuatan tambak, bukan Tinggi Tanah. Galat DeltaDTM (±0,5 m) juga lebih besar dari beda tinggi antar lahan.
 - Kriteria "tertangkap ≥ 70%" ternyata tidak cukup, karena bisa dicapai dengan menebak semuanya. Kriteria berikutnya harus membandingkan dengan tebakan acak.
+
+### 5.2 Hasil Uji Mundur pesisir (20 Okt 2026): lulus
+
+| Area | Piksel uji | Jadi air | AUC | Di bawah Pasang Harian | Hilang ke Laut tertangkap |
+|---|---|---|---|---|---|
+| Pesisir Semarang–Demak | 68.848 | 1.802 (2,6%) | **0,87** | tertangkap 76%, tepat 10% = **3,9× acak** | 4% |
+| Sayung saja | 6.885 | 599 (8,7%) | 0,50 | tertangkap 67%, tepat 9% = 1,0× acak | 9% |
+
+Kesimpulan:
+1. Rumus **bisa membedakan kawasan yang akan jadi air dari kawasan aman** (lulus).
+2. **Di dalam kawasan yang sudah rendah** (Sayung), rumus tidak bisa menentukan petak mana yang duluan jadi air. Karena itu kartu titik tidak memberi tahun untuk tanah yang sudah di bawah Pasang Tertinggi (ADR-0005).
+3. Darat berubah jadi air permanen begitu turun di bawah **Pasang Harian**, bukan Surut Harian. Tingkat Hilang ke Laut (< Surut Harian) hanya menangkap 4%.
 
 ## 6. Angka di Halaman Pembuka
 

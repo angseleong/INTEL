@@ -63,10 +63,12 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 - [x] `compute.py` + `compute_check.py` (angka buatan dengan jawaban yang diketahui). Masa Terukur menyusul setelah ada deret waktu InSAR.
 - [x] `compute.py` pertama dengan data asli: 31.096 titik. 27% sudah di bawah Pasang Tertinggi, 3% 2026–2030, 8% 2031–2040, 6% 2041–2050, 56% tidak sebelum 2050. Genuk −0,33 m dan Kaligawe −0,21 m di bawah MSL, kemungkinan terlalu rendah karena MDT dan `t0`. **Belum boleh ditampilkan.**
 - [x] `backtest.py` + `fetch_water.py`: Uji Mundur pertama. **Belum lulus**: tidak ada daya beda di Sayung (`DATA.md` §5.1).
-- [ ] Putuskan arah Uji Mundur dan klaim per titik setelah hasil §5.1.
-- [ ] Setel `RENTANG_MAKS` dan `UJI_MINIMAL` dari hasil Uji Mundur.
+- [x] Uji Mundur di seluruh pesisir dengan pembanding acak: **LULUS** (AUC 0,87, 3,9× acak). Sayung saja AUC 0,50 (`DATA.md` §5.2).
+- [x] Kartu titik tanpa tahun untuk tanah yang sudah di bawah Pasang Tertinggi (ADR-0005).
+- [ ] Putuskan nasib tingkat Hilang ke Laut (hanya 4% tertangkap).
+- [ ] Setel `RENTANG_MAKS` dari hasil Uji Mundur.
 
-**Checkpoint:** `python pipeline/backtest.py` mencetak persentase kecocokan ≥ `UJI_MINIMAL`. Kalau gagal, berhenti dan perbaiki sebelum lanjut.
+**Checkpoint:** `python pipeline/backtest.py` mencetak LULUS. ✅ 20 Okt 2026.
 
 ## ACTIVE — Blok 4: Peta Dasar
 

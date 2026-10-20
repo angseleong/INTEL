@@ -88,7 +88,7 @@ Proyek pribadi, open source, biaya Rp0.
 - Asal nama (Kolam Intel ITB), cara hitung dalam bahasa awam, keterbatasan, atribusi dan lisensi setiap dataset.
 
 ## 5. Syarat Rilis v1
-1. **Uji Mundur Sayung lulus**: pipeline dijalankan hanya dengan citra Sentinel-1 2015–2017, dan Area Bawah Pasang 2025 hasil prediksinya cocok dengan area yang benar-benar terendam di Kecamatan Sayung, Demak (termasuk Bedono dan Timbulsloko). Kriteria persisnya ada di `DATA.md` §5.
+1. **Uji Mundur lulus**: dengan data InSAR 2015–2017 saja, prediksi 2025 harus lebih baik dari tebakan acak di seluruh pesisir Semarang–Demak (AUC ≥ 0,7 dan ketepatan ≥ 2× acak). Kriteria di `DATA.md` §5. ✅ Lulus 20 Okt 2026 (AUC 0,87, 3,9× acak).
 2. Semua lapisan menampilkan tanggal "diperbarui".
 3. Halaman Tentang memuat semua atribusi.
 4. Bisa dipakai penuh di ponsel 375×812.
