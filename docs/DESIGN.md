@@ -17,6 +17,7 @@ Tetap tenang dan bisa dipercaya, bukan film bencana. Gelap di sini artinya fokus
 | Kabut | `#bdbdbd` | `--color-mist` | Teks pendukung, keterangan sumber data |
 | Biru Pasang | `#1f6bff` | `--color-tide` | **Satu-satunya** warna tombol terisi (Play, Bandingkan). Teks putih di atasnya 4,56:1 |
 | Air | `#4da3ff` | `--color-water` | Area Bawah Pasang (opasitas 45%). Hanya untuk data, tidak pernah untuk tombol |
+| Laut Pasang | `#123f86` | `--color-sea` | Air Nyata dari foto satelit. Hanya untuk data |
 | Sorot | `#ffb829` | `--color-spark` | Garis Pantai tahun terpilih, angka Rentang Tahun, label kecil kapital. 12,1:1 di atas hitam |
 | Laut Dalam | `#0b2a4a` | `--color-deep` | Ujung gradien logo saja |
 
@@ -31,6 +32,7 @@ Aturan:
 |---|---|
 | Peta dasar | Citra satelit, digelapkan 20% supaya data menyala |
 | Area Bawah Pasang | Air `#4da3ff`, opasitas 45%, tanpa garis tepi |
+| Air Nyata 2025 | Laut Pasang `#123f86`, opasitas 90%, di atas Area Bawah Pasang. Legenda: "Sudah jadi air menurut foto satelit 2025, termasuk tambak" |
 | Garis Pantai tahun ini | Tulang, 2 px |
 | Garis Pantai tahun terpilih | Sorot, 2 px. **Garis penuh** di Masa Terukur, **putus-putus** di Masa Perkiraan |
 | Tanggul | Abu, 2 px, putus-putus |
@@ -143,6 +145,7 @@ Peta pulau Jawa yang separuh bawahnya terpotong garis air, seperti Kolam Intel d
   --color-mist: #bdbdbd;
   --color-tide: #1f6bff;
   --color-water: #4da3ff;
+  --color-sea: #123f86;
   --color-spark: #ffb829;
   --color-deep: #0b2a4a;
   --panel: rgb(0 0 0 / 0.85);

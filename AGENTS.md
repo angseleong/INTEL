@@ -53,8 +53,9 @@ Kode, nama file, dan nama variabel memakai bahasa Inggris. Teks tampilan dan doc
 | Pasang Harian | `dailyHighTide` |
 | Kenaikan Muka Laut | `seaLevelRise` |
 | Tahun Rob | `robYear` |
-| Tahun Jadi Laut | `seaYear` |
-| Rentang Tahun | `robYearMin`/`robYearMax`, `seaYearMin`/`seaYearMax` |
+| Tahun Bawah Pasang Harian | `dailyYear` |
+| Air Nyata | `water` |
+| Rentang Tahun | `robYearMin`/`robYearMax`, `dailyYearMin`/`dailyYearMax` |
 | Area Bawah Pasang | `belowTide` |
 | Skenario Lanjut / Henti | `scenario: "continue" \| "stop"` |
 | Rilis Data | `release` |

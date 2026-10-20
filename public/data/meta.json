@@ -6,5 +6,6 @@
   ],
   "highestTide": 0.646,
   "dailyHighTide": 0.34,
-  "validated": true
+  "validated": true,
+  "dailyPrecision": 0.102
 }

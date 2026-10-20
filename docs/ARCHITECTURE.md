@@ -31,7 +31,7 @@ INTEL/
 │   └── style.css
 ├── public/
 │   └── data/               # Data terbaru, ditimpa oleh pipeline setiap pembaruan
-│       ├── below-tide-{rob,sea}.geojson  # satu file per tingkat, PMTiles setelah Pantura
+│       ├── below-tide-{rob,daily}.geojson  # satu file per tingkat, PMTiles setelah Pantura
 │       ├── points.json         # titik per kolom
 │       ├── meta.json           # tanggal, Pasang, status Uji Mundur
 │       ├── dikes.pmtiles
@@ -43,7 +43,7 @@ INTEL/
 │   ├── fetch_dem.py        # DeltaDTM potongan Wilayah Cakupan
 │   ├── fetch_tide.py       # Data pasang BIG → Pasang Tertinggi, Pasang Harian, tide.json
 │   ├── fetch_dikes.py      # Tanggul dari OpenStreetMap
-│   ├── compute.py          # Rumus DATA.md §2–3 → Tahun Rob + Tahun Jadi Laut per titik (+ compute_check.py)
+│   ├── compute.py          # Rumus DATA.md §2–3 → Tahun Rob + Tahun Bawah Pasang Harian per titik (+ compute_check.py)
 │   ├── backtest.py         # Uji Mundur DATA.md §5
 │   ├── export.py           # GeoTIFF → PMTiles + CSV
 │   └── run_all.py          # Langkah 1–6 berurutan untuk satu Rilis Data
@@ -60,7 +60,7 @@ Urutan per Rilis Data:
 1. `fetch_insar.py`: cari citra Sentinel-1 di atas Wilayah Cakupan, kirim pasangan burst ke HyP3, tunggu, unduh hasilnya, jalankan MintPy jadi peta Laju Penurunan + simpangan bakunya.
 2. `fetch_dem.py`: potong DeltaDTM ke Wilayah Cakupan, samakan grid dengan peta Laju Penurunan.
 3. `fetch_tide.py`: hitung Pasang Tertinggi dan Pasang Harian dari data pasang per jam.
-4. `compute.py`: untuk setiap titik, hitung Tahun Rob dan Tahun Jadi Laut (tengah, paling cepat, paling lambat) untuk kedua Skenario, plus Tinggi Tanah terukur tiap tahun dari 2015 sampai tahun Rilis Data.
+4. `compute.py`: untuk setiap titik, hitung Tahun Rob dan Tahun Bawah Pasang Harian (tengah, paling cepat, paling lambat) untuk kedua Skenario, plus Tinggi Tanah terukur tiap tahun dari 2015 sampai tahun Rilis Data.
 5. `backtest.py`: hanya untuk Uji Mundur, sebelum rilis pertama dan setiap kali rumus berubah.
 6. `export.py`: hasilkan file di §4, timpa `public/data/`, unggah juga sebagai Rilis Data `data-YYYYQn`.
 
@@ -72,8 +72,8 @@ Batas runner gratis GitHub Actions: 6 jam per job, ±14 GB disk. Pemakaian seben
 
 | File | Isi | Dipakai oleh |
 |---|---|---|
-| `below-tide-{rob,sea}.geojson` | Satu file per tingkat, hanya tingkat yang aktif yang diunduh. Satu poligon gabungan per tahun per Skenario. Properti: `level`, `year`, `scenario` (nanti `measured` untuk Masa Terukur) | Lapisan Area Bawah Pasang dan Garis Pantai (garis tepi poligon). Slider cukup mengganti filter `year`, tanpa menghitung ulang |
-| `points.json` | Titik grid ±80 m, disimpan per kolom (satu daftar per properti), dicari terdekatnya di browser. Properti: `elevation`, `subsidenceRate`, `robYearMin`, `robYearMax`, `seaYearMin`, `seaYearMax` per Skenario, `kelurahan` | Kartu klik titik |
+| `below-tide-{rob,daily}.geojson` | Satu file per tingkat, hanya tingkat yang aktif yang diunduh. Satu poligon gabungan per tahun per Skenario. Properti: `level`, `year`, `scenario` (nanti `measured` untuk Masa Terukur) | Lapisan Area Bawah Pasang dan Garis Pantai (garis tepi poligon). Slider cukup mengganti filter `year`, tanpa menghitung ulang |
+| `points.json` | Titik grid ±80 m, disimpan per kolom (satu daftar per properti), dicari terdekatnya di browser. Properti: `elevation`, `subsidenceRate`, `robYearMin`, `robYearMax`, `dailyYearMin`, `dailyYearMax` per Skenario, `kelurahan` | Kartu klik titik |
 | `dikes.pmtiles` | Garis Tanggul | Lapisan informasi |
 | `tide.json` | Waktu dan tinggi pasang 7 hari ke depan | Banner pasang |
 | `ranking.csv` | Satu baris per Kelurahan | Halaman Peliput, unduhan |

@@ -2,7 +2,7 @@ import * as maplibregl from "maplibre-gl";
 import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?url";
 import { cardHtml, nearest, type Level, type Points, type Scenario } from "./pointCard";
 
-type Meta = { updated: string; years: [number, number]; highestTide: number; dailyHighTide: number; validated: boolean };
+type Meta = { updated: string; years: [number, number]; highestTide: number; dailyHighTide: number; validated: boolean; dailyPrecision: number | null };
 
 const AREA = [110.3, -7.02, 110.65, -6.82] as const; // Wilayah Cakupan, same box as the pipeline
 const NOW = 2026;
@@ -46,9 +46,10 @@ const filter = (year: number): maplibregl.FilterSpecification =>
 const m = (x: number) => `${x < 0 ? "−" : "+"}${Math.abs(x).toLocaleString("id-ID", { maximumFractionDigits: 2 })} m`;
 function levelText() {
   if (!meta) return;
+  const real = meta.dailyPrecision ? `±${Math.max(1, Math.round(meta.dailyPrecision * 10))} dari 10` : "sebagian kecil";
   $("levelText").textContent = {
-    rob: `Biru = tanah di bawah Pasang Tertinggi (${m(meta.highestTide)}). Tanpa tanggul dan pompa, kena Rob beberapa kali setahun.`,
-    sea: `Biru = tanah di bawah Pasang Harian (${m(meta.dailyHighTide)}). Tanpa tanggul dan pompa, terendam tiap pasang dan lama-lama jadi laut, seperti Bedono.`,
+    rob: `Biru muda = tanah di bawah pasang tertinggi (${m(meta.highestTide)}). Tanpa tanggul dan pompa, kena rob beberapa kali setahun. Belum tentu tergenang.`,
+    daily: `Biru muda = tanah di bawah pasang harian (${m(meta.dailyHighTide)}). Tanpa tanggul dan pompa, terendam tiap pasang. Uji Mundur 2017–2025: hanya ${real} area seperti ini yang benar-benar jadi air, sisanya masih darat berkat tanggul, pompa, urugan, atau tambak.`,
   }[level];
 }
 
@@ -72,6 +73,8 @@ map.on("load", async () => {
   });
   map.addLayer({ id: "belowTide", type: "fill", source: "belowTide", filter: filter(NOW),
     paint: { "fill-color": "#4da3ff", "fill-opacity": 0.45, "fill-opacity-transition": { duration: reducedMotion ? 0 : 300 } } });
+  map.addSource("water", { type: "geojson", data: "/data/water-2025.geojson", attribution: "Air 2025: Sentinel-2 (ESA)" });
+  map.addLayer({ id: "water", type: "fill", source: "water", paint: { "fill-color": "#123f86", "fill-opacity": 0.9 } });
   map.addLayer({ id: "coastNow", type: "line", source: "belowTide", filter: filter(NOW),
     paint: { "line-color": "#ffffff", "line-width": 2 } });
   map.addLayer({ id: "coastYear", type: "line", source: "belowTide", filter: filter(NOW),
@@ -92,6 +95,7 @@ function setYear(year: number) {
   slider.value = String(year);
   $("yearOut").textContent = String(year);
   slider.setAttribute("aria-valuetext", `Tahun ${year}, perkiraan`);
+  showCard(); // Tinggi Tanah in the card follows the year
   if (!map.getLayer("belowTide")) return;
   map.setFilter("belowTide", filter(year));
   map.setFilter("coastYear", year === NOW ? ["==", ["get", "year"], -1] : filter(year)); // same as coastNow in 2026
@@ -116,7 +120,7 @@ function showCard() {
   if (!lastTap) return;
   const [lon, lat] = lastTap;
   const inside = lon >= AREA[0] && lon <= AREA[2] && lat >= AREA[1] && lat <= AREA[3];
-  $("card").innerHTML = cardHtml(points, points && inside ? nearest(points, lon, lat) : null, scenario, inside);
+  $("card").innerHTML = cardHtml(points, points && inside ? nearest(points, lon, lat) : null, scenario, Number(slider.value), inside);
 }
 
 function toggleGroup(attr: string, onPick: (value: string) => void) {

@@ -40,12 +40,16 @@ _Hindari_: subsidence, amblesan, penurunan muka tanah (versi panjang boleh di te
 Tahun pertama sebuah titik punya Tinggi Tanah di bawah Pasang Tertinggi, sehingga mulai kena Rob sesekali.
 _Hindari_: tahun tenggelam, tanggal tenggelam
 
-**Tahun Jadi Laut**:
-Tahun pertama sebuah titik punya Tinggi Tanah di bawah Pasang Harian, sehingga terendam setiap pasang dan, tanpa Tanggul dan pompa, lama-lama jadi laut.
-_Hindari_: tahun tenggelam, tahun terendam, hilang ke laut
+**Tahun Bawah Pasang Harian**:
+Tahun pertama sebuah titik punya Tinggi Tanah di bawah Pasang Harian, sehingga tanpa Tanggul dan pompa terendam tiap pasang. Belum tentu jadi air: di Uji Mundur hanya ±1 dari 10 lahan seperti ini yang benar-benar jadi air dalam 8 tahun.
+_Hindari_: jadi laut, tahun tenggelam, tahun terendam, hilang ke laut
+
+**Air Nyata**:
+Lahan yang menurut foto satelit Sentinel-2 benar-benar tergenang air sepanjang tahun (≥ 80% scene bersih), termasuk tambak.
+_Hindari_: laut, area tenggelam
 
 **Rentang Tahun**:
-Tahun Rob atau Tahun Jadi Laut paling cepat sampai paling lambat, dihitung dari ketidakpastian Tinggi Tanah dan Laju Penurunan.
+Tahun Rob atau Tahun Bawah Pasang Harian paling cepat sampai paling lambat, dihitung dari ketidakpastian Tinggi Tanah dan Laju Penurunan.
 _Hindari_: margin error, ± tahun
 
 **Masa Terukur**:

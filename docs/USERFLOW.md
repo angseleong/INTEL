@@ -8,7 +8,7 @@ Satu halaman yang digeser ke bawah, gaya void gelap (`DESIGN.md`):
 1. **Pembuka**: "Indonesia Tenggelam? Cek datanya." + satu kalimat skala Indonesia (dari Medan sampai Pantura Jawa, tanah pesisir turun lebih cepat daripada laut naik). Di bawahnya Konstelasi Titik (`DESIGN.md` §8).
 2. **Bukan cuma satu kota**: jumlah orang di kawasan berisiko Pantura, daftar kota pesisir yang turun, dan kota yang turun lebih cepat dari Jakarta. Angka dan sumbernya di `DATA.md` §6.
 3. **Dampaknya ke orang**: Bedono (KK yang direlokasi), Timbulsloko (KK yang hidup di tengah genangan), sawah Pantura yang terdampak. Hanya kejadian nyata, bukan perkiraan.
-4. **Cara membaca peta**: dua tingkat, Rob (kena rob sesekali) dan Jadi Laut (terendam tiap pasang, lama-lama jadi laut), dihitung tanpa Tanggul dan pompa, tahun selalu berupa Rentang Tahun.
+4. **Cara membaca peta**: dua tingkat, Rob (di bawah pasang tertinggi) dan Pasang Harian (di bawah pasang harian), plus Air Nyata dari foto satelit, dihitung tanpa Tanggul dan pompa, tahun selalu berupa Rentang Tahun.
 5. **Mulai**: "Cek lokasimu." + tombol **Mulai lihat peta** (satu-satunya tombol terisi di halaman) + chip kota: yang sudah dihitung (Semarang, Demak) menyala, yang menyusul abu-abu. Baru di sini dijelaskan bahwa INTEL sementara menghitung Semarang & Demak.
 6. Ketuk Mulai → peta terbuka. Animasi pembuka 2015 → sekarang (`DESIGN.md` §9 A1) jalan sekali di sini.
 
@@ -25,7 +25,7 @@ Banner di atas: "Wilayah Cakupan: sementara baru Semarang & Demak". Badge "Belum
 2. Ketuk titik rumah. Kartu titik muncul: Tinggi Tanah, Laju Penurunan, nama Kelurahan, dan dua Rentang Tahun:
    ```
    Mulai kena Rob sesekali: ±2029–2032   (Tahun Rob)
-   Jadi laut:               ±2036–2041   (Tahun Jadi Laut)
+   Di bawah pasang harian:  ±2036–2041   (Tahun Bawah Pasang Harian)
    ```
    Kalau Laju Penurunan titik itu diisi dari tetangga, kartu menulis "diperkirakan dari titik terukur dalam ±1 km".
 3. Geser slider atau tekan Play. Area Bawah Pasang dan Garis Pantai bergerak per tahun. Geser ke kiri sampai 2015 untuk melihat seberapa jauh Garis Pantai sudah maju (Masa Terukur). Geser ke kanan sampai 2050 untuk perkiraan (Masa Perkiraan).

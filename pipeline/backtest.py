@@ -44,8 +44,8 @@ def evaluate(test, truth, elev, high):
     recall, precision = scores(test & (elev < high), truth)
     return {"test_pixels": int(test.sum()), "became_water": int(truth.sum()), "base_rate": round(float(base), 3),
             "auc": round(float(auc(-elev[test], truth[test])), 3),
-            "sea_recall": round(float(recall), 3), "sea_precision": round(float(precision), 3),
-            "sea_lift": round(float(precision / base), 2)}
+            "daily_recall": round(float(recall), 3), "daily_precision": round(float(precision), 3),
+            "daily_lift": round(float(precision / base), 2)}
 
 
 def main():
@@ -89,13 +89,13 @@ def main():
         test = base_test & inside(bx)
         result[name] = evaluate(test, test & (w25 >= WET), elev_2025, high_2025)
     c = result["coast"]
-    result["passed"] = bool(c["auc"] >= AUC_MIN and c["sea_lift"] >= LIFT_MIN)
+    result["passed"] = bool(c["auc"] >= AUC_MIN and c["daily_lift"] >= LIFT_MIN)
     (WORK / "backtest.json").write_text(json.dumps(result, indent=2))
     for name, label in (("coast", "Pesisir Semarang–Demak"), ("sayung", "Sayung saja")):
         r = result[name]
         print(f"{label}: {r['test_pixels']} piksel darat 2017, {r['became_water']} jadi air 2025 ({r['base_rate']:.0%} = tebakan acak)")
-        print(f"  daya beda AUC {r['auc']:.2f} (minimal {AUC_MIN}) | di bawah Pasang Harian: tertangkap {r['sea_recall']:.0%}, "
-              f"tepat {r['sea_precision']:.0%} = {r['sea_lift']:.1f}× acak (minimal {LIFT_MIN}×)")
+        print(f"  daya beda AUC {r['auc']:.2f} (minimal {AUC_MIN}) | di bawah Pasang Harian: tertangkap {r['daily_recall']:.0%}, "
+              f"tepat {r['daily_precision']:.0%} = {r['daily_lift']:.1f}× acak (minimal {LIFT_MIN}×)")
     print("  LULUS" if result["passed"] else "  BELUM LULUS")
 
 

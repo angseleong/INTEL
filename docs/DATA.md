@@ -29,12 +29,12 @@ Pasang Tertinggi(t) = Pasang Tertinggi(2026) + Kenaikan Muka Laut × (t − 2026
 Pasang Harian(t)    = Pasang Harian(2026)    + Kenaikan Muka Laut × (t − 2026)
 
 Tahun Rob      = tahun pertama saat Tinggi Tanah(t) < Pasang Tertinggi(t)
-Tahun Jadi Laut = tahun pertama saat Tinggi Tanah(t) < Pasang Harian(t)
+Tahun Bawah Pasang Harian = tahun pertama saat Tinggi Tanah(t) < Pasang Harian(t)
 ```
 
 - Rumus di atas berlaku untuk Masa Perkiraan. Untuk Masa Terukur (2015 sampai tahun Rilis Data), `Laju Penurunan × (t − t0)` diganti dengan penurunan kumulatif yang benar-benar terukur di deret waktu InSAR pada tahun `t`, dan Pasang memakai data pasang tahun itu.
 - Pasang Tertinggi dan Pasang Harian dihitung dari data pasang per jam beberapa tahun terakhir: Pasang Tertinggi = pasang tertinggi tahunan rata-rata (tanpa badai), Pasang Harian = rata-rata pasang tinggi harian.
-- Peta punya dua pilihan tingkat: **Rob** (di bawah Pasang Tertinggi, bawaan) dan **Jadi Laut** (di bawah Pasang Harian). Dari stasiun Semarang: Pasang Tertinggi +0,65 m, Pasang Harian +0,34 m terhadap muka laut rata-rata. Tingkat ketiga "Hilang ke Laut" (di bawah Surut Harian −0,31 m) dibuang 20 Okt 2026 karena Uji Mundur menunjukkan darat sudah jadi air permanen begitu di bawah Pasang Harian (§5.2).
+- Peta punya dua pilihan tingkat: **Rob** (di bawah Pasang Tertinggi, bawaan) dan **Pasang Harian** (di bawah Pasang Harian). Nama "Jadi Laut" sempat dipakai lalu dibuang karena menyesatkan: hanya ±1 dari 10 lahan di bawah Pasang Harian yang benar-benar jadi air (§5.2). Di atasnya selalu tampil lapisan Air Nyata 2025 dari Sentinel-2. Dari stasiun Semarang: Pasang Tertinggi +0,65 m, Pasang Harian +0,34 m terhadap muka laut rata-rata. Tingkat ketiga "Hilang ke Laut" (di bawah Surut Harian −0,31 m) dibuang 20 Okt 2026 karena Uji Mundur menunjukkan darat sudah jadi air permanen begitu di bawah Pasang Harian (§5.2).
 
 - Laju Penurunan dari InSAR diukur searah pandang satelit. v1 menganggap gerakan tanah hanya vertikal. Kalau data orbit naik dan turun tersedia, gabungkan keduanya.
 

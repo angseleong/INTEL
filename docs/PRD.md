@@ -52,7 +52,8 @@ Proyek pribadi, open source, biaya Rp0.
 
 ### FR-1 — Peta
 - Peta dasar citra satelit, dibuka pada Wilayah Cakupan.
-- Lapisan Area Bawah Pasang untuk tahun yang dipilih, sesuai Skenario aktif dan tingkat yang dipilih: Rob (bawaan) atau Jadi Laut. Setiap tingkat punya satu kalimat legenda.
+- Lapisan Area Bawah Pasang untuk tahun yang dipilih, sesuai Skenario aktif dan tingkat yang dipilih: Rob (bawaan) atau Pasang Harian, dengan legenda yang menyebut hasil Uji Mundur (±1 dari 10 benar-benar jadi air).
+- Lapisan Air Nyata 2025 (Sentinel-2, termasuk tambak) selalu tampil, supaya pengunjung bisa membedakan yang sudah terjadi dari yang rawan. Setiap tingkat punya satu kalimat legenda.
 - Garis Pantai tahun sekarang dan tahun yang dipilih tampil bersamaan.
 - Lapisan Tanggul sebagai garis informasi.
 
@@ -67,7 +68,7 @@ Proyek pribadi, open source, biaya Rp0.
 
 ### FR-4 — Pencarian & Klik Titik
 - Cari alamat atau nama Kelurahan, peta terbang ke sana.
-- Klik atau ketuk satu titik: kartu berisi Tinggi Tanah, Laju Penurunan, Rentang Tahun untuk Tahun Rob ("mulai kena Rob sesekali") dan Tahun Jadi Laut, nama Kelurahan, dan tanggal data. Titik yang sudah di bawah Pasang Tertinggi tidak diberi tahun (ADR-0005). Titik yang lajunya diisi dari tetangga diberi keterangan.
+- Klik atau ketuk satu titik: kartu berisi Tinggi Tanah, Laju Penurunan, Rentang Tahun untuk Tahun Rob ("mulai kena Rob sesekali") dan Tahun Bawah Pasang Harian, Tinggi Tanah pada tahun yang dipilih di slider, nama Kelurahan, dan tanggal data. Titik yang sudah di bawah Pasang Tertinggi tidak diberi tahun (ADR-0005). Titik yang lajunya diisi dari tetangga diberi keterangan.
 - Kalau Rentang Tahun lebih lebar dari batas di `DATA.md` §3.3, kartu menulis "belum bisa diperkirakan" dan alasannya.
 
 ### FR-5 — Skenario
