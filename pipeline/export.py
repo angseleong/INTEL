@@ -53,9 +53,10 @@ def kelurahan_grid(shape, transform, crs):
     return kel, grid
 
 
-def ranking(rob, rate, kel, grid, pixel_ha):
+def ranking(rob, rate, kel, grid, pixel_ha, to_lonlat=lambda r, c: (float(c), float(r))):
     """One row per Kelurahan (USERFLOW.md §5). "Separuh" = the year half of its land is below Pasang Tertinggi:
-    the median over its points of the earliest and latest Tahun Rob, so it reads like a Kelurahan-wide Rentang Tahun."""
+    the median over its points of the earliest and latest Tahun Rob, so it reads like a Kelurahan-wide Rentang Tahun.
+    lon/lat: the point with data nearest the middle of the Kelurahan, so a link opens on a Kartu titik with numbers."""
     has = rob["robYear_continue"] != -1
     rows = []
     for k, row in kel.iterrows():
@@ -71,7 +72,9 @@ def ranking(rob, rate, kel, grid, pixel_ha):
             a, b = max(int(lo), int(YEARS[0])), int(YEARS[-1]) + 1 if hi == NEVER else int(hi)
             half = ("belum bisa diperkirakan",) * 2 if b - a > RENTANG_MAKS else (a, ">2050" if hi == NEVER else b)
         below = lambda s: (rob[f"robYear_{s}"][m] != NEVER).mean()  # ALREADY or a year up to 2050
-        lon, lat = row.geometry.representative_point().coords[0]
+        rows_, cols_ = np.nonzero(m)
+        i = np.argmin((rows_ - rows_.mean()) ** 2 + (cols_ - cols_.mean()) ** 2)
+        lon, lat = to_lonlat(rows_[i], cols_[i])
         rows.append({"kode": row.code, "kelurahan": row["name"], "kecamatan": row.kecamatan, "kota": row.kota,
                      "lon": round(lon, 5), "lat": round(lat, 5), "titik": int(m.sum()),
                      "persen_isian": round(100 * (rob["filled"][m] == 1).mean()),
@@ -163,7 +166,12 @@ def main():
     rows, cols = np.nonzero(rob["robYear_continue"] != -1)  # same order as point_columns
     points["kelurahan"] = grid[rows, cols].tolist()
     (OUT / "kelurahan.json").write_text(json.dumps(kel[["code", "name", "kecamatan", "kota"]].values.tolist()))
-    ranked = ranking(rob, rate, kel, grid, abs(transform.a * transform.e) / 1e4)
+    def to_lonlat(r, c):
+        from rasterio.transform import xy
+        from rasterio.warp import transform as reproject_xy
+        (lon,), (lat,) = reproject_xy(crs, "EPSG:4326", *[[v] for v in xy(transform, r, c)])
+        return lon, lat
+    ranked = ranking(rob, rate, kel, grid, abs(transform.a * transform.e) / 1e4, to_lonlat)
     with open(OUT / "ranking.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(ranked[0]))
         w.writeheader()

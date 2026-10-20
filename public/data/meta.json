@@ -7,5 +7,19 @@
   "highestTide": 0.646,
   "dailyHighTide": 0.34,
   "validated": true,
-  "dailyPrecision": 0.102
+  "dailyPrecision": 0.102,
+  "kota": [
+    {
+      "kota": "Demak",
+      "titik": 39982,
+      "lajuMedian": 9.4,
+      "lajuP90": 13.1
+    },
+    {
+      "kota": "Kota Semarang",
+      "titik": 24605,
+      "lajuMedian": 2.0,
+      "lajuP90": 11.1
+    }
+  ]
 }

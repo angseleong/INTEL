@@ -1,0 +1,240 @@
+kode,kelurahan,kecamatan,kota,lon,lat,titik,persen_isian,laju_penurunan_median_cm,persen_bawah_pasang_2026,persen_bawah_pasang_2050_lanjut,persen_bawah_pasang_2050_henti,ha_bawah_pasang_2050_lanjut,separuh_rob_paling_cepat,separuh_rob_paling_lambat
+ID3321030018,Bakalrejo,Guntur,Demak,110.61434,-6.96412,871,37,10.1,0,99,3,550,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374160005,Bambankerep,Ngaliyan,Kota Semarang,110.3637,-7.01233,511,0,-0.2,0,0,0,0,>2050,>2050
+ID3374120008,Bandarharjo,Semarang Utara,Kota Semarang,110.41664,-6.95451,334,23,7.6,97,100,100,214,sudah,sudah
+ID3321010009,Bandungrejo,Mranggen,Demak,110.50638,-7.01612,179,0,10.9,0,0,0,0,>2050,>2050
+ID3374090004,Bangetayu Kulon,Genuk,Kota Semarang,110.4731,-6.97556,310,0,10.8,7,97,48,193,2029,2038
+ID3374090005,Bangetayu Wetan,Genuk,Kota Semarang,110.48685,-6.9886,382,0,12.0,0,13,0,32,>2050,>2050
+ID3374130010,Bangunharjo,Semarang Tengah,Kota Semarang,110.42241,-6.9755,35,0,3.7,51,100,69,22,sudah,sudah
+ID3374090010,Banjardowo,Genuk,Kota Semarang,110.48543,-6.96038,390,0,11.2,61,100,84,250,sudah,sudah
+ID3321030001,Banjarejo,Guntur,Demak,110.56433,-7.00243,412,0,10.7,0,6,0,15,>2050,>2050
+ID3321040019,Banjarsari,Sayung,Demak,110.54128,-6.87649,894,1,7.0,100,100,100,572,sudah,sudah
+ID3374050002,Barusari,Semarang Selatan,Kota Semarang,110.40573,-6.98996,85,0,-0.4,0,0,0,0,>2050,>2050
+ID3321050012,Batu,Karang Tengah,Demak,110.55354,-6.92861,854,38,11.3,99,100,100,547,sudah,sudah
+ID3321040015,Bedono,Sayung,Demak,110.49345,-6.91697,392,85,11.6,100,100,100,251,sudah,sudah
+ID3374040002,Bendan Duwur,Gajah Mungkur,Kota Semarang,110.39556,-7.01817,109,6,-0.4,0,0,0,0,>2050,>2050
+ID3374040005,Bendan Ngisor,Gajah Mungkur,Kota Semarang,110.39846,-7.01093,123,0,0.2,0,0,0,0,>2050,>2050
+ID3374040007,Bendungan,Gajah Mungkur,Kota Semarang,110.40934,-7.00009,76,0,-0.3,0,0,0,0,>2050,>2050
+ID3321070008,Betokan,Demak,Demak,110.64483,-6.87441,331,54,5.9,0,100,33,211,belum bisa diperkirakan,belum bisa diperkirakan
+ID3321070009,Bintoro,Demak,Demak,110.64047,-6.89467,494,1,6.6,0,100,0,315,belum bisa diperkirakan,belum bisa diperkirakan
+ID3321030010,Blerong,Guntur,Demak,110.55349,-6.97709,599,1,11.7,11,91,34,351,2033,2042
+ID3321030005,Bogosari,Guntur,Demak,110.61142,-6.99307,720,15,10.0,0,26,0,120,2049,>2050
+ID3374140005,Bojongsalaman,Semarang Barat,Kota Semarang,110.39922,-6.98778,96,8,-0.4,0,0,0,0,>2050,>2050
+ID3321060012,Bonangrejo,Bonang,Demak,110.6043,-6.8476,609,54,8.3,96,100,100,390,sudah,sudah
+ID3374140004,Bongsari,Semarang Barat,Kota Semarang,110.39414,-6.99356,133,0,-0.5,0,0,0,0,>2050,>2050
+ID3321080017,Botorejo,Wonosalam,Demak,110.64988,-6.8983,41,0,6.2,0,88,0,23,belum bisa diperkirakan,belum bisa diperkirakan
+ID3321020010,Brambang,Karangawen,Demak,110.59836,-7.01549,360,0,9.0,0,0,0,0,>2050,>2050
+ID3374160003,Bringin,Ngaliyan,Kota Semarang,110.33184,-7.00361,467,0,-0.1,0,0,0,0,>2050,>2050
+ID3321010010,Brumbung,Mranggen,Demak,110.51579,-7.01541,139,0,11.0,0,0,0,0,>2050,>2050
+ID3374130004,Brumbungan,Semarang Tengah,Kota Semarang,110.42602,-6.98347,60,0,2.9,0,18,0,7,2047,>2050
+ID3374110006,Bugangan,Semarang Timur,Kota Semarang,110.43834,-6.97263,75,12,7.3,100,100,100,48,sudah,sudah
+ID3374120001,Bulu Lor,Semarang Utara,Kota Semarang,110.40431,-6.97259,101,7,3.2,60,94,82,61,sudah,sudah
+ID3321040003,Bulusari,Sayung,Demak,110.53973,-6.9778,504,0,11.9,4,98,22,317,2032,2041
+ID3374050001,Bulustalan,Semarang Selatan,Kota Semarang,110.40357,-6.98561,48,10,0.0,0,0,0,0,>2050,>2050
+ID3321030017,Bumiharjo,Guntur,Demak,110.63462,-6.96703,487,44,8.6,0,55,0,171,2041,>2050
+ID3321020009,Bumirejo,Karangawen,Demak,110.57012,-7.01546,200,1,10.4,0,0,0,0,>2050,>2050
+ID3374140006,Cabean,Semarang Barat,Kota Semarang,110.39922,-6.98271,31,0,0.3,0,0,0,0,>2050,>2050
+ID3374060004,Candi,Candisari,Kota Semarang,110.42888,-7.01097,104,0,-0.5,0,0,0,0,>2050,>2050
+ID3321010014,Candisari,Mranggen,Demak,110.55563,-7.01038,497,0,11.3,0,1,0,4,>2050,>2050
+ID3374120007,Dadapsari,Semarang Utara,Kota Semarang,110.42025,-6.96754,61,7,5.5,100,100,100,39,sudah,sudah
+ID3321040002,Dombo,Sayung,Demak,110.52669,-6.97851,202,0,12.0,1,100,36,129,2030,2039
+ID3321050004,Donorejo,Karang Tengah,Demak,110.61001,-6.94603,546,20,10.4,1,100,50,349,belum bisa diperkirakan,belum bisa diperkirakan
+ID3321070002,Donorejo,Demak,Demak,110.60716,-6.88958,434,57,7.4,93,100,100,278,sudah,sudah
+ID3321050010,Dukun,Karang Tengah,Demak,110.58033,-6.93008,474,7,11.5,95,100,99,303,sudah,sudah
+ID3374130006,Gabahan,Semarang Tengah,Kota Semarang,110.4253,-6.97985,40,0,3.9,0,65,12,17,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374040004,Gajahmungkur,Gajah Mungkur,Kota Semarang,110.40932,-7.01312,462,0,-0.4,0,0,0,0,>2050,>2050
+ID3321030009,Gaji,Guntur,Demak,110.56653,-6.98217,392,0,11.5,0,99,15,249,2033,2042
+ID3374100002,Gayamsari,Gayamsari,Kota Semarang,110.4499,-6.99725,192,1,2.5,0,0,0,0,>2050,>2050
+ID3321060003,Gebang,Bonang,Demak,110.56013,-6.84756,692,8,6.2,100,100,100,443,sudah,sudah
+ID3321060004,Gebangarum,Bonang,Demak,110.56157,-6.85914,357,1,5.6,100,100,100,228,sudah,sudah
+ID3374090002,Gebangsari,Genuk,Kota Semarang,110.46588,-6.96253,200,1,9.7,93,100,100,128,sudah,sudah
+ID3374080001,Gemah,Pedurungan,Kota Semarang,110.46292,-7.01101,198,0,1.6,0,0,0,0,>2050,>2050
+ID3321040011,Gemulak,Sayung,Demak,110.53399,-6.92208,535,39,10.8,100,100,100,342,sudah,sudah
+ID3374090003,Genuksari,Genuk,Kota Semarang,110.47601,-6.96326,365,1,10.3,87,100,99,234,sudah,sudah
+ID3374140008,Gisikdrono,Semarang Barat,Kota Semarang,110.38763,-6.98993,212,0,-0.5,0,5,4,7,>2050,>2050
+ID3374160009,Gondoriyo,Ngaliyan,Kota Semarang,110.31157,-6.99417,776,16,1.1,0,0,0,0,>2050,>2050
+ID3321050005,Grogol,Karang Tengah,Demak,110.61726,-6.9388,457,6,9.4,1,97,38,285,belum bisa diperkirakan,belum bisa diperkirakan
+ID3321030014,Guntur,Guntur,Demak,110.6165,-6.97932,556,20,9.9,0,75,0,267,2041,>2050
+ID3374130003,Jagalan,Semarang Tengah,Kota Semarang,110.43037,-6.97986,45,0,5.1,36,93,53,27,belum bisa diperkirakan,belum bisa diperkirakan
+ID3321060020,Jali,Bonang,Demak,110.64268,-6.84402,354,3,4.9,28,95,67,216,belum bisa diperkirakan,belum bisa diperkirakan
+ID3321010018,Jamus,Mranggen,Demak,110.50132,-7.00237,393,0,13.5,0,1,0,1,>2050,>2050
+ID3321060011,Jatimulyo,Bonang,Demak,110.60428,-6.86859,438,44,8.0,97,100,100,280,sudah,sudah
+ID3321060013,Jatirogo,Bonang,Demak,110.58765,-6.83818,737,56,7.7,100,100,100,472,sudah,sudah
+ID3374150001,Jerakah,Tugu,Kota Semarang,110.36302,-6.97615,215,1,2.6,42,71,53,98,belum bisa diperkirakan,belum bisa diperkirakan
+ID3321040001,Jetaksari,Sayung,Demak,110.51584,-6.97416,240,0,12.2,36,100,68,154,2026,2032
+ID3321080016,Jogoloyo,Wonosalam,Demak,110.63032,-6.91131,631,1,6.8,0,71,1,287,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374060003,Jomblang,Candisari,Kota Semarang,110.43757,-7.01388,175,0,-0.2,0,0,0,0,>2050,>2050
+ID3321070010,Kadilangu,Demak,Demak,110.64625,-6.90915,279,30,8.1,0,95,2,169,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374140009,Kalibanteng Kidul,Semarang Barat,Kota Semarang,110.38255,-6.9921,66,0,-0.7,0,0,0,0,>2050,>2050
+ID3374140010,Kalibanteng Kulon,Semarang Barat,Kota Semarang,110.37894,-6.9863,154,1,-0.4,0,0,0,0,>2050,>2050
+ID3374080009,Kalicari,Pedurungan,Kota Semarang,110.4557,-6.99653,225,0,5.8,0,22,2,31,>2050,>2050
+ID3321070006,Kalicilik,Demak,Demak,110.63034,-6.87657,348,86,7.8,2,100,72,223,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374100006,Kaligawe,Gayamsari,Kota Semarang,110.44705,-6.96323,102,9,9.8,100,100,100,65,sudah,sudah
+ID3321070001,Kalikondang,Demak,Demak,110.60208,-6.90622,566,1,8.2,78,100,95,362,sudah,sudah
+ID3374160006,Kalipancur,Ngaliyan,Kota Semarang,110.37601,-7.01018,374,2,-0.7,0,0,0,0,>2050,>2050
+ID3321040006,Kalisari,Sayung,Demak,110.51295,-6.96186,639,0,12.2,83,100,99,409,sudah,sudah
+ID3374060005,Kaliwiru,Candisari,Kota Semarang,110.42236,-7.01748,63,0,0.0,0,0,0,0,>2050,>2050
+ID3374140014,Karang Ayu,Semarang Barat,Kota Semarang,110.39199,-6.97836,82,0,2.5,13,74,46,39,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374150003,Karanganyar,Tugu,Kota Semarang,110.34058,-6.97106,473,20,1.4,48,54,51,164,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374060002,Karanganyar Gunung,Candisari,Kota Semarang,110.43322,-7.01821,78,1,-0.1,0,0,0,0,>2050,>2050
+ID3321040005,Karangasem,Sayung,Demak,110.52743,-6.96404,318,2,12.0,87,100,97,204,sudah,sudah
+ID3374130002,Karangkidul,Semarang Tengah,Kota Semarang,110.42891,-6.98998,84,0,1.8,0,1,0,1,>2050,>2050
+ID3321070005,Karangmlati,Demak,Demak,110.61659,-6.86498,612,34,8.3,63,100,100,392,sudah,sudah
+ID3321060005,Karangrejo,Bonang,Demak,110.57314,-6.87073,953,21,6.6,100,100,100,610,sudah,sudah
+ID3321080015,Karangrejo,Wonosalam,Demak,110.61438,-6.9207,523,3,7.2,2,97,17,324,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374090009,Karangroto,Genuk,Kota Semarang,110.49485,-6.96256,318,0,11.6,58,100,71,204,sudah,sudah
+ID3321050008,Karangsari,Karang Tengah,Demak,110.59337,-6.92286,363,2,9.4,55,100,100,232,sudah,sudah
+ID3321010013,Karangsono,Mranggen,Demak,110.54549,-7.01689,110,0,11.6,0,0,0,0,>2050,>2050
+ID3374110002,Karangtempel,Semarang Timur,Kota Semarang,110.4376,-6.99072,118,8,2.1,0,51,0,38,belum bisa diperkirakan,belum bisa diperkirakan
+ID3321050009,Karangtowo,Karang Tengah,Demak,110.58251,-6.91923,218,2,8.5,92,100,100,140,sudah,sudah
+ID3374110001,Karangturi,Semarang Timur,Kota Semarang,110.43325,-6.98927,44,0,2.3,0,20,0,6,belum bisa diperkirakan,belum bisa diperkirakan
+ID3321070003,Katonsari,Demak,Demak,110.61729,-6.90261,416,0,5.9,9,98,51,262,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374130009,Kauman,Semarang Tengah,Kota Semarang,110.42458,-6.97261,36,8,4.9,100,100,100,23,sudah,sudah
+ID3374110005,Kebonagung,Semarang Timur,Kota Semarang,110.43327,-6.97262,39,0,6.7,100,100,100,25,sudah,sudah
+ID3374070011,Kedungmundu,Tembalang,Kota Semarang,110.46436,-7.01825,90,0,0.3,0,0,0,0,>2050,>2050
+ID3374010010,Kedungpani,Mijen,Kota Semarang,110.35644,-7.01884,94,0,2.4,0,0,0,0,>2050,>2050
+ID3321050011,Kedunguter,Karang Tengah,Demak,110.57236,-6.94238,396,45,12.5,90,100,95,253,sudah,sudah
+ID3321060008,Kembangan,Bonang,Demak,110.57458,-6.88448,275,52,6.6,100,100,100,176,sudah,sudah
+ID3321010006,Kembangarum,Mranggen,Demak,110.53172,-7.01832,64,0,11.8,0,0,0,0,>2050,>2050
+ID3374140001,Kembangarum,Semarang Barat,Kota Semarang,110.37458,-6.99643,295,0,-0.7,0,0,0,0,>2050,>2050
+ID3374130011,Kembangsari,Semarang Tengah,Kota Semarang,110.41951,-6.9784,46,0,3.3,9,65,17,19,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374110010,Kemijen,Semarang Timur,Kota Semarang,110.43691,-6.95743,176,45,8.9,100,100,100,113,sudah,sudah
+ID3321080013,Kendaldoyong,Wonosalam,Demak,110.64044,-6.92289,350,25,7.6,0,66,1,148,belum bisa diperkirakan,belum bisa diperkirakan
+ID3321130004,Kenduren,Wedung,Demak,110.64414,-6.82303,172,29,9.4,90,100,100,110,sudah,sudah
+ID3321050002,Klitih,Karang Tengah,Demak,110.59045,-6.95397,588,21,11.3,28,100,92,376,2026,2033
+ID3321060007,Krajanbogo,Bonang,Demak,110.59197,-6.87364,366,7,7.3,100,100,100,234,sudah,sudah
+ID3321030011,Krandon,Guntur,Demak,110.56653,-6.97276,230,3,11.7,1,100,54,147,2028,2037
+ID3374130007,Kranggan,Semarang Tengah,Kota Semarang,110.42603,-6.97696,44,7,5.0,59,100,84,28,sudah,sudah
+ID3374140011,Krapyak,Semarang Barat,Kota Semarang,110.37025,-6.98412,143,0,-0.7,0,0,0,0,>2050,>2050
+ID3374140015,Krobokan,Semarang Barat,Kota Semarang,110.39778,-6.9762,138,9,2.4,59,80,70,70,sudah,sudah
+ID3374090008,Kudu,Genuk,Kota Semarang,110.50063,-6.96836,183,7,12.2,17,100,44,117,2030,2039
+ID3374120005,Kuningan,Semarang Utara,Kota Semarang,110.41518,-6.96247,132,11,6.1,100,100,100,84,sudah,sudah
+ID3374050008,Lamper Kidul,Semarang Selatan,Kota Semarang,110.43685,-7.00736,67,0,-0.3,0,0,0,0,>2050,>2050
+ID3374050009,Lamper Lor,Semarang Selatan,Kota Semarang,110.43903,-7.00302,54,2,0.2,0,0,0,0,>2050,>2050
+ID3374050010,Lamper Tengah,Semarang Selatan,Kota Semarang,110.4441,-7.00592,114,1,0.9,0,0,0,0,>2050,>2050
+ID3374040008,Lempongsari,Gajah Mungkur,Kota Semarang,110.41513,-7.00082,131,0,-0.4,0,0,0,0,>2050,>2050
+ID3321080008,Lempuyang,Wonosalam,Demak,110.64695,-6.93737,241,51,8.0,0,46,0,72,2044,>2050
+ID3321040010,Loireng,Sayung,Demak,110.53543,-6.93872,530,28,12.4,100,100,100,339,sudah,sudah
+ID3374150007,Mangkang Kulon,Tugu,Kota Semarang,110.30367,-6.95074,249,82,4.6,92,98,96,156,sudah,sudah
+ID3374150005,Mangkang Wetan,Tugu,Kota Semarang,110.31669,-6.96161,476,27,4.5,69,82,74,250,sudah,sudah
+ID3374150006,Mangunharjo,Tugu,Kota Semarang,110.30946,-6.95654,484,51,4.6,78,83,81,258,sudah,sudah
+ID3321070004,Mangunjiwan,Demak,Demak,110.62164,-6.88742,702,30,8.2,27,100,71,449,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374140002,Manyaran,Semarang Barat,Kota Semarang,110.38543,-7.0044,273,1,-0.4,0,0,0,0,>2050,>2050
+ID3321060002,Margolinduk,Bonang,Demak,110.5558,-6.83526,128,0,7.2,100,100,100,82,sudah,sudah
+ID3321010017,Menur,Mranggen,Demak,110.52376,-7.01108,323,0,12.0,0,1,0,2,>2050,>2050
+ID3374130005,Miroto,Semarang Tengah,Kota Semarang,110.41878,-6.98346,55,0,2.4,0,0,0,0,>2050,>2050
+ID3374110008,Mlatibaru,Semarang Timur,Kota Semarang,110.43763,-6.96612,82,10,7.9,100,100,100,52,sudah,sudah
+ID3374110007,Mlatiharjo,Semarang Timur,Kota Semarang,110.44197,-6.96684,75,25,8.7,100,100,100,48,sudah,sudah
+ID3321060001,Morodemak,Bonang,Demak,110.53987,-6.8338,511,30,8.2,100,100,100,327,sudah,sudah
+ID3374050004,Mugassari,Semarang Selatan,Kota Semarang,110.41732,-6.99214,126,0,-0.4,0,0,0,0,>2050,>2050
+ID3374080012,Muktiharjo Kidul,Pedurungan,Kota Semarang,110.4579,-6.97338,328,9,9.9,78,100,90,210,sudah,sudah
+ID3374090001,Muktiharjo Lor,Genuk,Kota Semarang,110.45719,-6.96252,233,4,9.9,100,100,100,149,sudah,sudah
+ID3374160004,Ngaliyan,Ngaliyan,Kota Semarang,110.34849,-7.00725,787,0,-0.5,0,0,0,0,>2050,>2050
+ID3321130002,Ngawen,Wedung,Demak,110.61156,-6.82518,63,83,6.7,100,100,100,40,sudah,sudah
+ID3321010011,Ngemplak,Mranggen,Demak,110.51436,-6.99876,510,0,14.4,0,18,0,58,>2050,>2050
+ID3374140003,Ngemplaksimongan,Semarang Barat,Kota Semarang,110.39631,-6.99935,132,8,-0.2,0,0,0,0,>2050,>2050
+ID3374080008,Palebon,Pedurungan,Kota Semarang,110.46438,-7.00378,220,0,3.8,0,0,0,0,>2050,>2050
+ID3321030003,Pamongan,Guntur,Demak,110.59475,-7.0068,460,2,9.6,0,0,0,0,>2050,>2050
+ID3374130012,Pandansari,Semarang Tengah,Kota Semarang,110.41879,-6.97333,42,0,3.7,81,100,90,27,sudah,sudah
+ID3374100001,Pandean Lamper,Gayamsari,Kota Semarang,110.44339,-6.99434,165,3,1.7,0,12,0,13,>2050,>2050
+ID3374120003,Panggung Kidul,Semarang Utara,Kota Semarang,110.40649,-6.96608,74,0,4.9,100,100,100,47,sudah,sudah
+ID3374120004,Panggung Lor,Semarang Utara,Kota Semarang,110.4036,-6.95522,374,21,6.6,100,100,100,239,sudah,sudah
+ID3374080002,Pedurungan Kidul,Pedurungan,Kota Semarang,110.4774,-7.01609,153,0,2.7,0,0,0,0,>2050,>2050
+ID3374080005,Pedurungan Lor,Pedurungan,Kota Semarang,110.48248,-7.00886,233,0,12.1,0,0,0,0,>2050,>2050
+ID3374080007,Pedurungan Tengah,Pedurungan,Kota Semarang,110.4738,-7.00162,293,0,9.4,0,0,0,0,>2050,>2050
+ID3374130001,Pekunden,Semarang Tengah,Kota Semarang,110.42095,-6.98708,76,0,1.5,0,3,0,1,>2050,>2050
+ID3374130014,Pendrikan Kidul,Semarang Tengah,Kota Semarang,110.40792,-6.98055,62,0,1.4,0,0,0,0,>2050,>2050
+ID3374130015,Pendrikan Lor,Semarang Tengah,Kota Semarang,110.4072,-6.97766,50,4,1.7,0,26,8,8,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374080004,Penggaron Kidul,Pedurungan,Kota Semarang,110.48973,-7.00887,127,0,12.8,0,0,0,0,>2050,>2050
+ID3374090007,Penggaron Lor,Genuk,Kota Semarang,110.49917,-6.985,211,0,13.3,0,28,0,38,>2050,>2050
+ID3321040004,Perampelan,Sayung,Demak,110.53757,-6.96478,265,0,11.9,69,100,98,170,sudah,sudah
+ID3374010011,Pesantren,Mijen,Kota Semarang,110.31878,-7.02023,39,0,0.8,0,0,0,0,>2050,>2050
+ID3374050007,Peterongan,Semarang Selatan,Kota Semarang,110.43469,-7.00012,91,2,0.3,0,0,0,0,>2050,>2050
+ID3374040006,Petompon,Gajah Mungkur,Kota Semarang,110.40282,-7.00153,140,6,-0.2,0,0,0,0,>2050,>2050
+ID3321050003,Pidodo,Karang Tengah,Demak,110.59697,-6.94746,514,30,10.9,18,100,73,329,2026,2033
+ID3321040009,Pilangsari,Sayung,Demak,110.55279,-6.95466,481,44,13.0,81,100,95,308,sudah,sudah
+ID3374080003,Plamongan Sari,Pedurungan,Kota Semarang,110.49479,-7.01394,310,0,12.6,0,0,0,0,>2050,>2050
+ID3374050005,Pleburan,Semarang Selatan,Kota Semarang,110.42456,-6.99577,126,0,-0.2,0,0,0,0,>2050,>2050
+ID3374120002,Plombokan,Semarang Utara,Kota Semarang,110.4101,-6.97187,86,0,3.6,64,95,86,52,sudah,sudah
+ID3321050006,Ploso,Karang Tengah,Demak,110.63391,-6.94098,279,3,8.2,0,62,0,110,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374160001,Podorejo,Ngaliyan,Kota Semarang,110.30286,-7.01008,267,4,0.7,0,0,0,0,>2050,>2050
+ID3321060018,Poncoharjo,Bonang,Demak,110.59635,-6.82516,529,19,6.4,100,100,100,339,sudah,sudah
+ID3321050007,Pulosari,Karang Tengah,Demak,110.60423,-6.92721,347,18,9.7,2,100,72,222,2026,2036
+ID3374130008,Purwodinatan,Semarang Tengah,Kota Semarang,110.42893,-6.97117,61,0,6.3,100,100,100,39,sudah,sudah
+ID3321060015,Purworejo,Bonang,Demak,110.55726,-6.82513,395,4,7.0,100,100,100,253,sudah,sudah
+ID3321040013,Purwosari,Sayung,Demak,110.50139,-6.93796,449,35,11.3,100,100,100,287,sudah,sudah
+ID3374120006,Purwosari,Semarang Utara,Kota Semarang,110.4159,-6.97043,76,0,4.3,99,100,100,49,sudah,sudah
+ID3374160007,Purwoyoso,Ngaliyan,Kota Semarang,110.36155,-6.99352,292,0,-0.5,0,0,0,0,>2050,>2050
+ID3374150004,Randu Garut,Tugu,Kota Semarang,110.32755,-6.9667,444,14,2.0,35,45,38,127,2044,>2050
+ID3374050003,Randusari,Semarang Selatan,Kota Semarang,110.4108,-6.99069,135,0,-0.4,0,0,0,0,>2050,>2050
+ID3374110009,Rejomulyo,Semarang Timur,Kota Semarang,110.43473,-6.96466,56,0,7.6,100,100,100,36,sudah,sudah
+ID3321050015,Rejosari,Karang Tengah,Demak,110.57673,-6.90692,288,25,8.7,100,100,100,184,sudah,sudah
+ID3374110003,Rejosari,Semarang Timur,Kota Semarang,110.43906,-6.97987,134,10,6.2,63,100,84,86,sudah,sudah
+ID3321130003,Ruwit,Wedung,Demak,110.62025,-6.82518,322,69,6.4,100,100,100,206,sudah,sudah
+ID3374140007,Salamanmloyo,Semarang Barat,Kota Semarang,110.39343,-6.9856,73,0,-0.0,0,0,0,0,>2050,>2050
+ID3374100004,Sambirejo,Gayamsari,Kota Semarang,110.44558,-6.98204,179,4,7.5,58,100,72,115,sudah,sudah
+ID3321050001,Sampang,Karang Tengah,Demak,110.57234,-6.9554,676,36,12.2,61,100,99,433,sudah,sudah
+ID3374040001,Sampangan,Gajah Mungkur,Kota Semarang,110.39122,-7.01092,158,9,0.1,0,0,0,0,>2050,>2050
+ID3321030007,Sarirejo,Guntur,Demak,110.58245,-6.99738,211,0,10.7,0,64,0,86,2044,>2050
+ID3374110004,Sarirejo,Semarang Timur,Kota Semarang,110.43327,-6.98058,69,0,5.6,39,100,71,44,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374100005,Sawahbesar,Gayamsari,Kota Semarang,110.44704,-6.97192,107,22,9.2,100,100,100,68,sudah,sudah
+ID3321040007,Sayung,Sayung,Demak,110.51297,-6.94811,798,3,12.2,100,100,100,511,sudah,sudah
+ID3374130013,Sekayu,Semarang Tengah,Kota Semarang,110.41371,-6.97984,101,0,2.2,1,18,10,12,>2050,>2050
+ID3374090006,Sembungharjo,Genuk,Kota Semarang,110.49048,-6.97848,335,0,12.1,0,50,4,107,2046,>2050
+ID3374070012,Sendangguwo,Tembalang,Kota Semarang,110.45496,-7.01245,225,0,0.1,0,0,0,0,>2050,>2050
+ID3321060017,Serangan,Bonang,Demak,110.62023,-6.84545,1040,44,6.6,80,100,99,666,sudah,sudah
+ID3321040012,Sidogemah,Sayung,Demak,110.51226,-6.92712,573,59,11.3,100,100,100,367,sudah,sudah
+ID3321030020,Sidoharjo,Guntur,Demak,110.64332,-6.94822,345,8,8.2,0,41,0,91,2045,>2050
+ID3321030008,Sidokumpul,Guntur,Demak,110.57159,-6.99086,428,1,10.7,0,72,3,196,2041,>2050
+ID3321040018,Sidorejo,Sayung,Demak,110.54778,-6.89749,1062,47,9.2,100,100,100,680,sudah,sudah
+ID3321070007,Singorejo,Demak,Demak,110.63759,-6.87368,208,68,6.7,1,100,70,133,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374100003,Siwalan,Gayamsari,Kota Semarang,110.44992,-6.98422,74,0,8.1,24,100,41,47,belum bisa diperkirakan,belum bisa diperkirakan
+ID3321040014,Sriwulan,Sayung,Demak,110.4869,-6.94157,326,18,11.0,100,100,100,209,sudah,sudah
+ID3321060010,Sukodono,Bonang,Demak,110.59413,-6.8845,405,54,6.6,99,100,100,259,sudah,sudah
+ID3321030006,Sukorejo,Guntur,Demak,110.59187,-6.99233,324,20,9.9,0,47,0,97,2045,>2050
+ID3374020015,Sukorejo,Gunung Pati,Kota Semarang,110.38541,-7.0196,53,23,-0.6,0,0,0,0,>2050,>2050
+ID3321060009,Sumberejo,Bonang,Demak,110.58398,-6.89752,840,39,8.3,100,100,100,538,sudah,sudah
+ID3321040020,Surodadi,Sayung,Demak,110.52028,-6.87575,822,13,8.0,100,100,100,526,sudah,sudah
+ID3321010012,Tamansari,Mranggen,Demak,110.53463,-7.00964,372,0,12.2,0,1,0,3,>2050,>2050
+ID3374140012,Tambak Harjo,Semarang Barat,Kota Semarang,110.37462,-6.96893,715,33,3.0,55,78,67,357,sudah,sudah
+ID3374160008,Tambakaji,Ngaliyan,Kota Semarang,110.34128,-6.98915,681,0,-0.1,0,0,0,0,>2050,>2050
+ID3321050017,Tambakbulusan,Karang Tengah,Demak,110.53261,-6.85333,1029,21,8.4,100,100,100,659,sudah,sudah
+ID3374100007,Tambakrejo,Gayamsari,Kota Semarang,110.44633,-6.95382,134,0,10.5,100,100,100,86,sudah,sudah
+ID3321040008,Tambakroto,Sayung,Demak,110.54193,-6.94741,597,27,13.1,100,100,100,382,sudah,sudah
+ID3374070010,Tandang,Tembalang,Kota Semarang,110.44843,-7.01678,148,0,-0.5,0,0,0,0,>2050,>2050
+ID3321030012,Tangkis,Guntur,Demak,110.56944,-6.96553,276,12,11.5,7,100,69,177,2026,2035
+ID3374120009,Tanjungmas,Semarang Utara,Kota Semarang,110.4304,-6.95163,556,28,7.4,100,100,100,356,sudah,sudah
+ID3374140016,Tawangmas,Semarang Barat,Kota Semarang,110.39562,-6.96606,202,11,4.8,95,100,100,129,sudah,sudah
+ID3374140013,Tawangsari,Semarang Barat,Kota Semarang,110.38839,-6.96171,651,14,4.7,66,91,79,378,sudah,sudah
+ID3321010015,Tegalarum,Mranggen,Demak,110.54333,-6.99735,669,0,12.8,0,20,0,86,>2050,>2050
+ID3374060007,Tegalsari,Candisari,Kota Semarang,110.42165,-7.00445,157,0,-0.6,0,0,0,0,>2050,>2050
+ID3321070014,Tempuran,Demak,Demak,110.64772,-6.87731,65,80,5.1,0,97,0,40,belum bisa diperkirakan,belum bisa diperkirakan
+ID3321030013,Temuroso,Guntur,Demak,110.58898,-6.97495,996,27,10.4,0,99,22,631,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374090013,Terboyo Kulon,Genuk,Kota Semarang,110.45213,-6.94949,208,43,10.5,100,100,100,133,sudah,sudah
+ID3374090012,Terboyo Wetan,Genuk,Kota Semarang,110.463,-6.94805,279,33,10.3,100,100,100,179,sudah,sudah
+ID3321040016,Timbulsloko,Sayung,Demak,110.51084,-6.89962,471,62,9.4,100,100,100,301,sudah,sudah
+ID3321060006,Tlogoboyo,Bonang,Demak,110.58691,-6.85627,591,34,6.8,100,100,100,378,sudah,sudah
+ID3374080006,Tlogomulyo,Pedurungan,Kota Semarang,110.48105,-6.99439,322,0,11.3,0,2,0,4,>2050,>2050
+ID3321030016,Tlogorejo,Guntur,Demak,110.64548,-6.96921,323,31,7.5,0,11,0,22,2047,>2050
+ID3321080009,Tlogorejo,Wonosalam,Demak,110.64841,-6.92507,57,100,8.3,0,100,0,36,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374080010,Tlogosari Kulon,Pedurungan,Kota Semarang,110.46078,-6.98568,375,0,9.0,21,72,37,173,2035,2045
+ID3374080011,Tlogosari Wetan,Pedurungan,Kota Semarang,110.47019,-6.98859,197,0,9.7,0,19,0,24,>2050,>2050
+ID3321030004,Tlogoweru,Guntur,Demak,110.61358,-7.00971,482,10,9.4,0,3,0,8,>2050,>2050
+ID3321060014,Tridonorejo,Bonang,Demak,110.5739,-6.83383,599,14,6.9,100,100,100,383,sudah,sudah
+ID3374090011,Trimulyo,Genuk,Kota Semarang,110.47169,-6.94517,419,22,10.6,100,100,100,268,sudah,sudah
+ID3321040017,Tugu,Sayung,Demak,110.5275,-6.89964,741,35,9.0,100,100,100,474,sudah,sudah
+ID3374150002,Tugurejo,Tugu,Kota Semarang,110.35361,-6.97107,813,28,2.2,71,74,72,383,sudah,sudah
+ID3321030019,Turitempel,Guntur,Demak,110.63173,-6.95328,341,17,9.1,0,77,0,167,belum bisa diperkirakan,belum bisa diperkirakan
+ID3321010016,Waru,Mranggen,Demak,110.52885,-6.99299,436,0,13.7,0,62,6,173,2043,>2050
+ID3374160002,Wates,Ngaliyan,Kota Semarang,110.31952,-7.01227,782,2,0.9,0,0,0,0,>2050,>2050
+ID3321060021,Weding,Bonang,Demak,110.63544,-6.83171,791,28,6.9,68,100,100,506,sudah,sudah
+ID3321050016,Wonoagung,Karang Tengah,Demak,110.55648,-6.87796,710,20,7.2,100,100,100,454,sudah,sudah
+ID3374050006,Wonodri,Semarang Selatan,Kota Semarang,110.42962,-7.00012,120,0,-0.3,0,0,0,0,>2050,>2050
+ID3321050013,Wonokerto,Karang Tengah,Demak,110.56296,-6.92283,462,36,10.8,100,100,100,296,sudah,sudah
+ID3321030002,Wonorejo,Guntur,Demak,110.57954,-7.00896,460,0,10.2,0,1,0,4,>2050,>2050
+ID3321080014,Wonosalam,Wonosalam,Demak,110.6274,-6.9294,351,2,6.8,0,38,0,85,2048,>2050
+ID3321060019,Wonosari,Bonang,Demak,110.63904,-6.85849,585,51,5.2,8,96,72,361,belum bisa diperkirakan,belum bisa diperkirakan
+ID3374160010,Wonosari,Ngaliyan,Kota Semarang,110.31594,-6.98115,733,0,0.1,0,0,0,0,>2050,>2050
+ID3374060006,Wonotingal,Candisari,Kota Semarang,110.42164,-7.01169,127,0,-0.6,0,0,0,0,>2050,>2050
+ID3321050014,Wonowoso,Karang Tengah,Demak,110.56876,-6.91125,489,12,10.1,100,100,100,313,sudah,sudah
+ID3321010019,Wringin Jajar,Mranggen,Demak,110.51076,-6.98429,490,0,12.5,0,57,6,177,2044,>2050

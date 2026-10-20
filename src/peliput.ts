@@ -31,7 +31,8 @@ function render() {
   const key = (r: Row) => (sortKey === "separuh" ? half(r) : NUM.includes(sortKey) ? Number(r[sortKey]) : r[sortKey]);
   const sorted = [...rows].sort((a, b) => {
     const [x, y] = [key(a), key(b)];
-    return (x < y ? -1 : x > y ? 1 : 0) * (ascending ? 1 : -1);
+    const tie = Number(b.persen_bawah_pasang_2026) - Number(a.persen_bawah_pasang_2026); // more land already below first
+    return (x < y ? -1 : x > y ? 1 : 0) * (ascending ? 1 : -1) || tie;
   });
   tbody.innerHTML = sorted.map((r) => `<tr>
     <td><a href="/#${r.lat},${r.lon},14,2026,continue">${r.kelurahan}</a><br /><span class="caption">${r.kecamatan}, ${r.kota}</span></td>
