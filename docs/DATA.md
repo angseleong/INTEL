@@ -27,16 +27,14 @@ Untuk setiap titik peta dan setiap tahun `t`:
 Tinggi Tanah(t)     = Tinggi Tanah(t0) − Laju Penurunan × (t − t0)
 Pasang Tertinggi(t) = Pasang Tertinggi(2026) + Kenaikan Muka Laut × (t − 2026)
 Pasang Harian(t)    = Pasang Harian(2026)    + Kenaikan Muka Laut × (t − 2026)
-Surut Harian(t)     = Surut Harian(2026)     + Kenaikan Muka Laut × (t − 2026)
 
 Tahun Rob      = tahun pertama saat Tinggi Tanah(t) < Pasang Tertinggi(t)
-Tahun Terendam = tahun pertama saat Tinggi Tanah(t) < Pasang Harian(t)
-Tahun Hilang ke Laut = tahun pertama saat Tinggi Tanah(t) < Surut Harian(t)
+Tahun Jadi Laut = tahun pertama saat Tinggi Tanah(t) < Pasang Harian(t)
 ```
 
 - Rumus di atas berlaku untuk Masa Perkiraan. Untuk Masa Terukur (2015 sampai tahun Rilis Data), `Laju Penurunan × (t − t0)` diganti dengan penurunan kumulatif yang benar-benar terukur di deret waktu InSAR pada tahun `t`, dan Pasang memakai data pasang tahun itu.
 - Pasang Tertinggi dan Pasang Harian dihitung dari data pasang per jam beberapa tahun terakhir: Pasang Tertinggi = pasang tertinggi tahunan rata-rata (tanpa badai), Pasang Harian = rata-rata pasang tinggi harian.
-- Peta punya tiga pilihan tingkat: Rob (Pasang Tertinggi, bawaan), Terendam (Pasang Harian), Hilang ke Laut (Surut Harian). Kartu titik menampilkan ketiganya. Dari stasiun Semarang: Pasang Tertinggi +0,65 m, Pasang Harian +0,34 m, Surut Harian −0,31 m terhadap muka laut rata-rata.
+- Peta punya dua pilihan tingkat: **Rob** (di bawah Pasang Tertinggi, bawaan) dan **Jadi Laut** (di bawah Pasang Harian). Dari stasiun Semarang: Pasang Tertinggi +0,65 m, Pasang Harian +0,34 m terhadap muka laut rata-rata. Tingkat ketiga "Hilang ke Laut" (di bawah Surut Harian −0,31 m) dibuang 20 Okt 2026 karena Uji Mundur menunjukkan darat sudah jadi air permanen begitu di bawah Pasang Harian (§5.2).
 
 - Laju Penurunan dari InSAR diukur searah pandang satelit. v1 menganggap gerakan tanah hanya vertikal. Kalau data orbit naik dan turun tersedia, gabungkan keduanya.
 

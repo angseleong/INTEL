@@ -16,10 +16,6 @@ _Hindari_: pasang maksimum, HAT, puncak pasang
 Rata-rata ketinggian pasang tinggi yang terjadi hampir setiap hari.
 _Hindari_: pasang normal, MHHW, pasang rata-rata
 
-**Surut Harian**:
-Rata-rata ketinggian air surut yang terjadi hampir setiap hari.
-_Hindari_: surut normal, MLLW, air rendah
-
 **Kenaikan Muka Laut**:
 Seberapa cepat rata-rata permukaan laut naik dari tahun ke tahun, dalam mm per tahun.
 _Hindari_: sea level rise, naiknya air laut
@@ -44,16 +40,12 @@ _Hindari_: subsidence, amblesan, penurunan muka tanah (versi panjang boleh di te
 Tahun pertama sebuah titik punya Tinggi Tanah di bawah Pasang Tertinggi, sehingga mulai kena Rob sesekali.
 _Hindari_: tahun tenggelam, tanggal tenggelam
 
-**Tahun Terendam**:
-Tahun pertama sebuah titik punya Tinggi Tanah di bawah Pasang Harian, sehingga terendam setiap kali pasang lalu surut lagi.
-_Hindari_: rob harian, banjir harian
-
-**Tahun Hilang ke Laut**:
-Tahun pertama sebuah titik punya Tinggi Tanah di bawah Surut Harian, sehingga air tidak pernah surut lagi.
-_Hindari_: tahun tenggelam, rob permanen, tenggelam total
+**Tahun Jadi Laut**:
+Tahun pertama sebuah titik punya Tinggi Tanah di bawah Pasang Harian, sehingga terendam setiap pasang dan, tanpa Tanggul dan pompa, lama-lama jadi laut.
+_Hindari_: tahun tenggelam, tahun terendam, hilang ke laut
 
 **Rentang Tahun**:
-Tahun Rob, Tahun Terendam, atau Tahun Hilang ke Laut paling cepat sampai paling lambat, dihitung dari ketidakpastian Tinggi Tanah dan Laju Penurunan.
+Tahun Rob atau Tahun Jadi Laut paling cepat sampai paling lambat, dihitung dari ketidakpastian Tinggi Tanah dan Laju Penurunan.
 _Hindari_: margin error, ± tahun
 
 **Masa Terukur**:

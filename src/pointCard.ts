@@ -1,7 +1,7 @@
 // Kartu titik: what one tapped point shows (docs/USERFLOW.md §2 and §4).
 
 export type Scenario = "continue" | "stop";
-export type Level = "rob" | "flooded" | "lost";
+export type Level = "rob" | "sea";
 export type Points = Record<string, number[]>;
 
 const ALREADY = 0;
@@ -56,11 +56,9 @@ export function cardHtml(points: Points | null, i: number | null, scenario: Scen
     ${facts}`;
   }
   const rob = range(v(`robYearMin_${scenario}`), v(`robYearMax_${scenario}`), "Sudah kena");
-  const flooded = range(v(`floodedYearMin_${scenario}`), v(`floodedYearMax_${scenario}`), "Sudah terendam");
-  const lost = range(v(`lostYearMin_${scenario}`), v(`lostYearMax_${scenario}`), "Sudah di bawah surut");
+  const sea = range(v(`seaYearMin_${scenario}`), v(`seaYearMax_${scenario}`), "Sudah");
   return `<p class="label">Mulai kena Rob sesekali</p>
     <p class="big">${rob}</p>
-    <div class="row"><span>Terendam tiap pasang</span><b>${flooded}</b></div>
-    <div class="row"><span>Hilang ke laut</span><b>${lost}</b></div>
+    <div class="row"><span>Jadi laut</span><b>${sea}</b></div>
     ${facts}`;
 }

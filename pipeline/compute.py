@@ -1,4 +1,4 @@
-"""Tahun Rob, Tahun Terendam and Tahun Hilang ke Laut for every point (docs/DATA.md §2–3).
+"""Tahun Rob and Tahun Jadi Laut for every point (docs/DATA.md §2–3).
 
     python pipeline/compute.py   # work/elevation.tif + work/subsidence_rate.tif + work/tide.json -> work/rob.tif
 
@@ -47,7 +47,7 @@ def first_year_below(elev0, rate, tide0, slr, scenario):
 
 
 def year_range(elev0, rate, rate_std, tide0, scenario):
-    """(earliest, middle, latest) Tahun Rob/Terendam for one tide level (DATA.md §3.2)."""
+    """(earliest, middle, latest) Tahun Rob/Jadi Laut for one tide level (DATA.md §3.2)."""
     lo, hi = (s / 1000 for s in SLR_MM)
     return (first_year_below(elev0 - DEM_SIGMA, rate + rate_std, tide0, hi, scenario),
             first_year_below(elev0, rate, tide0, (lo + hi) / 2, scenario),
@@ -107,8 +107,7 @@ def main():
     ok = np.isfinite(elev) & np.isfinite(rate_cm)
     bands, names = [], []
     for scenario in ("continue", "stop"):
-        for key, level in (("rob", tide["highest_tide"]), ("flooded", tide["daily_high_tide"]),
-                           ("lost", tide["daily_low_tide"])):
+        for key, level in (("rob", tide["highest_tide"]), ("sea", tide["daily_high_tide"])):
             for part, years in zip(("Min", "", "Max"), year_range(elev, rate_cm / 100, std_cm / 100, level, scenario)):
                 bands.append(np.where(ok, years, -1).astype("int16"))
                 names.append(f"{key}Year{part}_{scenario}")

@@ -51,12 +51,10 @@ Kode, nama file, dan nama variabel memakai bahasa Inggris. Teks tampilan dan doc
 | Laju Penurunan | `subsidenceRate` |
 | Pasang Tertinggi | `highestTide` |
 | Pasang Harian | `dailyHighTide` |
-| Surut Harian | `dailyLowTide` |
 | Kenaikan Muka Laut | `seaLevelRise` |
 | Tahun Rob | `robYear` |
-| Tahun Terendam | `floodedYear` |
-| Tahun Hilang ke Laut | `lostYear` |
-| Rentang Tahun | `robYearMin`/`robYearMax`, `floodedYearMin`/`floodedYearMax`, `lostYearMin`/`lostYearMax` |
+| Tahun Jadi Laut | `seaYear` |
+| Rentang Tahun | `robYearMin`/`robYearMax`, `seaYearMin`/`seaYearMax` |
 | Area Bawah Pasang | `belowTide` |
 | Skenario Lanjut / Henti | `scenario: "continue" \| "stop"` |
 | Rilis Data | `release` |

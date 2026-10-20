@@ -1,6 +1,6 @@
 """work/rob.tif -> files the web map reads (docs/ARCHITECTURE.md §4).
 
-    python pipeline/export.py   # -> public/data/below-tide-{rob,flooded,lost}.geojson, points.json, meta.json
+    python pipeline/export.py   # -> public/data/below-tide-{rob,sea}.geojson, points.json, meta.json
 
 ponytail: plain GeoJSON while the map covers only Demak–Semarang (a few MB). Switch to PMTiles once Pantura is in.
 """
@@ -15,7 +15,7 @@ from compute import ALREADY, NEVER, WORK, YEARS, fill_gaps, load_inputs
 
 OUT = Path(__file__).parent.parent / "public" / "data"
 SCENARIOS = ("continue", "stop")
-LEVELS = ("rob", "flooded", "lost")  # Pasang Tertinggi, Pasang Harian, Surut Harian
+LEVELS = ("rob", "sea")  # below Pasang Tertinggi, below Pasang Harian
 SIMPLIFY_M = 60  # ¾ of an InSAR pixel; keeps the coastline shape, drops stair-steps
 
 
@@ -80,7 +80,7 @@ def main():
     (OUT / "points.json").write_text(json.dumps(points, separators=(",", ":"), allow_nan=False))
     (OUT / "meta.json").write_text(json.dumps({
         "updated": date.today().isoformat(), "years": [int(YEARS[0]), int(YEARS[-1])],
-        "highestTide": tide["highest_tide"], "dailyHighTide": tide["daily_high_tide"], "dailyLowTide": tide["daily_low_tide"],
+        "highestTide": tide["highest_tide"], "dailyHighTide": tide["daily_high_tide"],
         "validated": validated(),  # Uji Mundur passed (docs/PRD.md §5)
     }, indent=2))
     for f in [f"below-tide-{lv}.geojson" for lv in LEVELS] + ["points.json"]:

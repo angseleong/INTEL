@@ -59,13 +59,13 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 - [x] Sumber angka BRIN 2,4–4,3 mm/tahun: siaran pers BRIGHTS Seri 2, 26 Mei 2026.
 - [x] Pilih `t0` DeltaDTM dengan titik ICESat-2 di Sayung: **2021** (`DATA.md` §2.1). Efeknya kecil: "sudah di bawah Pasang Tertinggi" 27% → 26%.
 - [x] Cek MDT dengan muka laut ICESat-2: **0,75 ± 0,04 m** di atas EGM2008 dari 7 lintasan 2019–2025 yang dikoreksi pasang stasiun. Menggantikan DTU22 (1,008 m, geoid berbeda).
-- [x] Tingkat ketiga Tahun Hilang ke Laut (di bawah Surut Harian −0,31 m).
+- [x] Tingkat ketiga Tahun Hilang ke Laut dicoba, lalu dibuang (lihat bawah).
 - [x] `compute.py` + `compute_check.py` (angka buatan dengan jawaban yang diketahui). Masa Terukur menyusul setelah ada deret waktu InSAR.
 - [x] `compute.py` pertama dengan data asli: 31.096 titik. 27% sudah di bawah Pasang Tertinggi, 3% 2026–2030, 8% 2031–2040, 6% 2041–2050, 56% tidak sebelum 2050. Genuk −0,33 m dan Kaligawe −0,21 m di bawah MSL, kemungkinan terlalu rendah karena MDT dan `t0`. **Belum boleh ditampilkan.**
 - [x] `backtest.py` + `fetch_water.py`: Uji Mundur pertama. **Belum lulus**: tidak ada daya beda di Sayung (`DATA.md` §5.1).
 - [x] Uji Mundur di seluruh pesisir dengan pembanding acak: **LULUS** (AUC 0,87, 3,9× acak). Sayung saja AUC 0,50 (`DATA.md` §5.2).
 - [x] Kartu titik tanpa tahun untuk tanah yang sudah di bawah Pasang Tertinggi (ADR-0005).
-- [ ] Putuskan nasib tingkat Hilang ke Laut (hanya 4% tertangkap).
+- [x] Jadi dua tingkat: Rob (Pasang Tertinggi) dan Jadi Laut (Pasang Harian). Hilang ke Laut dibuang karena hanya menangkap 4%. Uji Mundur tetap lulus.
 - [ ] Setel `RENTANG_MAKS` dari hasil Uji Mundur.
 
 **Checkpoint:** `python pipeline/backtest.py` mencetak LULUS. ✅ 20 Okt 2026.
@@ -75,13 +75,13 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 > Dibuka 19 Okt 2026 atas persetujuan pemilik, sebelum Uji Mundur lulus. Peta wajib berlabel "Belum tervalidasi" sampai `meta.json` `validated: true`.
 
 - [ ] Pemilik: sambungkan repo ke Vercel (Add New → Project → pilih INTEL). Opsional: domain di Vercel → Settings → Domains.
-- [x] `export.py` → `below-tide-{rob,flooded,lost}.geojson` (±0,6–0,8 MB gzip per tingkat, hanya tingkat aktif yang diunduh) + `points.json` (0,7 MB gzip) + `meta.json`. GeoJSON dulu, PMTiles kalau sudah Pantura.
+- [x] `export.py` → `below-tide-{rob,sea}.geojson` (±0,6–0,8 MB gzip per tingkat, hanya tingkat aktif yang diunduh) + `points.json` (0,7 MB gzip) + `meta.json`. GeoJSON dulu, PMTiles kalau sudah Pantura.
 - [x] Peta MapLibre (peta dasar EOX 2024) + Area Bawah Pasang + Garis Pantai 2026 (putih) dan tahun terpilih (oranye putus-putus).
 - [x] Slider tahun 2026–2050 + Play + Skenario Lanjut/Henti.
 - [ ] Masa Terukur 2015–2025 di slider: perlu `timeseries.h5` dari MintPy di artifact.
 - [x] Kartu klik titik: titik terukur terdekat ≤ 150 m, kasus di luar Wilayah Cakupan, tanpa data, sudah kena, tidak sebelum 2050, belum bisa diperkirakan.
 - [x] Celah InSAR diisi dari titik terukur dalam ±1 km (min. 10 tetangga), berlabel. 58.387 titik (27.291 isian).
-- [x] Pilihan tingkat Rob / Terendam / Hilang ke Laut di peta + legenda.
+- [x] Pilihan tingkat Rob / Jadi Laut di peta + legenda.
 - [x] Pemilik: jalankan `insar` step `process` dengan ambang koherensi 0,5 (20 Okt 2026). Cakupan daratan < 3 m: 25% → 75%. 81.368 titik, 15.223 isian.
 - [x] Acuan ulang laju ke median STABLE_BOX (`DATA.md` §2.4), karena acuan MintPy di run 2 jatuh di luar kotak.
 - [ ] Cari tahu kenapa acuan MintPy di run 2 jatuh di luar STABLE_BOX (log run berikutnya).

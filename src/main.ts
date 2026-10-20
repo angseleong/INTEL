@@ -2,7 +2,7 @@ import * as maplibregl from "maplibre-gl";
 import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?url";
 import { cardHtml, nearest, type Level, type Points, type Scenario } from "./pointCard";
 
-type Meta = { updated: string; years: [number, number]; highestTide: number; dailyHighTide: number; dailyLowTide: number; validated: boolean };
+type Meta = { updated: string; years: [number, number]; highestTide: number; dailyHighTide: number; validated: boolean };
 
 const AREA = [110.3, -7.02, 110.65, -6.82] as const; // Wilayah Cakupan, same box as the pipeline
 const NOW = 2026;
@@ -48,8 +48,7 @@ function levelText() {
   if (!meta) return;
   $("levelText").textContent = {
     rob: `Biru = tanah di bawah Pasang Tertinggi (${m(meta.highestTide)}). Tanpa tanggul dan pompa, kena Rob beberapa kali setahun.`,
-    flooded: `Biru = tanah di bawah Pasang Harian (${m(meta.dailyHighTide)}). Tanpa tanggul dan pompa, terendam tiap kali pasang.`,
-    lost: `Biru = tanah di bawah Surut Harian (${m(meta.dailyLowTide)}). Tanpa tanggul dan pompa, air tidak pernah surut lagi.`,
+    sea: `Biru = tanah di bawah Pasang Harian (${m(meta.dailyHighTide)}). Tanpa tanggul dan pompa, terendam tiap pasang dan lama-lama jadi laut, seperti Bedono.`,
   }[level];
 }
 
