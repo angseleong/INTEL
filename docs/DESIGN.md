@@ -192,6 +192,8 @@ Biru laut malam yang hampir hitam, teks putih kebiruan, satu aksen krem cahaya b
 
 ## Layout
 
+- **Menu atas selalu tampil** di semua halaman, juga di atas peta: pil merek (di ponsel tinggal titik bulan) + pil menu satu baris. Di ponsel "Apa yang bisa dilakukan" disingkat "Upaya".
+- **Gulir bermagnet di halaman pembuka**: gulir selalu berhenti di satu momen utuh (awal, INTEL tepat tenggelam, tiap adegan), tidak pernah di tengah transisi (`scroll-snap`).
 - **Ponsel dulu.** Lebar acuan 375–390px. Setiap interaksi bisa dengan satu ketukan, area ketuk minimal 44×44px.
 - Konten halaman teks di kolom maksimal 1200px dengan gutter 24px. Bagian dipisah jarak (120px di desktop, 64px di ponsel), bukan garis.
 - Pola dua kolom asimetris di desktop: judul atau angka di kiri, teks di kanan. Di ponsel menumpuk.
@@ -286,7 +288,7 @@ Animasi menunjukkan perubahan waktu atau menanggapi sentuhan, bukan hiasan.
 | A9 | Halaman teks | Setiap bagian muncul pelan (naik 12px + pudar) saat digulir ke layar |
 
 - Kurva `cubic-bezier(0.2, 0.7, 0.2, 1)`. Durasi 150 / 300 / 600ms.
-- Animasi DOM hanya `opacity` dan `transform`. Animasi gulir (B1–B3) pakai GSAP + ScrollTrigger (ADR-0006).
+- Animasi DOM hanya `opacity`, `transform`, dan sedikit `blur`. Semua gerak gulir memakai satu fungsi `motion()` di `src/ui.tsx`, tanpa library (GSAP dilepas 27 Okt 2026). Teks masuk dari kiri atau kanan, keluar memudar ke atas; halaman pembuka menahan satu panggung supaya latarnya tidak ikut tergulir.
 - `prefers-reduced-motion`: B1 jadi pergantian per bagian tanpa air bergerak, A1/A3/A8/A9/B2/B3/B4 mati, A2/A5/A6 langsung lompat, A4 jadi `jumpTo`.
 - A1 hanya sekali per perangkat, diingat di `localStorage` (dibungkus `try/catch`). Link dengan hash langsung membuka keadaan di hash, tanpa halaman pembuka dan tanpa A1.
 

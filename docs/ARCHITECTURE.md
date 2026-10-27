@@ -18,27 +18,23 @@ Tidak ada server dan tidak ada database (ADR-0001). Pengolahan citra radar yang 
 
 ```
 INTEL/
-├── index.html              # Peta (React). Halaman pembuka baru menyusul di Blok 7
-├── peliput.html            # Halaman Peliput: peringkat + unduhan (gaya lama, diganti di Blok 7)
-├── tentang.html            # Halaman Tentang: cara hitung, atribusi (gaya lama, diganti di Blok 7)
-├── upaya.html              # Apa yang Bisa Dilakukan: Kartu Upaya + Skenario (gaya lama, diganti di Blok 7)
+├── index.html              # Halaman pembuka (tanpa hash) di atas Peta
+├── peliput.html            # Halaman Peliput: peringkat + unduhan
+├── tentang.html            # Halaman Tentang: cara hitung, atribusi
+├── upaya.html              # Apa yang Bisa Dilakukan: Kartu Upaya + Skenario
 ├── vite.config.ts          # empat halaman HTML di atas + Tailwind
 ├── public/fonts/           # Sora (OFL), satu file woff2
 ├── src/
 │   ├── app.css             # Tailwind + token Laut Malam dari DESIGN.md
 │   ├── peta/               # Halaman Peta: Peta.tsx (peta, panel, slider, Skenario, pencarian, hash), PointCard.tsx, layers.ts
-│   ├── sea/                # Laut WebGL: glsl.ts (shader bersama), ripples.ts (+ ripples_check.ts). Hanya halaman pembuka dan Upaya, bukan peta
+│   ├── sea/                # Laut WebGL: glsl.ts (shader bersama), sea.ts (laut perspektif), ripples.ts (+ ripples_check.ts). Hanya halaman pembuka dan Upaya, bukan peta
 │   ├── compare.ts          # Geser bandingkan: peta kedua di atas, dipotong clip-path
 │   ├── pointCard.ts        # Isi Kartu titik + cari titik terdekat
 │   ├── search.ts           # Pencarian alamat (Nominatim)
 │   ├── tide.ts             # Pasang tertinggi minggu ini
-│   ├── intro.ts            # Halaman pembuka lama, tidak dipakai lagi, dihapus di akhir Blok 7
-│   ├── page.ts             # Bersama untuk halaman teks: gaya + A9
-│   ├── tentang.ts          # Konstelasi Titik
-│   ├── peliput.ts          # Tabel peringkat + grafik per kota
-│   ├── upaya.ts            # Angka Kartu Upaya + Skenario
-│   ├── tokens.css          # Token DESIGN.md lama, dipakai page.css sampai halaman teks diganti
-│   └── page.css            # Halaman teks
+│   ├── ui.tsx              # Bersama: menu, footer, Part, motion() + useMotion (gerak gulir)
+│   ├── beranda/            # Halaman pembuka: Beranda.tsx (panggung laut + adegan)
+│   └── pages/              # upaya.tsx, peliput.tsx, tentang.tsx (Konstelasi Titik)
 ├── public/
 │   ├── photos/             # Foto Cerita Kota (DATA.md §6.1)
 │   ├── story/              # Air Nyata 2017 vs 2025 untuk Cerita Kota
@@ -106,7 +102,7 @@ Setiap file menyimpan tanggal pembaruannya (metadata PMTiles atau field `updated
 - Vite + React + TypeScript strict + Tailwind CSS 4 + komponen shadcn/ui (ADR-0007). Tetap statis, tanpa server. Susunan `src/` di §1 masih versi lama dan ditulis ulang di Blok 7.
 - Laut WebGL (shader sendiri, tanpa three.js) untuk halaman pembuka, Air Nyata di peta, dan halaman Upaya (ADR-0008, `DESIGN.md` bagian Laut WebGL).
 - MapLibre GL JS + protokol `pmtiles`.
-- GSAP + ScrollTrigger hanya untuk animasi scroll di halaman pembuka (ADR-0006). Tidak dimuat di halaman peta.
+- Gerak gulir tanpa library: `motion()` di `src/ui.tsx` (GSAP dilepas, lihat catatan di ADR-0006). Halaman pembuka dimuat terpisah (`lazy`), jadi link dengan hash tidak memuatnya.
 - Slider: `map.setFilter(layer, ["all", ["==", "year", y], ["==", "scenario", s]])`.
 - Geser bandingkan: dua instance MapLibre yang posisinya disinkronkan, peta kanan dipotong dengan `clip-path`. Ditulis sendiri, tanpa plugin.
 - URL hash: `#lat,lon,zoom,tahun,skenario`. Lokasi = titik yang diketuk kalau ada. Link tanpa hash membuka halaman pembuka dulu.

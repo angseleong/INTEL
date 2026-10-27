@@ -9,6 +9,7 @@ import { weekHigh, type WeekHigh } from "../tide";
 import { compareMap } from "../compare";
 import { AREA, LAST, NOW, addDataLayers, mapOptions, setLevel, showYear } from "./layers";
 import { Label, PointCard } from "./PointCard";
+import { Nav } from "../ui";
 
 type Meta = { updated: string; highestTide: number; dailyHighTide: number; validated: boolean; dailyPrecision: number | null };
 type Search = { state: "idle" | "loading" | "error" | "empty" } | { state: "ok"; places: Place[] };
@@ -50,7 +51,10 @@ function Toggle<T extends string>({ value, options, onChange, label }: { value: 
   );
 }
 
-export function Peta() {
+const CITY_VIEW = { demak: { center: [110.5, -6.92] as [number, number], zoom: 13 }, semarang: { center: [110.43, -6.96] as [number, number], zoom: 13 } };
+
+/** `intro`: the halaman pembuka covers the map; the URL stays clean until it closes, then the map flies to `city`. */
+export function Peta({ intro = false, city = null }: { intro?: boolean; city?: "demak" | "semarang" | null }) {
   const wide = useWide();
   const mapEl = useRef<HTMLDivElement>(null);
   const map2El = useRef<HTMLDivElement>(null);
@@ -76,8 +80,8 @@ export function Peta() {
   const [search, setSearch] = useState<Search>({ state: "idle" });
   const [query, setQuery] = useState("");
 
-  const now = useRef({ year, scenario, tap, level, yearB });
-  now.current = { year, scenario, tap, level, yearB };
+  const now = useRef({ year, scenario, tap, level, yearB, intro });
+  now.current = { year, scenario, tap, level, yearB, intro };
 
   /** The part of the map the panels don't cover. */
   const visible = () => {
@@ -90,7 +94,7 @@ export function Peta() {
   /** The tapped point if there is one, so the receiver of a link sees the same Kartu titik; else the map centre. */
   const writeHash = () => {
     const map = mapRef.current;
-    if (!map) return;
+    if (!map || now.current.intro) return;
     const { tap, year, scenario } = now.current;
     const [lon, lat] = tap ?? map.getCenter().toArray();
     history.replaceState(null, "", `#${lat.toFixed(5)},${lon.toFixed(5)},${map.getZoom().toFixed(2)},${year},${scenario}`);
@@ -142,6 +146,12 @@ export function Peta() {
     if (compareRef.current) showYear(compareRef.current.map, level, scenario, yearB); // Skenario and tingkat reach the right side too
     writeHash();
   }, [ready, year, yearB, level, scenario, tap]);
+
+  useEffect(() => {
+    if (!ready || intro || !city) return writeHash();
+    const view = { ...CITY_VIEW[city], padding: visible() };
+    if (still) mapRef.current!.jumpTo(view); else mapRef.current!.flyTo({ ...view, duration: 1200 });
+  }, [ready, intro]);
 
   useEffect(() => {
     if (!ready) return;
@@ -259,11 +269,9 @@ export function Peta() {
         <span className="absolute top-[22%] left-[34px] text-[30px] font-light text-gold">{yearB}</span>
       </div>
 
-      <header ref={topEl} className="pointer-events-none fixed top-3 right-3 left-3 flex flex-col gap-2 wide:right-[calc(380px+24px)] wide:max-w-[640px]">
+      {/* below the Nav (always on screen): 44px pill + its padding */}
+      <header ref={topEl} className="pointer-events-none fixed top-[68px] right-3 left-3 flex flex-col gap-2 wide:top-[76px] wide:right-[calc(380px+24px)] wide:max-w-[640px]">
         <div className="flex items-center gap-2">
-          <a href="/" className={`${glass} pointer-events-auto flex h-[52px] flex-none items-center gap-2.5 rounded-full px-[18px] text-sm font-semibold tracking-[0.08em] text-foam no-underline`}>
-            <span className="size-[11px] rounded-full bg-moon shadow-[0_0_10px_rgb(243_234_210/0.6)]" />INTEL
-          </a>
           <form role="search" onSubmit={onSearch} className={`${glass} pointer-events-auto flex h-[52px] min-w-0 flex-1 items-center gap-2.5 rounded-full px-[18px]`}>
             <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="#c7d3d6" strokeWidth="1.5" aria-hidden="true"><circle cx="7" cy="7" r="5" /><path d="M11 11L14.5 14.5" /></svg>
             <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Cari alamat atau kelurahan"
@@ -301,7 +309,7 @@ export function Peta() {
 
       <aside ref={sheetEl} aria-live="polite"
         className={`${glass} fixed right-2 bottom-2 left-2 flex max-h-[52svh] flex-col gap-5 overflow-y-auto rounded-[28px] p-4
-          wide:top-0 wide:right-0 wide:bottom-0 wide:left-auto wide:max-h-none wide:w-[380px] wide:rounded-none wide:border-y-0 wide:border-r-0 wide:bg-night-panel wide:p-6`}>
+          wide:top-[76px] wide:right-0 wide:bottom-0 wide:left-auto wide:max-h-none wide:w-[380px] wide:rounded-none wide:border-y-0 wide:border-r-0 wide:bg-night-panel wide:p-6`}>
         <PointCard info={info} place={place} />
         {!wide && timeBar}
         <div className="flex flex-col gap-2.5">
@@ -326,12 +334,8 @@ export function Peta() {
           <li className="flex items-center gap-2.5"><span className="w-3 flex-none border-t-2 border-dashed border-haze" />Tanggul menurut OpenStreetMap. Hanya letaknya: INTEL tidak menghitung apa yang ditahannya.</li>
         </ul>
         {updated && <p className="m-0 text-[11px] leading-normal font-light text-driftwood">Data: Sentinel-1 (InSAR), DeltaDTM, pasang IOC Semarang. Diperbarui {updated}.</p>}
-        <nav className="mt-auto flex flex-wrap gap-x-5 border-t border-hairline pt-3 text-sm">
-          <a href="/upaya.html" className="flex min-h-11 items-center text-moon">Apa yang bisa dilakukan?</a>
-          <a href="/peliput.html" className="flex min-h-11 items-center text-haze no-underline">Peliput</a>
-          <a href="/tentang.html" className="flex min-h-11 items-center text-haze no-underline">Tentang</a>
-        </nav>
       </aside>
+      <Nav current="/#peta" full />
     </div>
   );
 }

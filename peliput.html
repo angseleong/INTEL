@@ -5,62 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>INTEL untuk Peliput</title>
     <meta name="description" content="Peringkat Kelurahan di Demak dan Semarang menurut Area Bawah Pasang, dan unduhan data INTEL." />
+      <link rel="preload" href="/fonts/sora-latin.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body>
-    <nav class="nav">
-      <a class="brand" href="/">INTEL</a>
-      <a href="/#peta">Peta</a>
-      <a href="/upaya.html">Apa yang bisa dilakukan</a>
-      <a href="/peliput.html" aria-current="page">Peliput</a>
-      <a href="/tentang.html">Tentang</a>
-    </nav>
-
-    <main>
-      <section class="part">
-        <div>
-          <p class="label">Untuk jurnalis, peneliti, dan pemda</p>
-          <h1 class="display">Peringkat Kelurahan</h1>
-        </div>
-        <div class="body">
-          <p>Kelurahan dan desa di Wilayah Cakupan (Demak dan Kota Semarang) yang punya cukup titik data. <b>Separuh di bawah Pasang Tertinggi</b> adalah Rentang Tahun ketika separuh daratannya lebih rendah dari Pasang Tertinggi, tanpa menghitung Tanggul dan pompa. Ketuk nama Kelurahan untuk membukanya di peta.</p>
-          <p class="caption" id="source"></p>
-        </div>
-      </section>
-
-      <section class="reveal">
-        <p class="label">Laju Penurunan per kabupaten/kota</p>
-        <div id="kota"></div>
-        <p class="caption">Median titik yang benar-benar terukur Sentinel-1 (tanpa isian dari tetangga), di dalam Wilayah Cakupan saja. Garis tipis: 1 dari 10 titik turun lebih cepat dari angka ini.</p>
-      </section>
-
-      <section class="reveal">
-        <div class="scroll">
-          <table id="ranking">
-            <thead><tr>
-              <th scope="col"><button type="button" data-key="kelurahan">Kelurahan</button></th>
-              <th scope="col"><button type="button" data-key="separuh">Separuh di bawah Pasang Tertinggi</button></th>
-              <th scope="col" class="num"><button type="button" data-key="laju_penurunan_median_cm">Laju Penurunan (cm/tahun)</button></th>
-              <th scope="col" class="num"><button type="button" data-key="persen_bawah_pasang_2026">Di bawah pasang 2026</button></th>
-              <th scope="col" class="num"><button type="button" data-key="persen_bawah_pasang_2050_lanjut">2050 Lanjut</button></th>
-              <th scope="col" class="num"><button type="button" data-key="persen_bawah_pasang_2050_henti">2050 Henti</button></th>
-            </tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <p class="caption">Persen = bagian daratan Kelurahan (yang ada di Wilayah Cakupan) di bawah Pasang Tertinggi. Lanjut: tanah terus turun secepat sekarang. Henti: pengambilan air tanah dihentikan mulai 2027. Laju Penurunan median, termasuk titik yang diisi dari titik terukur dalam ±1 km.</p>
-      </section>
-
-      <section class="part reveal">
-        <h2>Unduh data</h2>
-        <div class="body">
-          <p><a class="ghostlink" href="/data/ranking.csv" download>ranking.csv</a> satu baris per Kelurahan, semua kolom di atas plus luas (ha), jumlah titik, dan persen isian.</p>
-          <p><a class="ghostlink" href="/data/below-tide-rob.geojson" download>below-tide-rob.geojson</a> Area Bawah Pasang Tertinggi per tahun 2026–2050, per Skenario.</p>
-          <p><a class="ghostlink" href="/data/below-tide-daily.geojson" download>below-tide-daily.geojson</a> sama, untuk Pasang Harian.</p>
-          <p>Semua Rilis Data lama ada di <a href="https://github.com/angseleong/INTEL/releases">GitHub Releases</a>, supaya perkiraan antar rilis bisa dibandingkan. Cara hitung dan sumber: <a href="/tentang.html">Tentang</a>. Mohon sebut "INTEL, dari data Sentinel-1, DeltaDTM, dan pasang IOC Semarang" bila memakai angka ini.</p>
-        </div>
-      </section>
-    </main>
-
-    <script type="module" src="/src/peliput.ts"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/pages/peliput.tsx"></script>
   </body>
 </html>

@@ -20,7 +20,7 @@ Baca sebelum mengambil keputusan desain atau memulai tugas:
 - **Web**: Vite + React + TypeScript (strict) + Tailwind CSS 4 + shadcn/ui (ADR-0007). Peta pakai MapLibre GL JS, data peta dalam PMTiles. Laut ditulis sebagai shader WebGL sendiri (ADR-0008).
 - **Tanpa server, tanpa database** (lihat ADR-0001). Kalau sebuah fitur butuh menulis data dari Pengunjung, berhenti dan tanya pemilik.
 - **Hosting**: Vercel, deploy otomatis tiap push. Otomasi pipeline: GitHub Actions (terjadwal, tanpa campur tangan pemilik). Arsip Rilis Data: GitHub Releases.
-- **Dependensi**: tanya pemilik sebelum menambah dependensi web selain `maplibre-gl`, `pmtiles`, `vite`, `typescript`, `gsap` (hanya halaman pembuka, ADR-0006), `react`, `react-dom`, `tailwindcss`, `@tailwindcss/vite`, dan dependensi bawaan komponen shadcn/ui: `radix-ui`, `class-variance-authority`, `clsx`, `tailwind-merge`, `lucide-react` (ADR-0007).
+- **Dependensi**: tanya pemilik sebelum menambah dependensi web selain `maplibre-gl`, `pmtiles`, `vite`, `typescript`, `react`, `react-dom`, `tailwindcss`, `@tailwindcss/vite`, dan dependensi bawaan komponen shadcn/ui: `radix-ui`, `class-variance-authority`, `clsx`, `tailwind-merge`, `lucide-react` (ADR-0007).
 
 ## 2. Aturan Data
 - Setiap angka di layar harus bisa ditelusuri ke sumber di `docs/DATA.md`. Tidak ada angka karangan atau angka contoh di build produksi.

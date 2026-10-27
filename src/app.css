@@ -53,6 +53,16 @@ button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid 
 .maplibregl-ctrl-attrib-button { filter: invert(1); }
 @media (max-width: 899px) { .maplibregl-ctrl-bottom-right { bottom: calc(52svh + 8px); } } /* above the bottom sheet */
 
+/* Text pages: body copy and links (DESIGN.md Typography: Body 300, max 65ch) */
+.prose-intel p, .prose-intel li { margin: 0; font-size: 16px; line-height: 1.65; font-weight: 300; color: var(--color-mist); max-width: 65ch; }
+.prose-intel b { font-weight: 500; color: var(--color-foam); }
+.prose-intel ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; }
+.prose-intel li { padding: 14px 0; border-top: 1px solid var(--color-hairline); }
+.prose-intel a, .caption a { color: var(--color-moon); text-underline-offset: 3px; }
+.caption { margin: 0; font-size: 12px; line-height: 1.5; font-weight: 300; color: var(--color-driftwood); }
+
+[data-motion] { will-change: transform, opacity; }
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }

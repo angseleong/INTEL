@@ -5,94 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Tentang INTEL</title>
     <meta name="description" content="Cara INTEL menghitung, keterbatasannya, dan sumber setiap data." />
+      <link rel="preload" href="/fonts/sora-latin.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body>
-    <nav class="nav">
-      <a class="brand" href="/">INTEL</a>
-      <a href="/#peta">Peta</a>
-      <a href="/upaya.html">Apa yang bisa dilakukan</a>
-      <a href="/peliput.html">Peliput</a>
-      <a href="/tentang.html" aria-current="page">Tentang</a>
-    </nav>
-
-    <main>
-      <header class="hero">
-        <canvas id="stars" aria-hidden="true"></canvas>
-        <span class="hero-year" id="heroYear" aria-hidden="true"></span>
-        <h1 class="display">Titik-titik ukur<br />yang pelan-pelan turun.</h1>
-      </header>
-      <p class="caption">Setiap titik di atas adalah satu tempat di pesisir Demak–Semarang yang diukur satelit radar Sentinel-1. Titik turun sesuai Laju Penurunan yang terukur di tempat itu. Diperbarui <span id="updated">–</span>.</p>
-
-      <section class="part reveal">
-        <h2>Kenapa namanya INTEL</h2>
-        <div class="body">
-          <p>Di kampus ITB ada kolam yang dijuluki <b>Kolam Intel</b>, singkatan dari "Indonesia Tenggelam". Nama itu dipinjam di sini sebagai pertanyaan, bukan jawaban: apakah benar, dan kapan? INTEL mencoba menjawabnya dengan angka yang bisa dicek ulang.</p>
-        </div>
-      </section>
-
-      <section class="part reveal">
-        <h2>Cara menghitung</h2>
-        <div class="body">
-          <p class="label">Tiga bahan</p>
-          <ul>
-            <li><b>Tinggi Tanah</b>: seberapa tinggi tanah di atas rata-rata muka laut, dari peta ketinggian DeltaDTM (keadaan sekitar 2021).</li>
-            <li><b>Laju Penurunan</b>: seberapa cepat tanah turun, diukur satelit radar Sentinel-1 sejak 2014. Di Sayung dan Genuk sekitar 10 cm per tahun.</li>
-            <li><b>Pasang</b>: dari stasiun pasang Semarang. Pasang Tertinggi dalam setahun +0,65 m, Pasang Harian +0,34 m di atas muka laut rata-rata. Laut naik 2,4–4,3 mm per tahun (BRIN).</li>
-          </ul>
-          <p class="label">Satu hitungan</p>
-          <p>Untuk setiap titik dan setiap tahun: tinggi tanah tahun itu = tinggi tanah sekarang dikurangi penurunannya. Tahun pertama tanah lebih rendah dari Pasang Tertinggi disebut <b>Tahun Rob</b>: tanpa Tanggul dan pompa, tempat itu mulai kena rob beberapa kali setahun. Tahun pertama tanah lebih rendah dari Pasang Harian disebut <b>Tahun Bawah Pasang Harian</b>.</p>
-          <p>Ini hitungan fisika biasa, bukan kecerdasan buatan. Semua rumus dan angkanya ada di <a href="https://github.com/angseleong/INTEL/blob/main/docs/DATA.md">docs/DATA.md</a>.</p>
-          <p class="label">Kenapa tahunnya berupa rentang</p>
-          <p>Peta ketinggian bisa meleset sekitar ±0,5 m, ukuran satelit punya galat, dan laju naiknya laut belum pasti. Karena itu tahun selalu ditulis sebagai Rentang Tahun, misalnya ±2031–2035. Kalau rentangnya lebih dari 10 tahun, kartu menulis "belum bisa diperkirakan".</p>
-          <p class="label">Dua Skenario</p>
-          <p><b>Lanjut</b>: tanah terus turun secepat sekarang. <b>Henti</b>: pengambilan air tanah dihentikan mulai 2027 dan penurunan melambat sampai berhenti dalam 10 tahun. Angka 10 tahun ini dari Tokyo, yang tanahnya berhenti turun sekitar 10 tahun setelah pengambilan air tanah dibatasi. Ini skenario optimis: Bangkok, yang mengatur air tanah sejak 1977, sampai sekarang masih turun walau lebih pelan.</p>
-        </div>
-      </section>
-
-      <section class="part reveal">
-        <h2>Diuji dengan masa lalu</h2>
-        <div class="body">
-          <p>Sebelum peta ini dibuka, rumusnya diuji mundur: dihitung hanya dengan data satelit 2015–2017, lalu dicocokkan dengan lahan yang benar-benar jadi air di 2025 menurut foto satelit Sentinel-2.</p>
-          <p class="big">3,9× lebih tepat</p>
-          <p>dari tebakan acak di seluruh pesisir Semarang–Demak (skor pembeda AUC 0,87). Artinya rumus bisa membedakan kawasan yang rawan dari kawasan yang aman.</p>
-          <p>Tapi di kawasan yang sudah rendah, seperti Sayung, rumus <b>tidak bisa</b> menebak petak mana yang duluan jadi air. Di sana Tanggul, pompa, urugan, dan pembuatan tambak lebih menentukan daripada tinggi tanah. Karena itu tanah yang sudah di bawah Pasang Tertinggi tidak diberi tahun di kartu titik. Dan dari lahan yang dihitung di bawah Pasang Harian, hanya sekitar 1 dari 10 yang benar-benar jadi air dalam 8 tahun.</p>
-        </div>
-      </section>
-
-      <section class="part reveal">
-        <h2>Yang tidak dihitung</h2>
-        <div class="body">
-          <ul>
-            <li><b>Tanggul, pompa, dan urugan.</b> Peta menunjukkan tanah yang lebih rendah dari laut, bukan tempat yang pasti tergenang. Garis Tanggul hanya menunjukkan letaknya.</li>
-            <li><b>Banjir karena hujan dan sungai.</b> Hanya air laut pasang.</li>
-            <li><b>Tempat yang tidak terukur satelit.</b> Radar sulit mengukur sawah, tambak, dan air. Di sana Laju Penurunan diisi dari rata-rata titik terukur dalam ±1 km, dan kartu titik menuliskannya.</li>
-            <li><b>Arah gerak tanah.</b> Satelit mengukur dari samping. INTEL menganggap tanah hanya bergerak turun.</li>
-            <li><b>Musim.</b> Muka laut naik-turun ±10–15 cm antar musim. Angka pasang di sini rata-rata setahun, jadi rob musiman bisa sedikit lebih tinggi.</li>
-            <li><b>Kenaikan Muka Laut</b> 2,4–4,3 mm per tahun diambil dari paparan BRIN Mei 2026. Makalahnya belum terbit.</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="part reveal">
-        <h2>Sumber data dan lisensi</h2>
-        <div class="body">
-          <ul>
-            <li><b>Laju Penurunan</b>: citra radar Copernicus Sentinel-1 (ESA), diolah jadi interferogram oleh <a href="https://hyp3-docs.asf.alaska.edu/">ASF HyP3</a> dan jadi deret waktu dengan MintPy. Berisi data Copernicus Sentinel yang telah diolah.</li>
-            <li><b>Tinggi Tanah</b>: <a href="https://doi.org/10.4121/21997565">DeltaDTM v1.1</a> (Deltares / TU Delft), CC BY 4.0. Dibuat dari Copernicus WorldDEM-30 © DLR e.V. 2010–2014 dan © Airbus Defence and Space GmbH 2014–2018, disediakan dalam program COPERNICUS oleh Uni Eropa dan ESA.</li>
-            <li><b>Muka laut rata-rata</b>: titik lidar NASA ICESat-2, dipakai untuk menyamakan acuan tinggi. DTU22 MDT © DTU Space hanya dipakai sebagai pembanding.</li>
-            <li><b>Pasang</b>: stasiun Semarang (<code>sema</code>, operator BIG) dari <a href="https://www.ioc-sealevelmonitoring.org">IOC Sea Level Station Monitoring Facility</a> (VLIZ/IOC-UNESCO).</li>
-            <li><b>Kenaikan Muka Laut</b>: BRIN, BRIGHTS Seri 2, 26 Mei 2026.</li>
-            <li><b>Air Nyata 2017 dan 2025</b>: citra Copernicus Sentinel-2 (ESA).</li>
-            <li><b>Tanggul</b> dan <b>pencarian alamat</b>: © kontributor <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, ODbL. Pencarian lewat Nominatim.</li>
-            <li><b>Batas Kelurahan</b>: <a href="https://data.humdata.org/dataset/cod-ab-idn">COD-AB Indonesia</a> (BPS, via OCHA HDX), CC BY-IGO.</li>
-            <li><b>Foto Cerita Kota</b>: rumah di Desa Bedono, 2025, Tim LindungiHutan, <a href="https://commons.wikimedia.org/wiki/File:Rumah_Mak_Jah_di_Desa_Bedono_yang_Tenggelam_karena_abrasi.jpg">CC BY 4.0</a>; nelayan Tambak Lorok, 2023, Djunaidibd, <a href="https://commons.wikimedia.org/wiki/File:Nelayan_Tambak_Lorok.jpg">CC BY-SA 4.0</a>. Keduanya diperkecil.</li>
-            <li><b>Peta dasar</b>: <a href="https://s2maps.eu">Sentinel-2 cloudless</a> by EOX IT Services GmbH (Contains modified Copernicus Sentinel data 2024), CC BY-NC-SA 4.0.</li>
-          </ul>
-          <p>Kode INTEL terbuka dengan lisensi MIT di <a href="https://github.com/angseleong/INTEL">GitHub</a>. Proyek pribadi, tanpa iklan, tanpa menyimpan data Pengunjung.</p>
-        </div>
-      </section>
-    </main>
-
-    <script type="module" src="/src/tentang.ts"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/pages/tentang.tsx"></script>
   </body>
 </html>
