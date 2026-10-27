@@ -18,24 +18,26 @@ Tidak ada server dan tidak ada database (ADR-0001). Pengolahan citra radar yang 
 
 ```
 INTEL/
-├── index.html              # Halaman pembuka (scrollytelling) di atas Peta, lalu Peta
-├── peliput.html            # Halaman Peliput: peringkat + unduhan
-├── tentang.html            # Halaman Tentang: cara hitung, atribusi
-├── upaya.html              # Apa yang Bisa Dilakukan: Kartu Upaya + Skenario
-├── vite.config.ts          # empat halaman HTML di atas
+├── index.html              # Peta (React). Halaman pembuka baru menyusul di Blok 7
+├── peliput.html            # Halaman Peliput: peringkat + unduhan (gaya lama, diganti di Blok 7)
+├── tentang.html            # Halaman Tentang: cara hitung, atribusi (gaya lama, diganti di Blok 7)
+├── upaya.html              # Apa yang Bisa Dilakukan: Kartu Upaya + Skenario (gaya lama, diganti di Blok 7)
+├── vite.config.ts          # empat halaman HTML di atas + Tailwind
+├── public/fonts/           # Sora (OFL), satu file woff2
 ├── src/
-│   ├── main.ts             # Peta MapLibre, lapisan, slider, Play, Skenario, URL hash, pencarian
-│   ├── intro.ts            # Halaman pembuka, GSAP (dimuat dinamis, hanya tanpa hash)
+│   ├── app.css             # Tailwind + token Laut Malam dari DESIGN.md
+│   ├── peta/               # Halaman Peta: Peta.tsx (peta, panel, slider, Skenario, pencarian, hash), PointCard.tsx, layers.ts
+│   ├── sea/                # Laut WebGL: glsl.ts (shader bersama), mapWater.ts (air di peta), ripples.ts (+ ripples_check.ts)
 │   ├── compare.ts          # Geser bandingkan: peta kedua di atas, dipotong clip-path
-│   ├── pointCard.ts        # Kartu klik titik + cari titik terdekat
+│   ├── pointCard.ts        # Isi Kartu titik + cari titik terdekat
 │   ├── search.ts           # Pencarian alamat (Nominatim)
-│   ├── tide.ts             # Banner pasang minggu ini
+│   ├── tide.ts             # Pasang tertinggi minggu ini
+│   ├── intro.ts            # Halaman pembuka lama, tidak dipakai lagi, dihapus di akhir Blok 7
 │   ├── page.ts             # Bersama untuk halaman teks: gaya + A9
 │   ├── tentang.ts          # Konstelasi Titik
 │   ├── peliput.ts          # Tabel peringkat + grafik per kota
 │   ├── upaya.ts            # Angka Kartu Upaya + Skenario
-│   ├── tokens.css          # Token DESIGN.md lama (diganti di Blok 7)
-│   ├── style.css           # Peta + halaman pembuka
+│   ├── tokens.css          # Token DESIGN.md lama, dipakai page.css sampai halaman teks diganti
 │   └── page.css            # Halaman teks
 ├── public/
 │   ├── photos/             # Foto Cerita Kota (DATA.md §6.1)

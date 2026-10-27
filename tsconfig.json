@@ -9,6 +9,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noEmit": true,
+    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
     "skipLibCheck": true,
     "types": ["vite/client"]
   },
