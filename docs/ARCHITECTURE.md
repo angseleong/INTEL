@@ -34,7 +34,7 @@ INTEL/
 │   ├── tentang.ts          # Konstelasi Titik
 │   ├── peliput.ts          # Tabel peringkat + grafik per kota
 │   ├── upaya.ts            # Angka Kartu Upaya + Skenario
-│   ├── tokens.css          # Token DESIGN.md §14
+│   ├── tokens.css          # Token DESIGN.md lama (diganti di Blok 7)
 │   ├── style.css           # Peta + halaman pembuka
 │   └── page.css            # Halaman teks
 ├── public/
@@ -101,7 +101,8 @@ Setiap file menyimpan tanggal pembaruannya (metadata PMTiles atau field `updated
 
 ## 5. Web
 
-- Vite + TypeScript strict, tanpa framework UI. Tiga halaman HTML biasa.
+- Vite + React + TypeScript strict + Tailwind CSS 4 + komponen shadcn/ui (ADR-0007). Tetap statis, tanpa server. Susunan `src/` di §1 masih versi lama dan ditulis ulang di Blok 7.
+- Laut WebGL (shader sendiri, tanpa three.js) untuk halaman pembuka, Air Nyata di peta, dan halaman Upaya (ADR-0008, `DESIGN.md` bagian Laut WebGL).
 - MapLibre GL JS + protokol `pmtiles`.
 - GSAP + ScrollTrigger hanya untuk animasi scroll di halaman pembuka (ADR-0006). Tidak dimuat di halaman peta.
 - Slider: `map.setFilter(layer, ["all", ["==", "year", y], ["==", "scenario", s]])`.

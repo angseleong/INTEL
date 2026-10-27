@@ -3,16 +3,16 @@
 ## 1. Kedatangan
 
 ### 1.1 Tanpa link khusus: halaman pembuka dulu
-Satu halaman scrollytelling: tiap kali digeser, layar berganti satu ide. Latarnya makin dalam makin gelap (`DESIGN.md` §1.1). Urutannya:
+Satu halaman scrollytelling: tiap kali digeser, layar berganti satu ide. Suasananya malam di laut, makin digeser makin gelap (`DESIGN.md` Overview dan Gerak B1). Urutannya:
 
-1. **Hero**: wordmark **INTEL** besar di atas peta Indonesia, tagline berupa pertanyaan "Indonesia Tenggelam? Cek datanya."
-2. **Air naik**: makin digeser, air naik dari bawah layar sampai menutup judul (`DESIGN.md` §9 B1). Air menutup layar, bukan pulau di peta, supaya tidak terbaca sebagai klaim "Indonesia tenggelam".
+1. **Hero**: laut malam yang bisa disentuh (ketuk = riak), wordmark **INTEL** besar berdiri di atas air dan memantul, tagline berupa pertanyaan "Indonesia Tenggelam? Cek datanya."
+2. **Air naik**: makin digeser, air naik sampai menutup judul, lalu layar menggelap (`DESIGN.md` Gerak B1). Air menutup layar, bukan pulau di peta, supaya tidak terbaca sebagai klaim "Indonesia tenggelam".
 3. **Masalahnya**: tanah pesisir turun pelan, beberapa cm per tahun, tidak terasa sampai rob datang tiap bulan. Peta Indonesia menyalakan kota-kota pesisir yang turun (Jakarta, Pekalongan, Semarang, Demak, Medan, dll.) dan jumlah orang di kawasan berisiko. Angka dan sumber di `DATA.md` §6.
 4. **Cek tempatmu**: chip kota. Yang sudah dihitung (Semarang, Demak) menyala. Yang belum tetap tampil dengan label "belum tercakup". Di sini dijelaskan bahwa INTEL sementara baru menghitung Semarang & Demak.
 5. **Cerita kota**: ketuk chip, lalu muncul cerita kota itu (±3 layar): apa yang sudah terjadi, siapa yang terdampak, foto, dan geser sebelum/sesudah citra satelit 2017 vs 2025 (Air Nyata). Hanya kejadian nyata, bukan perkiraan.
    - **Demak**: Bedono (KK yang direlokasi), Timbulsloko (KK yang hidup di tengah genangan).
    - **Semarang**: Tambak Lorok, rob di kawasan kota, tembok laut yang retak.
-6. **Peta**: tombol **Cek lokasimu** (satu-satunya tombol terisi di layar ini) membuka peta di kota yang dipilih. Sebelum peta, satu layar cara membaca: dua tingkat (Rob dan Pasang Harian), Air Nyata, dihitung tanpa Tanggul dan pompa, tahun selalu berupa Rentang Tahun. Animasi pembuka 2015 → sekarang (`DESIGN.md` §9 A1) jalan sekali di sini.
+6. **Peta**: tombol **Cek lokasimu** (satu-satunya tombol terisi di layar ini) membuka peta di kota yang dipilih. Sebelum peta, satu layar cara membaca: dua tingkat (Rob dan Pasang Harian), Air Nyata, dihitung tanpa Tanggul dan pompa, tahun selalu berupa Rentang Tahun. Animasi pembuka 2015 → sekarang (`DESIGN.md` Gerak A1) jalan sekali di sini.
 7. **Mitigasi**: di peta ada tombol hantu **Apa yang bisa dilakukan?**, karena di ponsel peta penuh layar menelan gerakan scroll. Isinya ada di §1.4.
 
 Kunjungan kedua dan seterusnya: halaman pembuka tetap muncul, tapi ada tombol hantu **Langsung ke peta** di atas.

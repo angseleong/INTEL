@@ -106,6 +106,22 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 
 **Checkpoint:** semua FR di `PRD.md` §4 bisa dicoba di ponsel.
 
+## ACTIVE — Blok 7: Rombak Frontend (Laut Malam)
+
+> Dibuka 27 Okt 2026 atas permintaan pemilik. Acuan: canvas mockup "INTEL Mockup Gaya Baru", ADR-0007, ADR-0008, `DESIGN.md`. Data dan pipeline tidak berubah.
+
+- [x] Mockup 5 halaman + Prototipe Air di canvas, disetujui pemilik.
+- [x] ADR-0007, ADR-0008, `DESIGN.md` ditulis ulang.
+- [ ] Pasang React + Tailwind 4 + shadcn/ui di Vite yang ada. Token `DESIGN.md` jadi tema Tailwind. Font Sora di-self-host.
+- [ ] Modul Laut WebGL: halaman pembuka (perspektif) dan peta (dari atas), sentuhan, cadangan reduced-motion dan tanpa WebGL. Satu cek yang bisa dijalankan untuk simulasi riak.
+- [ ] Peta: MapLibre + Air Nyata realistis + Area Bawah Pasang bercahaya + kartu titik + slider + Skenario + pencarian + URL hash + Bandingkan. Semua fitur Blok 4–5 tetap jalan.
+- [ ] Halaman pembuka: laut naik ikut gulir sampai hilang, baru teks bagian berikutnya masuk dari samping. Lalu chip kota, Cerita Kota, cara membaca.
+- [ ] Tentang (Konstelasi Titik), Apa yang Bisa Dilakukan (potongan laut diam), Peliput.
+- [ ] Tiap halaman: impeccable `critique` + `polish` sekali, cek 375×812 dan desktop.
+- [ ] Hapus `src/` lama setelah semua halaman pengganti lulus.
+
+**Checkpoint:** semua FR di `PRD.md` §4 bisa dicoba di ponsel dengan tampilan baru, dan `npm run build` lolos tanpa error.
+
 ## Blok 6: Otomasi & Rilis
 - [ ] `tide.yml`, `dikes.yml`, `insar.yml`. `insar.yml` juga perlu `fetch_kelurahan.py` (simpan `work/kelurahan.geojson` di cache atau Rilis Data, unduhannya ±15 menit), `upaya.py`, `story.py`.
 - [ ] Rilis Data pertama `data-YYYYQn` di GitHub Releases.

@@ -46,9 +46,9 @@ Proyek pribadi, open source, biaya Rp0.
 ## 4. Kebutuhan Fungsional
 
 ### FR-0 — Halaman Pembuka
-- Scrollytelling sebelum peta (`USERFLOW.md` §1.1): hero INTEL di atas peta Indonesia dengan air yang naik, masalah penurunan tanah dan kota-kota yang terdampak (angka asli bersumber), chip kota, Cerita Kota, cara membaca dua tingkat, lalu tombol **Cek lokasimu**.
+- Scrollytelling sebelum peta (`USERFLOW.md` §1.1): hero INTEL di atas laut malam yang bisa disentuh dan naik saat digulir, masalah penurunan tanah dan kota-kota yang terdampak (angka asli bersumber), chip kota, Cerita Kota, cara membaca dua tingkat, lalu tombol **Cek lokasimu**.
 - Chip kota menyebut Wilayah Cakupan saat ini. Kota yang belum dihitung tampil dengan label "belum tercakup".
-- Cerita Kota untuk Demak dan Semarang: kejadian nyata, foto berlisensi (`DESIGN.md` §13), geser sebelum/sesudah Air Nyata 2017 vs 2025.
+- Cerita Kota untuk Demak dan Semarang: kejadian nyata, foto berlisensi (`DESIGN.md` bagian Foto), geser sebelum/sesudah Air Nyata 2017 vs 2025.
 - Dilewati kalau link berisi hash. Kunjungan berikutnya mendapat tombol "Langsung ke peta".
 
 ### FR-1 — Peta
@@ -62,7 +62,7 @@ Proyek pribadi, open source, biaya Rp0.
 - Slider 2015–2050, langkah satu tahun, dibuka di tahun sekarang. Peta berubah saat slider digeser, tanpa jeda yang terasa.
 - Slider terbagi dua: Masa Terukur (2015 sampai tahun Rilis Data terakhir) dan Masa Perkiraan (sesudahnya). Keduanya dibedakan dengan gaya garis dan label "terukur" / "perkiraan".
 - Tombol Play menganimasikan tahun dari posisi sekarang sampai 2050, lalu berhenti.
-- Kunjungan pertama dibuka dengan animasi 2015 → tahun ini ("Ini yang sudah terjadi"), bisa dilewati. Semua animasi ada di `DESIGN.md` §9.
+- Kunjungan pertama dibuka dengan animasi 2015 → tahun ini ("Ini yang sudah terjadi"), bisa dilewati. Semua animasi ada di `DESIGN.md` bagian Gerak.
 
 ### FR-3 — Geser Bandingkan
 - Layar dibelah dua: kiri tahun A, kanan tahun B. Garis pembatas bisa digeser dengan jari atau mouse.
