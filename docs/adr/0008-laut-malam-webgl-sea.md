@@ -4,7 +4,7 @@ Gaya "void" (hitam pekat, satu tombol biru) diganti gaya **Laut Malam**: seluruh
 
 Air dibagi dua supaya tetap jujur (ADR-0003):
 
-- **Air sungguhan** (laut, Air Nyata dari foto satelit, laut di halaman pembuka) digambar realistis: ombak, pantulan, kilau.
+- **Air sungguhan** di halaman pembuka digambar realistis: ombak, pantulan, kilau. Di peta, Air Nyata tetap isian diam: laut WebGL di peta sudah dicoba dan ditolak pemilik pada 27 Okt 2026 karena malah terlihat jelek.
 - **Area Bawah Pasang** tetap lapisan data toska bercahaya yang transparan. Lapisan ini tidak boleh terlihat seperti air sungguhan, karena artinya tanah lebih rendah dari pasang, bukan tergenang.
 
 ## Considered Options

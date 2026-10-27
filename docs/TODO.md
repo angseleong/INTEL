@@ -113,7 +113,7 @@ Tujuan: setiap baris "belum dicek" di `DATA.md` §1 jadi pasti sebelum ada kode 
 - [x] Mockup 5 halaman + Prototipe Air di canvas, disetujui pemilik.
 - [x] ADR-0007, ADR-0008, `DESIGN.md` ditulis ulang.
 - [x] Pasang React + Tailwind 4 di Vite yang ada. Token `DESIGN.md` jadi tema Tailwind (`src/app.css`). Font Sora di-self-host. JSX dikompilasi esbuild bawaan Vite, tanpa `@vitejs/plugin-react`. shadcn/ui dipasang begitu ada komponen yang butuh (dialog, sheet), belum di Peta.
-- [x] Laut WebGL untuk peta (`src/sea/mapWater.ts`): laut dan Air Nyata berombak, cincin riak dari Titik terpilih, cadangan reduced-motion dan tanpa WebGL. Cek: `node src/sea/ripples_check.ts`.
+- [x] ~~Laut WebGL untuk peta~~: dicoba lalu dibatalkan pemilik (27 Okt 2026), laut bergerak di peta terlihat jelek. Peta memakai isian diam. Yang tersisa dipakai halaman pembuka: `src/sea/glsl.ts`, `src/sea/ripples.ts` (cek: `node src/sea/ripples_check.ts`).
 - [ ] Laut WebGL untuk halaman pembuka (perspektif), memakai `glsl.ts` dan `ripples.ts` yang sama.
 - [x] Peta (`src/peta/`): MapLibre + Area Bawah Pasang bercahaya + kartu titik + slider + Play + Skenario + tingkat + pencarian + URL hash + Bandingkan + banner pasang. Dicek di 390×844 dan 1440×900. Halaman pembuka lama ikut lepas dari `index.html` sampai yang baru jadi.
 - [ ] Peta: animasi A2 (pudar silang tahun), A3 (garis putus-putus berjalan), A5 (angka menghitung naik, kartu naik), A6. Masih langsung lompat.

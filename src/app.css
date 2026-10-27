@@ -45,7 +45,7 @@ button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid 
 .range::-moz-range-progress { height: 4px; border-radius: 4px; background: var(--color-moon); }
 .range::-moz-range-thumb { width: 20px; height: 20px; border: 0; border-radius: 50%; background: var(--color-moon); }
 
-/* Titik terpilih: moonlight dot with a glow ring; the sea layer draws the ripple ring */
+/* Titik terpilih: moonlight dot with a glow ring */
 .pin { width: 12px; height: 12px; border-radius: 50%; background: var(--color-moon); box-shadow: 0 0 0 10px rgb(243 234 210 / 0.14), 0 0 16px rgb(243 234 210 / 0.6); }
 
 .maplibregl-ctrl-attrib { background: rgb(5 11 16 / 0.7) !important; color: var(--color-haze); font-size: 11px; }

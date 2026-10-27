@@ -27,7 +27,7 @@ INTEL/
 ├── src/
 │   ├── app.css             # Tailwind + token Laut Malam dari DESIGN.md
 │   ├── peta/               # Halaman Peta: Peta.tsx (peta, panel, slider, Skenario, pencarian, hash), PointCard.tsx, layers.ts
-│   ├── sea/                # Laut WebGL: glsl.ts (shader bersama), mapWater.ts (air di peta), ripples.ts (+ ripples_check.ts)
+│   ├── sea/                # Laut WebGL: glsl.ts (shader bersama), ripples.ts (+ ripples_check.ts). Hanya halaman pembuka dan Upaya, bukan peta
 │   ├── compare.ts          # Geser bandingkan: peta kedua di atas, dipotong clip-path
 │   ├── pointCard.ts        # Isi Kartu titik + cari titik terdekat
 │   ├── search.ts           # Pencarian alamat (Nominatim)

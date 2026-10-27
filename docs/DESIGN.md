@@ -18,7 +18,6 @@ colors:
   ink: "#06121a"
   tide-glow: "#3cf0d0"
   tide-deep: "#1f8bff"
-  sea-real: "#061b26"
   water-real: "#0a2633"
 typography:
   display:
@@ -161,7 +160,7 @@ Biru laut malam yang hampir hitam, teks putih kebiruan, satu aksen krem cahaya b
 - **Kaca** (`rgba(14,28,38,0.55)`) dan **Kaca Peta** (`rgba(8,18,26,0.6)` + blur 18px): panel di atas latar dan di atas peta.
 - **Garis Rambut** (`rgba(200,225,235,0.10)`): tepi panel dan pemisah.
 - **Buih** (`#eef3f2`): teks utama. **Kabut** (`#d5e0e2`): teks badan. **Halimun** (`#b3c2c6`): teks sekunder. **Kayu Apung** (`#8ea1a8`): keterangan sumber. **Sampah Pasang** (`#9fb8c0`): label kecil kapital.
-- **Laut Sungguhan** (`#061b26`) dan **Air Nyata** (`#0a2633`): warna dasar air realistis di peta, sebelum shader menambah ombak dan kilau.
+- **Air Nyata** (`#0a2633`): isian diam untuk yang sudah jadi air menurut foto satelit, di peta.
 
 ### Named Rules
 **The Moonlight Rule.** Krem Cahaya Bulan hanya untuk aksi dan pilihan aktif. Kalau sesuatu berwarna krem, itu bisa diketuk.
@@ -240,17 +239,16 @@ Satu-satunya "bayangan" adalah pendar cahaya bulan: `box-shadow: 0 0 32px rgba(2
 
 ## Laut WebGL
 
-Satu modul shader dipakai di tiga tempat. Ditulis sendiri dengan WebGL 1, tanpa three.js (ADR-0007). Acuan: artboard "Prototipe Air" di canvas mockup.
+Satu modul shader dipakai di halaman pembuka dan halaman Upaya. Peta tidak memakainya. Ditulis sendiri dengan WebGL 1, tanpa three.js (ADR-0007). Acuan: artboard "Prototipe Air" di canvas mockup.
 
 | Tempat | Pandangan | Isi |
 |---|---|---|
 | Halaman pembuka | Perspektif ke cakrawala | Huruf INTEL dan bulan memantul di laut. Air dekat garis air tenang (pantulan bersih), makin dekat ke Pengunjung makin berombak. Bagian huruf di bawah air terlihat samar. |
-| Peta | Dari atas | Laut dan Air Nyata berombak dengan kilau kecil, mengikuti bentuk poligon. |
 | Halaman Upaya | Perspektif, diam | Potongan laut kecil di blok "Berhenti menyedot air tanah", tanpa sentuhan. |
 
 - **Ombak**: 8 gelombang berarah, panjang gelombang menurun, kecepatan mengikuti rumus laut dalam. Gelombang yang lebih kecil dari ±3px di layar dipudarkan supaya tidak berkedip.
 - **Sentuhan**: simulasi riak di grid kecil (±96×208 sel), dua langkah per frame. Ketuk = riak, geser ke samping = jejak ombak, geser ke atas/bawah = gulir halaman (`touch-action: pan-y`). Di desktop kursor membuat riak kecil. Di halaman pembuka sel grid dua kali lebih lebar dari tingginya, supaya riak terlihat pipih seperti dilihat dari samping.
-- **Peta**: ketuk titik → satu cincin riak keluar dari titik itu, sekaligus jadi tanda titik terpilih.
+- **Peta tidak memakai laut WebGL.** Dicoba 27 Okt 2026 dan ditolak pemilik: laut yang bergerak di peta malah terlihat jelek dan mengganggu data.
 - **Cadangan**: `prefers-reduced-motion` → air diam, tanpa riak. WebGL gagal → gradien statis. Tab tersembunyi atau laut di luar layar → berhenti menggambar.
 - **Anggaran**: 60 fps di ponsel kelas menengah, piksel dibatasi `devicePixelRatio ≤ 2`.
 
@@ -259,13 +257,13 @@ Satu modul shader dipakai di tiga tempat. Ditulis sendiri dengan WebGL 1, tanpa 
 | Lapisan | Gaya |
 |---|---|
 | Peta dasar | Citra satelit EOX, digelapkan dan dikurangi warnanya supaya data menyala |
-| Laut dan Air Nyata 2025 | Air realistis (Laut WebGL, dari atas). Legenda: "Air sungguhan (foto satelit 2025)" |
+| Air Nyata 2025 | Isian diam Air Nyata `#0a2633`, opasitas 90%. Laut memakai citra satelit yang digelapkan. Legenda: "Sudah jadi air menurut foto satelit 2025, termasuk tambak" |
 | Area Bawah Pasang | Gradien Toska Pasang → Biru Dalam, transparan ±35%, pendar lembut, kilau pelan. Tanpa garis tepi |
 | Garis Pantai tahun ini | Buih, 1,6px |
 | Garis Pantai tahun terpilih | Emas Bulan, titik-titik bulat |
 | Tanggul | Halimun, 2,5px, putus-putus |
 | Titik ukur (zoom ≥ 14) | Titik 2px Kabut, opasitas 30% |
-| Titik terpilih | Lingkaran Cahaya Bulan 10px + lingkaran pendar 30px + cincin riak |
+| Titik terpilih | Lingkaran Cahaya Bulan 12px + lingkaran pendar |
 
 ## Gerak
 

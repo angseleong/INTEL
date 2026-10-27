@@ -7,7 +7,6 @@ import { cardInfo, nearest, type Level, type Points, type Scenario } from "../po
 import { searchPlaces, type Place } from "../search";
 import { weekHigh, type WeekHigh } from "../tide";
 import { compareMap } from "../compare";
-import { mapWater } from "../sea/mapWater";
 import { AREA, LAST, NOW, addDataLayers, mapOptions, setLevel, showYear } from "./layers";
 import { Label, PointCard } from "./PointCard";
 
@@ -60,7 +59,6 @@ export function Peta() {
   const sheetEl = useRef<HTMLElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const compareRef = useRef<ReturnType<typeof compareMap> | null>(null);
-  const waterRef = useRef<ReturnType<typeof mapWater>>(null);
   const markerRef = useRef<maplibregl.Marker | null>(null);
   const timer = useRef<number | undefined>(undefined);
 
@@ -101,7 +99,6 @@ export function Peta() {
   const pick = (lon: number, lat: number) => {
     setTap([lon, lat]);
     markerRef.current?.setLngLat([lon, lat]).addTo(mapRef.current!);
-    waterRef.current?.tap(lon, lat);
   };
 
   useEffect(() => {
@@ -120,12 +117,6 @@ export function Peta() {
       else map.fitBounds([[AREA[0], AREA[1]], [AREA[2], AREA[3]]], { padding: visible(), animate: false });
       if (now.current.tap) markerRef.current!.setLngLat(now.current.tap).addTo(map);
       setReady(true);
-      fetch("/data/water-2025.geojson").then((r) => r.json()).then((data) => {
-        if (!mapRef.current) return;
-        waterRef.current = mapWater(map, data, AREA);
-        if (waterRef.current) map.setPaintProperty("water", "fill-opacity", 0); // the sea layer draws it instead
-        if (waterRef.current && now.current.tap) waterRef.current.tap(...now.current.tap);
-      }).catch(() => {}); // the plain fill stays
     });
     map.on("moveend", writeHash);
     map.on("click", (e) => pick(e.lngLat.lng, e.lngLat.lat));
@@ -139,7 +130,6 @@ export function Peta() {
 
     return () => {
       clearInterval(timer.current);
-      waterRef.current?.destroy();
       compareRef.current?.map.remove();
       map.remove();
       mapRef.current = null;
@@ -329,7 +319,7 @@ export function Peta() {
           {levelText && <p className="m-0 text-xs leading-relaxed font-light text-haze">{levelText}</p>}
         </div>
         <ul className="m-0 flex list-none flex-col gap-2 p-0 text-xs text-mist">
-          <li className="flex items-center gap-2.5"><span className="size-3 flex-none rounded border border-[rgb(200_225_235/0.3)] bg-[radial-gradient(circle_at_70%_30%,rgb(243_234_210/0.7),transparent_40%),#0a2633]" />Air sungguhan menurut foto satelit 2025, termasuk tambak</li>
+          <li className="flex items-center gap-2.5"><span className="size-3 flex-none rounded border border-[rgb(200_225_235/0.3)] bg-water-real" />Sudah jadi air menurut foto satelit 2025, termasuk tambak</li>
           <li className="flex items-center gap-2.5"><span className="size-3 flex-none rounded bg-linear-to-b from-tide-glow to-tide-deep opacity-75" />Di bawah {level === "rob" ? "Pasang Tertinggi" : "pasang harian"}, {year}</li>
           <li className="flex items-center gap-2.5"><span className="w-3 flex-none border-t-2 border-foam" />Garis pantai {NOW}</li>
           <li className="flex items-center gap-2.5"><span className="w-3 flex-none border-t-2 border-dotted border-gold" />Garis pantai {year}</li>

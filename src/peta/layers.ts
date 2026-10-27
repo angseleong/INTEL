@@ -11,7 +11,7 @@ export function mapOptions(container: HTMLElement, center: [number, number], zoo
     container, center, zoom,
     minZoom: 8,
     maxZoom: 17,
-    dragRotate: false, // mapWater projects without bearing or pitch
+    dragRotate: false, // north stays up: easier to read for Pengunjung, and the compare map only syncs centre and zoom
     pitchWithRotate: false,
     touchPitch: false,
     attributionControl: { compact: true },
